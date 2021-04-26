@@ -29,6 +29,8 @@ public class Register extends javax.swing.JFrame {
         jTextField3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         jTextField4.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         jButton1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+        jLabel7.setVisible(false);
+        jLabel4.setVisible(false);
     }
 
     /**
@@ -383,11 +385,13 @@ public class Register extends javax.swing.JFrame {
                 }
                 if (count==1)
                 {
+                    jLabel7.setVisible(true);
                     jLabel7.setText("Username Unavailable");
                     jLabel7.setForeground(new Color(255,0,0));
                 }
                 else
                 {
+                    jLabel7.setVisible(true);
                     jLabel7.setText("Username Available");
                     jLabel7.setForeground(new Color(0,255,0));
                 }
