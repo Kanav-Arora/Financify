@@ -20,6 +20,8 @@ public class Register extends javax.swing.JFrame {
     /**
      * Creates new form Register
      */
+    
+           
     public Register() {
         initComponents();
         jTextField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -51,6 +53,7 @@ public class Register extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -96,6 +99,12 @@ public class Register extends javax.swing.JFrame {
             }
         });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
@@ -193,6 +202,9 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabel7.setText("Username availability");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -200,6 +212,7 @@ public class Register extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(199, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
@@ -216,25 +229,27 @@ public class Register extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(35, 35, 35)
+                .addGap(50, 50, 50)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -260,7 +275,7 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1MouseExited
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
@@ -288,10 +303,11 @@ public class Register extends javax.swing.JFrame {
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/users","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
-            String query = String.format("insert into users (username,password,email,name,number)"+ "values(%s,%s,%s,%s);",username,pass,email,name);
-            stmt.executeQuery(query);
+            
+            String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"');";
+            stmt.executeUpdate(query);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
@@ -343,6 +359,47 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4KeyTyped
 
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+       
+        
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+         try {
+            String username = jTextField1.getText();
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Statement stmt = (Statement) con.createStatement();
+            
+                
+                String query = "select count(username) from users where username = '"+username+"';";
+                ResultSet rs = stmt.executeQuery(query);
+                int count=0;
+                if(rs.next())
+                {
+                    count = rs.getInt(1);
+                }
+                if (count==1)
+                {
+                    jLabel7.setText("Username Unavailable");
+                    jLabel7.setForeground(new Color(255,0,0));
+                }
+                else
+                {
+                    jLabel7.setText("Username Available");
+                    jLabel7.setForeground(new Color(0,255,0));
+                }
+           
+            
+        } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -386,6 +443,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;

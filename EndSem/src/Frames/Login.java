@@ -224,16 +224,26 @@ public class Login extends javax.swing.JFrame {
             String query = "select * from users";
             ResultSet rs=stmt.executeQuery(query);
             Boolean validity= false;
+            for(;;)
+            {
             if (rs.next())
             {
                 String str1=rs.getString("username");
                 String str2=rs.getString("password");
+                System.out.println(str1);
+                System.out.println(str2);
                 if (str1.equals(username)&& str2.equals(pass))
                 {
                     validity=true;
                 }
 
             }
+            else
+            {
+                break;
+            }
+            }
+            
             if (validity==true)
             {
                 JOptionPane.showMessageDialog(this,"Welcome "+username);
