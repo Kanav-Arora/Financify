@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author Kanav
  */
 public class Login extends javax.swing.JFrame {
-
+static String user;
     /**
      * Creates new form Login
      */

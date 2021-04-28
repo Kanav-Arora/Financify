@@ -465,6 +465,7 @@ public class Register extends javax.swing.JFrame {
         else
         {
             jLabel4.setVisible(false);
+            jLabel10.setVisible(true);
         }
     }//GEN-LAST:event_jTextField2KeyReleased
 
