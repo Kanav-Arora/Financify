@@ -27,7 +27,7 @@ public class Register extends javax.swing.JFrame {
     public Register() {
         initComponents();
         jTextField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-        jTextField2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        jPasswordField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         jTextField3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         jTextField4.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         jButton1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
@@ -53,7 +53,6 @@ public class Register extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -65,6 +64,7 @@ public class Register extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -124,31 +124,6 @@ public class Register extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 175, 259, -1));
-
-        jTextField2.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextField2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jTextField2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jTextField2MouseExited(evt);
-            }
-        });
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField2KeyReleased(evt);
-            }
-        });
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 405, 259, -1));
 
         jButton1.setBackground(new java.awt.Color(172, 24, 209));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,6 +227,15 @@ public class Register extends javax.swing.JFrame {
         jLabel10.setText("jLabel10");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 370, -1));
 
+        jPasswordField1.setBackground(new java.awt.Color(51, 51, 51));
+        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyReleased(evt);
+            }
+        });
+        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 402, 260, 20));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 580, 590));
 
         pack();
@@ -274,33 +258,17 @@ public class Register extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField1KeyTyped
 
-    private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
-
-    }//GEN-LAST:event_jTextField2MouseClicked
-
-    private void jTextField2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseEntered
-        jLabel3.setForeground(new Color(191, 85, 218));
-    }//GEN-LAST:event_jTextField2MouseEntered
-
-    private void jTextField2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseExited
-        jLabel3.setForeground(new Color(37,38,40));
-    }//GEN-LAST:event_jTextField2MouseExited
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String username = jTextField1.getText();
-        String pass = jTextField2.getText();
+        String pass = jPasswordField1.getText();
         String email = jTextField3.getText();
         String name = jTextField4.getText();
         
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","Shivam","Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             
             String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"');";
@@ -372,7 +340,7 @@ public class Register extends javax.swing.JFrame {
             if (match.matches()== true)
             {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","Shivam","Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             
                 
@@ -447,9 +415,9 @@ public class Register extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField3KeyReleased
 
-    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
-        // TODO add your handling code here:
-        String pass = jTextField2.getText();
+    private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
+        String pass = jPasswordField1.getText();
+        System.out.println(pass);
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(pass);
@@ -461,13 +429,18 @@ public class Register extends javax.swing.JFrame {
             jLabel10.setText("unique symbol and length in 8-20 characters.");
             jLabel4.setForeground(new Color(255,0,0));
             jLabel10.setForeground(new Color(255,0,0));
+            
         }
         else
         {
             jLabel4.setVisible(false);
+<<<<<<< HEAD
             jLabel10.setVisible(true);
+=======
+            jLabel10.setVisible(false);   
+>>>>>>> 3f1253d0c0c276daaf69135d2d1110b6be76fab2
         }
-    }//GEN-LAST:event_jTextField2KeyReleased
+    }//GEN-LAST:event_jPasswordField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -518,8 +491,8 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
