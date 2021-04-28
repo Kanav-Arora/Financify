@@ -193,7 +193,7 @@ public class Login extends javax.swing.JFrame {
         {
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","Kanav","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
 
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from users";
