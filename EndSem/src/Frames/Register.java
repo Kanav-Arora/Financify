@@ -268,7 +268,7 @@ public class Register extends javax.swing.JFrame {
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","Shivam","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             
             String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"');";
@@ -340,7 +340,7 @@ public class Register extends javax.swing.JFrame {
             if (match.matches()== true)
             {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","Shivam","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             
                 
@@ -417,7 +417,6 @@ public class Register extends javax.swing.JFrame {
 
     private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
         String pass = jPasswordField1.getText();
-        System.out.println(pass);
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(pass);
@@ -434,11 +433,7 @@ public class Register extends javax.swing.JFrame {
         else
         {
             jLabel4.setVisible(false);
-<<<<<<< HEAD
-            jLabel10.setVisible(true);
-=======
             jLabel10.setVisible(false);   
->>>>>>> 3f1253d0c0c276daaf69135d2d1110b6be76fab2
         }
     }//GEN-LAST:event_jPasswordField1KeyReleased
 
