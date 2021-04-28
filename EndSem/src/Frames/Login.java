@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 static String user;
+boolean userLabel;
+boolean passLabel;
     /**
      * Creates new form Login
      */
@@ -90,6 +92,9 @@ static String user;
             }
         });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
@@ -125,6 +130,11 @@ static String user;
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jPasswordField1MouseExited(evt);
+            }
+        });
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyReleased(evt);
             }
         });
 
@@ -176,7 +186,11 @@ static String user;
     }//GEN-LAST:event_jTextField1MouseEntered
 
     private void jTextField1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseExited
-        jLabel1.setForeground(new Color(37,38,40));
+        if(userLabel==false)
+        {
+            jLabel1.setForeground(new Color(37,38,40));
+        }
+        
     }//GEN-LAST:event_jTextField1MouseExited
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
@@ -259,8 +273,25 @@ static String user;
 
     private void jPasswordField1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField1MouseExited
         // TODO add your handling code here:
-        jLabel3.setForeground(new Color(37,38,40));
+        if(passLabel==false)
+        {
+            jLabel3.setForeground(new Color(37,38,40));
+        }
+        
     }//GEN-LAST:event_jPasswordField1MouseExited
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        jLabel1.setForeground(new Color(191, 85, 218));
+        userLabel = true;
+        
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
+        // TODO add your handling code here:
+        jLabel3.setForeground(new Color(191, 85, 218));
+        passLabel = true;
+    }//GEN-LAST:event_jPasswordField1KeyReleased
 
     /**
      * @param args the command line arguments
