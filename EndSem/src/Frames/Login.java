@@ -221,7 +221,11 @@ static String user;
             
             if (validity==true)
             {
+                user = username;
                 JOptionPane.showMessageDialog(this,"Welcome "+username);
+                Main main = new Main();
+                main.setVisible(true);
+                this.setVisible(false);
             }
             else
             {
