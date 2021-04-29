@@ -65,6 +65,8 @@ public class Register extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,7 +93,7 @@ public class Register extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(37, 38, 40));
         jLabel1.setText("Username");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 140, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(11, 65, 101));
         jLabel3.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
@@ -123,7 +125,7 @@ public class Register extends javax.swing.JFrame {
                 jTextField1KeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 175, 259, -1));
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 259, -1));
 
         jButton1.setBackground(new java.awt.Color(172, 24, 209));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -157,7 +159,7 @@ public class Register extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(37, 38, 40));
         jLabel5.setText("Email");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 257, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, -1, -1));
 
         jTextField3.setBackground(new java.awt.Color(51, 51, 51));
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
@@ -180,13 +182,13 @@ public class Register extends javax.swing.JFrame {
                 jTextField3KeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 292, 259, -1));
+        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 259, -1));
 
         jLabel6.setBackground(new java.awt.Color(11, 65, 101));
         jLabel6.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(37, 38, 40));
         jLabel6.setText("Name");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 29, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, -1, -1));
 
         jTextField4.setBackground(new java.awt.Color(51, 51, 51));
         jTextField4.setForeground(new java.awt.Color(255, 255, 255));
@@ -209,19 +211,19 @@ public class Register extends javax.swing.JFrame {
                 jTextField4KeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 64, 259, -1));
+        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 259, -1));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel7.setText("Username availability");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 205, 370, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 370, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel8.setText("Name valid");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 94, 259, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 259, -1));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel9.setText("Email valid");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 322, 259, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 259, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel10.setText("jLabel10");
@@ -235,6 +237,16 @@ public class Register extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 402, 260, 20));
+
+        jComboBox1.setBackground(new java.awt.Color(51, 51, 51));
+        jComboBox1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gender", "Male", "Female", "Other" }));
+        jComboBox1.setBorder(null);
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabel11.setText("Please select gender");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 580, 590));
 
@@ -474,8 +486,10 @@ public class Register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
