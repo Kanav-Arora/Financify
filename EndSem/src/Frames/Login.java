@@ -219,8 +219,6 @@ boolean passLabel;
             {
                 String str1=rs.getString("username");
                 String str2=rs.getString("password");
-                System.out.println(str1);
-                System.out.println(str2);
                 if (str1.equals(username)&& str2.equals(pass))
                 {
                     validity=true;
