@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static javax.management.Query.match;
 
 
 /**
@@ -37,6 +38,7 @@ public class Register extends javax.swing.JFrame {
         jLabel8.setVisible(false);
         jLabel9.setVisible(false);
         jLabel4.setVisible(false);
+        jLabel11.setVisible(false);
     }
 
     /**
@@ -242,10 +244,15 @@ public class Register extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gender", "Male", "Female", "Other" }));
         jComboBox1.setBorder(null);
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        jLabel11.setText("Please select gender");
+        jLabel11.setText("jLabel11");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 580, 590));
@@ -276,14 +283,14 @@ public class Register extends javax.swing.JFrame {
         String pass = jPasswordField1.getText();
         String email = jTextField3.getText();
         String name = jTextField4.getText();
-        
+        String gender= (String) jComboBox1.getSelectedItem();
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             
-            String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"');";
+            String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"','"+gender+"');";
             stmt.executeUpdate(query);
 
         } catch (ClassNotFoundException ex) {
@@ -352,7 +359,7 @@ public class Register extends javax.swing.JFrame {
             if (match.matches()== true)
             {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             
                 
@@ -448,6 +455,22 @@ public class Register extends javax.swing.JFrame {
             jLabel10.setVisible(false);   
         }
     }//GEN-LAST:event_jPasswordField1KeyReleased
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        String gender= (String) jComboBox1.getSelectedItem();
+        if ("Gender".equals(gender))
+        {
+            jLabel11.setVisible(true);
+            jLabel11.setText("Select a Gender");
+            jLabel11.setForeground(new Color(255,0,0));
+            
+        }
+        else
+        {
+            jLabel11.setVisible(false);
+            jLabel11.setVisible(false);  
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
