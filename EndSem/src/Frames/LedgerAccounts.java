@@ -129,6 +129,11 @@ String username;
         jRadioButton2.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton2.setText("Monthly");
         jRadioButton2.setBorder(null);
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         jRadioButton3.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton3);
@@ -153,6 +158,11 @@ String username;
         jRadioButton4.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton4.setText("Quaterly");
         jRadioButton4.setBorder(null);
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
@@ -363,6 +373,42 @@ String username;
     }
         
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+        Date date = new Date();
+        String current_date = formatter.format(date);
+        jTextField2.setText(current_date);
+        String month_year = new SimpleDateFormat("MM/yyyy").format(date);
+        jTextField1.setText("01/"+month_year);
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+        Date date = new Date();
+        String current_date = formatter.format(date);
+        String current_year = new SimpleDateFormat("yyyy").format(date);
+        jTextField2.setText(current_date);
+        int month = Integer.parseInt(new SimpleDateFormat("MM").format(date));
+        if(month>=4 && month<=6)
+        {
+            jTextField1.setText("01/04/"+current_year);
+        }
+        else if(month>=7 && month<=9)
+        {
+            jTextField1.setText("01/07/"+current_year);
+        }
+        else if(month>=10 && month<=12)
+        {
+            jTextField1.setText("01/10/"+current_year);
+        }
+        else if(month>=1 && month<=3)
+        {
+            jTextField1.setText("01/01/"+current_year);
+        }
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     /**
      * @param args the command line arguments
