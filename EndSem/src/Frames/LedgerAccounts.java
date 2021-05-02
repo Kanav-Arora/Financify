@@ -4,11 +4,17 @@
  * and open the template in the editor.
  */
 package Frames;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;  
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 /**
  *
  * @author Kanav
@@ -28,6 +34,34 @@ String username;
         String year = new SimpleDateFormat("yyyy").format(date);
         jTextField1.setText("01/04/"+year);
         username = new Login().user;
+    try {
+
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Statement stmt = (Statement) con.createStatement();
+        String query = "select acc_name from accounts where username = '"+username+"'";
+        ResultSet rs=stmt.executeQuery(query);
+        for(;;)
+        {
+            if(rs.next())
+            {   
+                String item=rs.getString(1);
+                jComboBox1.addItem(item);
+            }
+            else
+            {
+                break;
+            }
+                                  
+        }
+        jComboBox1.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox1);
+          
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
     }
 
@@ -79,7 +113,7 @@ String username;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(766, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,9 +221,9 @@ String username;
         jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setBorder(null);
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
