@@ -287,7 +287,7 @@ public class Register extends javax.swing.JFrame {
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             
             String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"','"+gender+"');";
@@ -359,7 +359,7 @@ public class Register extends javax.swing.JFrame {
             if (match.matches()== true)
             {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             
                 
