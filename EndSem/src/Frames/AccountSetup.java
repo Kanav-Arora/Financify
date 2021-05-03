@@ -26,7 +26,6 @@ String username;
     public AccountSetup() {
         initComponents();
         username = new Login().user;
-        jComboBox2.setSelectedItem("");
         jTextField1.setEditable(false);
         jTextField2.setEditable(false);
         jTextField3.setEditable(false);
@@ -37,14 +36,62 @@ String username;
         jTextField8.setEditable(false);
         jTextField9.setEditable(false);
         jTextArea1.setEditable(false);
+//        jComboBox2.setSelectedItem("");
+//        jComboBox3.setSelectedItem("");
+//        jComboBox4.setSelectedItem("");
+//        jComboBox2.setEnabled(false);
+//        jComboBox3.setEnabled(false);
+//        jComboBox4.setEnabled(false);
+        
+        
         
          try {
 
         Class.forName("java.sql.DriverManager");
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         Statement stmt = (Statement) con.createStatement();
-        String query = "select acc_name from accounts where username = '"+username+"'";
+        String query = "select name,id from states order by name";
         ResultSet rs=stmt.executeQuery(query);
+        for(;;)
+        {
+            if(rs.next())
+            {
+                String state = rs.getString(1);
+                
+                jComboBox3.addItem(state);
+            }
+            else
+            {
+                break;
+            }
+        }
+        jComboBox3.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox3);
+        
+        
+        query = "select city from cities order by city";
+        rs=stmt.executeQuery(query);
+        
+        for(;;)
+        {
+            if(rs.next())
+            {
+                
+                String city = rs.getString(1);
+                jComboBox4.addItem(city);
+            }
+            else
+            {
+                break;
+            }
+        }
+        jComboBox4.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox4);
+        
+        
+        
+        query = "select acc_name from accounts where username = '"+username+"'";
+        rs=stmt.executeQuery(query);
         for(;;)
         {
             if(rs.next())
@@ -150,6 +197,11 @@ String username;
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Refresh");
         jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -199,7 +251,7 @@ String username;
 
         jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sundry Debtor", "Sundry Creditors" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sundry Debtor", "Sundry Creditor" }));
         jComboBox2.setBorder(null);
 
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -253,12 +305,10 @@ String username;
 
         jComboBox3.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox3.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sundry Debtor", "Sundry Creditors" }));
         jComboBox3.setBorder(null);
 
         jComboBox4.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox4.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sundry Debtor", "Sundry Creditors" }));
         jComboBox4.setBorder(null);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -301,8 +351,8 @@ String username;
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField2)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -422,6 +472,69 @@ String username;
         Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        String acc = (String) jComboBox1.getSelectedItem();
+        try {
+        // TODO add your handling code here:
+        
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Statement stmt = (Statement) con.createStatement();
+        String query = "select * from accounts where username = '"+username+"' and acc_name = '"+ acc +"'";
+        ResultSet rs=stmt.executeQuery(query);
+        
+        if(rs.next())
+                {
+                    String id = "A-" + rs.getInt("acc_id");
+                    String type = rs.getString("acc_type");
+                    String address = rs.getString("address");
+                    String city = rs.getString("city");
+                    String state = rs.getString("state");
+                    int pincode = rs.getInt("pincode");
+                    String gst = rs.getString("gst");
+                    String pan = rs.getString("pan");
+                    String email = rs.getString("email");
+                    long mobile = rs.getLong("mobile");
+                    int credit_days = rs.getInt("credit_days");
+                    int interest = rs.getInt("interest");
+                    
+                    String combotype="";
+                    
+                    if (type.equals("dr"))
+                    {
+                        combotype = "Sundry Debtor";
+                    }
+                    else if (type.equals("cr"))
+                    {
+                        combotype = "Sundry Creditor";
+                    }
+                    
+                    
+                    jTextField1.setText(id);
+                    jTextField2.setText(acc);
+                    jComboBox2.setSelectedItem(combotype);
+                    jTextArea1.setText(address);
+                    jComboBox3.setSelectedItem(state);
+                    jComboBox4.setSelectedItem(city);
+                    jTextField3.setText(""+pincode);
+                    jTextField4.setText(""+ mobile);
+                    jTextField5.setText(email);
+                    jTextField6.setText(gst);
+                    jTextField7.setText(pan);
+                    jTextField8.setText(""+ credit_days);
+                    jTextField9.setText(""+ interest);
+                    
+                }
+        
+        
+        
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
