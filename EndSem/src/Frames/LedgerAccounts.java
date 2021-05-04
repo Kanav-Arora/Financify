@@ -49,9 +49,12 @@ int row;
 
         Class.forName("java.sql.DriverManager");
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select acc_name from accounts where username = '"+username+"'";
+        System.out.println("Fetching acc_name from database: jvp; table: accounts");
         ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
         for(;;)
         {
             if(rs.next())
@@ -561,9 +564,12 @@ int row;
         
         Class.forName("java.sql.DriverManager");
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select count(*) from transactions WHERE username = '"+username+"' and particular = '"+acc +"'";
+        System.out.println("Counting records from database: jvp, table: transactions");
         ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record count fetched successfully.");
         int total_records =0;
         int shown = 0;
         if(rs.next())
@@ -582,7 +588,9 @@ int row;
         
         
         query = "select * from transactions WHERE username = '"+username+"' and particular = '"+acc +"' and date>= '"+ date_from+"' and date<= '"+ date_to+"'";
+        System.out.println("Fetching records from database: jvp, table: transactions");
         rs=stmt.executeQuery(query);
+        System.out.println("Records fetched successfully.");
         float credit_total = 0;
         float debit_total = 0;
         
