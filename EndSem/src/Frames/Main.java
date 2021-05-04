@@ -43,7 +43,7 @@ public class Main extends javax.swing.JFrame {
             
             
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
 
             Statement stmt = (Statement) con.createStatement();
             String query = "select name,gender from users where username = '"+username+"'";
@@ -56,14 +56,14 @@ public class Main extends javax.swing.JFrame {
                 if(gender.equals("Male"))              
                {
                    String myimgpath; 
-                   myimgpath= "C:/Users/Kanav/Google Drive (kanavarora2002@gmail.com)/Git Files/JavaCSEProject/EndSem/src/Icons/male 64 pixel.png";
+                   myimgpath= "D:/COLLEGE/CODING/Github Repos/Java-CSE-Project/EndSem/src/Icons/male 64 pixel.png";
                    Icon myimgicon = new ImageIcon(myimgpath);
                    jLabel12.setIcon(myimgicon);
                }
                else if (gender.equals("Female"))
                {                    
                    String myimgpath; 
-                   myimgpath= "C:/Users/Kanav/Google Drive (kanavarora2002@gmail.com)/Git Files/JavaCSEProject/EndSem/src/Icons/female 64 pixel.png";
+                   myimgpath= "D:/COLLEGE/CODING/Github Repos/Java-CSE-Project/EndSem/src/Icons/female 64 pixel.png";
                    Icon myimgicon = new ImageIcon(myimgpath);
                    jLabel12.setIcon(myimgicon);
                }
