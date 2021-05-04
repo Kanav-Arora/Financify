@@ -263,6 +263,11 @@ int row;
         jComboBox1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox1.setBorder(null);
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -638,6 +643,10 @@ int row;
         Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

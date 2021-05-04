@@ -116,6 +116,11 @@ public class Register extends javax.swing.JFrame {
                 jTextField1MouseExited(evt);
             }
         });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField1KeyPressed(evt);
@@ -205,6 +210,11 @@ public class Register extends javax.swing.JFrame {
                 jTextField4MouseExited(evt);
             }
         });
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
         jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField4KeyReleased(evt);
@@ -288,6 +298,7 @@ public class Register extends javax.swing.JFrame {
         {
             Class.forName("java.sql.DriverManager");
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
             
             String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"','"+gender+"');";
@@ -471,6 +482,14 @@ public class Register extends javax.swing.JFrame {
             jLabel11.setVisible(false);  
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

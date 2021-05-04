@@ -52,13 +52,10 @@ String username;
          try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
-        System.out.println("Connection is created successfully");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         Statement stmt = (Statement) con.createStatement();
         String query = "select name,id from states order by name";
-        System.out.println("Fetching name,id from database: jvp, table: states");
         ResultSet rs=stmt.executeQuery(query);
-        System.out.println("Records fetched successfully");
         for(;;)
         {
             if(rs.next())
@@ -77,9 +74,7 @@ String username;
         
         
         query = "select city from cities order by city";
-        System.out.println("Fetching city from database: jvp, table: cities");
         rs=stmt.executeQuery(query);
-        System.out.println("Records fetched successfully");
         
         for(;;)
         {
@@ -222,6 +217,11 @@ String username;
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Add");
         jLabel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -256,6 +256,11 @@ String username;
         jLabel9.setText("ID  :");
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Name  :");
@@ -269,6 +274,11 @@ String username;
         jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sundry Debtor", "Sundry Creditor" }));
         jComboBox2.setBorder(null);
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Address  :");
@@ -524,13 +534,10 @@ String username;
         // TODO add your handling code here:
         
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
-        System.out.println("Connection is created successfully");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         Statement stmt = (Statement) con.createStatement();
         String query = "select * from accounts where username = '"+username+"' and acc_name = '"+ acc +"'";
-        System.out.println("Fetching records from database: jvp, table: accounts");
         ResultSet rs=stmt.executeQuery(query);
-        System.out.println("Record fetched successfully.");
         
         if(rs.next())
                 {
@@ -605,6 +612,7 @@ String username;
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
+        // TODO add your handling code here:
         jTextField1.setEditable(false);
         jTextField2.setEditable(false);
         jTextField3.setEditable(false);
@@ -619,55 +627,20 @@ String username;
         jComboBox2.setEnabled(false);
         jComboBox3.setEnabled(false);
         jComboBox4.setEnabled(false);
-        
-        username = new Login().user;
-        int id = Integer.parseInt(jTextField1.getText().substring(2));
-        String acc = jTextField2.getText();
-        String type = (String) jComboBox2.getSelectedItem();
-        String address = jTextArea1.getText();
-        String state = (String) jComboBox3.getSelectedItem();
-        String city = (String) jComboBox4.getSelectedItem();
-        int pincode = Integer.parseInt(jTextField3.getText());
-        long mobile = Long.parseLong(jTextField4.getText());
-        String email = jTextField5.getText();
-        String gst = jTextField6.getText();
-        String pan = jTextField7.getText();
-        int credit_days = Integer.parseInt(jTextField8.getText());
-        int interest = Integer.parseInt(jTextField9.getText());
-        
-        String combotype="";
-                    
-        if (type.equals("Sundry Debtor"))
-        {
-            combotype = "dr";
-        }
-        else if (type.equals("Sundry Creditor"))
-        {
-            combotype = "cr";
-        }
-        
-        
-        
-    try {
-        Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
-        System.out.println("Connection is created successfully");
-        Statement stmt = (Statement) con.createStatement();
-        String query = "delete from accounts where username = '"+username+"' and acc_id = '"+ id +"'";
-        System.out.println("Finding record...");
-        stmt.executeUpdate(query);
-        
-        
-        query = "INSERT INTO accounts VALUES('"+username+"','"+id+"','"+acc+"','"+combotype+"','"+address+"','"+state+"','"+city+"','"+pincode+"','"+gst+"','"+pan+"','"+email+"','"+mobile+"','"+credit_days+"','"+interest+"')";
-        stmt.executeUpdate(query);
-        System.out.println("Record updated successfully");
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
     }//GEN-LAST:event_jLabel22MouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        this.setVisible(false);                        
+        new AddAccount().setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
