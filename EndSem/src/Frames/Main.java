@@ -63,7 +63,7 @@ public class Main extends javax.swing.JFrame {
                else if (gender.equals("Female"))
                {                    
                    String myimgpath; 
-                   myimgpath= "./src/Icons/male 64 pixel.png";
+                   myimgpath= "./src/Icons/female 64 pixel.png";
                    Icon myimgicon = new ImageIcon(myimgpath);
                    jLabel12.setIcon(myimgicon);
                }
