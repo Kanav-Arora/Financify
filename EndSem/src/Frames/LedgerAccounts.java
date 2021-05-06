@@ -575,7 +575,7 @@ int row;
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
-        String query = "select count(*) from transactions WHERE username = '"+username+"' and particular = '"+acc +"'";
+        String query = "select count(*) from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
         System.out.println("Counting records from database: jvp, table: transactions");
         ResultSet rs=stmt.executeQuery(query);
         System.out.println("Record count fetched successfully.");
@@ -596,7 +596,7 @@ int row;
         String date_to = rev(jTextField2.getText());
         
         
-        query = "select * from transactions WHERE username = '"+username+"' and particular = '"+acc +"' and date>= '"+ date_from+"' and date<= '"+ date_to+"'";
+        query = "select * from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"' and date>= '"+ date_from+"' and date<= '"+ date_to+"'";
         System.out.println("Fetching records from database: jvp, table: transactions");
         rs=stmt.executeQuery(query);
         System.out.println("Records fetched successfully.");

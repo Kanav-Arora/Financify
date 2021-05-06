@@ -447,7 +447,7 @@ String username;
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new AccountSetup().setVisible(true);
+        new LedgerAccounts().setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -485,7 +485,8 @@ String username;
             stmt.executeUpdate(query);
             System.out.println("Record Inserted Successfully");
             JOptionPane.showMessageDialog(this,"Account Added Successfully");
-        
+            this.setVisible(false);
+            new AccountSetup().setVisible(true);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);

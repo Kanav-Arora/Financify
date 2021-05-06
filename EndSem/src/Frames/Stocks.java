@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -451,7 +452,39 @@ String username;
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
+//        String item_name = (String) jComboBox1.getSelectedItem();
+//        int result=0;
+//        if (item_name.equals(""))
+//        {
+//            JOptionPane.showMessageDialog(this,"Select an item to delete.");
+//        }
+//        
+//        else
+//        {
+//            result = JOptionPane.showConfirmDialog(this,"Sure? You want to delete "+item_name,"Delete Item",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+//            if(result==JOptionPane.YES_OPTION)
+//            {
+//                
+//                try {
+//        // TODO add your handling code here:
+//        
+//                Class.forName("java.sql.DriverManager");
+//                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+//                Statement stmt = (Statement) con.createStatement();
+//                String query = "delete from stocks where item_name = '"+ item_name +"'";
+//                stmt.executeUpdate(query);
+//                
+//                JOptionPane.showMessageDialog(this,"Account deleted");
+//            }   catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            
+//                
+//        }
+//        }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     /**

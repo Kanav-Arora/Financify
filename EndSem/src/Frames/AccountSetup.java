@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -247,6 +248,11 @@ String username;
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Delete");
         jLabel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -640,6 +646,44 @@ String username;
         this.setVisible(false);                        
         new AddAccount().setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+//        String acc = (String) jComboBox1.getSelectedItem();
+//        int result=0;
+//        if (acc.equals(""))
+//        {
+//            JOptionPane.showMessageDialog(this,"Select an account to delete.");
+//        }
+//        
+//        else
+//        {
+//            result = JOptionPane.showConfirmDialog(this,"Sure? You want to delete "+acc,"Delete Account",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+//            if(result==JOptionPane.YES_OPTION)
+//            {
+//                
+//                try {
+//        // TODO add your handling code here:
+//        
+//                Class.forName("java.sql.DriverManager");
+//                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+//                Statement stmt = (Statement) con.createStatement();
+//                String query = "delete from transactions where acc_name = '"+acc +"'";
+//                stmt.executeUpdate(query);
+//                query = "delete from accounts where acc_name = '"+ acc+"'";
+//                stmt.executeUpdate(query);
+//                
+//                JOptionPane.showMessageDialog(this,"Account deleted");
+//            }   catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            
+//                
+//        }
+//        }
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments
