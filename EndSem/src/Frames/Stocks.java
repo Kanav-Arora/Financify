@@ -38,7 +38,7 @@ String username;
         try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select item_name from stocks where username = '"+username+"'";
@@ -377,7 +377,7 @@ String username;
     try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select * from stocks where username = '"+username+"'";

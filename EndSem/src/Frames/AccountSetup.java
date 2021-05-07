@@ -21,6 +21,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class AccountSetup extends javax.swing.JFrame {
 String username;
+static String acc_delete;
     /**
      * Creates new form AccountSetup
      */
@@ -53,7 +54,7 @@ String username;
          try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         Statement stmt = (Statement) con.createStatement();
         String query = "select name,id from states order by name";
         ResultSet rs=stmt.executeQuery(query);
@@ -539,7 +540,7 @@ String username;
         // TODO add your handling code here:
         
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         Statement stmt = (Statement) con.createStatement();
         String query = "select * from accounts where username = '"+username+"' and acc_name = '"+ acc +"'";
         ResultSet rs=stmt.executeQuery(query);
@@ -649,40 +650,16 @@ String username;
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-//        String acc = (String) jComboBox1.getSelectedItem();
-//        int result=0;
-//        if (acc.equals(""))
-//        {
-//            JOptionPane.showMessageDialog(this,"Select an account to delete.");
-//        }
-//        
-//        else
-//        {
-//            result = JOptionPane.showConfirmDialog(this,"Sure? You want to delete "+acc,"Delete Account",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-//            if(result==JOptionPane.YES_OPTION)
-//            {
-//                
-//                try {
-//        // TODO add your handling code here:
-//        
-//                Class.forName("java.sql.DriverManager");
-//                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
-//                Statement stmt = (Statement) con.createStatement();
-//                String query = "delete from transactions where acc_name = '"+acc +"'";
-//                stmt.executeUpdate(query);
-//                query = "delete from accounts where acc_name = '"+ acc+"'";
-//                stmt.executeUpdate(query);
-//                
-//                JOptionPane.showMessageDialog(this,"Account deleted");
-//            }   catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            
-//                
-//        }
-//        }
+         acc_delete = (String) jComboBox1.getSelectedItem();
+         if (acc_delete.equals(""))
+        {
+            JOptionPane.showMessageDialog(this,"Select an account to delete.");
+        }
+         
+         else
+         {
+             new Acc_Delete_Confirm().setVisible(true);
+         }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     /**

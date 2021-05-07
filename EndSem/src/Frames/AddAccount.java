@@ -32,7 +32,7 @@ String username;
             try {
                 
                 Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
                 System.out.println("Connection is Created Successfully");
                 Statement stmt = (Statement) con.createStatement();
                 String query = "select name,id from states order by name";

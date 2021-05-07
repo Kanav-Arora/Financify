@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import java.lang.Math;
 import java.text.ParseException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,7 +49,7 @@ int row;
     try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select acc_name from accounts where username = '"+username+"'";
@@ -82,14 +83,30 @@ int row;
     public static String rev(String date1)
     {
         String findate="";
+        String final1 = "";
     try {
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
-        findate = new SimpleDateFormat("yyyy-MM-dd").format(date); 
+        findate = new SimpleDateFormat("yyyy/MM/dd").format(date); 
+        
+        for(int i=0; i<findate.length(); i++)
+        {
+            String ele = findate.substring(i,i+1);
+            if(ele.equals("/"))
+            {
+                final1 = final1+ "-";
+            }
+            else
+            {
+                final1 = final1 +ele;
+            }
+        }
+        
+        
        
     } catch (ParseException ex) {
         Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
     }
-     return findate;
+     return final1;
     }
 
     /**
@@ -572,7 +589,7 @@ int row;
         // TODO add your handling code here:
         
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select count(*) from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
@@ -595,6 +612,13 @@ int row;
         String date_from = rev(jTextField1.getText());
         String date_to = rev(jTextField2.getText());
         
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        
+        if(sdf.parse(jTextField1.getText()).after(sdf.parse(jTextField2.getText())))
+        {
+            JOptionPane.showMessageDialog(this,"Date format is invalid.");
+        }
         
         query = "select * from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"' and date>= '"+ date_from+"' and date<= '"+ date_to+"'";
         System.out.println("Fetching records from database: jvp, table: transactions");
@@ -644,6 +668,8 @@ int row;
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
+        Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ParseException ex) {
         Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_jLabel8MouseClicked
