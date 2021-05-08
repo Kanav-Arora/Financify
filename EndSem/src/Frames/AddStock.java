@@ -313,7 +313,7 @@ String username;
         String item_name = jTextField2.getText();
         String percentage= (String) jComboBox2.getSelectedItem();
         int gst_slab = Integer.parseInt(percentage.substring(0, percentage.length()-2));
-        int quantity = Integer.parseInt(jTextField4.getText());
+        long quantity = Long.parseLong(jTextField4.getText());
         float weight = Float.parseFloat(jTextField5.getText());
         float price = Float.parseFloat(jTextField6.getText());
         

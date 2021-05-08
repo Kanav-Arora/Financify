@@ -21,6 +21,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class Stocks extends javax.swing.JFrame {
 String username;
+int edit_bool;
     /**
      * Creates new form Stocks
      */
@@ -101,6 +102,7 @@ String username;
         jLabel6 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -257,7 +259,17 @@ String username;
 
         jLabel23.setBackground(new java.awt.Color(255, 255, 255));
         jLabel23.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel23.setText("jLabel23");
+        jLabel23.setText("Click Save to Update the Record");
+
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Save");
+        jLabel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -321,6 +333,10 @@ String username;
                         .addGap(54, 54, 54)
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(127, 127, 127))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,7 +367,9 @@ String username;
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4))
-                .addGap(81, 81, 81)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -389,14 +407,14 @@ String username;
         {
             int item_id = rs.getInt("item_id");
             String item_name = rs.getString("item_name");
-            int gst = rs.getInt("gst");
-            float quantity = rs.getFloat("quantity");
+            int gst_slab = rs.getInt("gst_slab");
+            long quantity = rs.getLong("quantity");
             float weight = rs.getFloat("weight");
             float price = rs.getFloat("price");
             
-            jTextField1.setText(""+item_id);
+            jTextField1.setText("S-"+item_id);
             jTextField2.setText(item_name);
-            jComboBox1.setSelectedItem(""+gst);
+            jComboBox2.setSelectedItem(""+gst_slab+" %");
             jTextField4.setText(""+quantity);
             jTextField5.setText(""+weight);
             jTextField6.setText(""+price);
@@ -448,8 +466,22 @@ String username;
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        // TODO add your handling code here:
-        
+        String item_name = (String) jComboBox1.getSelectedItem();
+
+        if (item_name.equals(""))
+        {
+            JOptionPane.showMessageDialog(this,"Select an item to Edit.");
+        }
+        edit_bool = JOptionPane.showConfirmDialog(this,"Sure? You want to edit "+item_name,"Edit Item",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                if(edit_bool==JOptionPane.YES_OPTION)
+                {
+                jTextField2.setEditable(true);
+                jTextField4.setEditable(true);
+                jTextField5.setEditable(true);
+                jTextField6.setEditable(true);
+                jComboBox2.setEnabled(true);
+                jLabel23.setVisible(true);
+                }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -471,7 +503,7 @@ String username;
 //        // TODO add your handling code here:
 //        
 //                Class.forName("java.sql.DriverManager");
-//                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+//                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
 //                Statement stmt = (Statement) con.createStatement();
 //                String query = "delete from stocks where item_name = '"+ item_name +"'";
 //                stmt.executeUpdate(query);
@@ -487,6 +519,54 @@ String username;
 //        }
 //        }
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+            String item_name = (String) jComboBox1.getSelectedItem();
+        
+        
+        
+            if(edit_bool==JOptionPane.YES_OPTION)
+            {
+               
+                try {
+             
+                    
+
+                Class.forName("java.sql.DriverManager");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+                Statement stmt = (Statement) con.createStatement();
+                String query = "delete from stocks where item_name = '"+ item_name +"'";
+                stmt.executeUpdate(query);
+                
+
+                int item_id = Integer.parseInt(jTextField1.getText().substring(2));
+                String percentage= (String) jComboBox2.getSelectedItem();
+                int gst_slab = Integer.parseInt(percentage.substring(0, percentage.length()-2));
+                long quantity = Long.parseLong(jTextField4.getText());
+                float weight = Float.parseFloat(jTextField5.getText());
+                float price = Float.parseFloat(jTextField6.getText());
+                item_name = jTextField2.getText();
+                
+                
+                String query2="INSERT INTO stocks VALUES('"+item_id+"','"+item_name+"','"+gst_slab+"','"+quantity+"','"+weight+"','"+price+"','"+username+"');";
+                stmt.executeUpdate(query2);
+                System.out.println("Stock Updated Successfully");
+                JOptionPane.showMessageDialog(this,"Stock Info Updated Successfully");
+                this.setVisible(false);
+                new Stocks().setVisible(true);
+                
+                
+               
+            }   catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+              
+        }
+        
+        
+     
+    }//GEN-LAST:event_jLabel15MouseClicked
 
     /**
      * @param args the command line arguments
@@ -532,6 +612,7 @@ String username;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
