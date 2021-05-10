@@ -34,12 +34,13 @@ int edit_bool;
         jTextField6.setEditable(false);
         jComboBox2.setEnabled(false);
         jLabel23.setVisible(false);
+        jLabel15.setVisible(false);
         username = new Login().user;
         
         try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select item_name from stocks where username = '"+username+"'";
@@ -393,12 +394,12 @@ int edit_bool;
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
     try {
-
+        String item_name2=(String) jComboBox1.getSelectedItem();
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
-        String query = "select * from stocks where username = '"+username+"'";
+        String query = "select * from stocks where username = '"+username+"'AND item_name='"+item_name2+"'";
         System.out.println("Fetching items from database: jvp; table: stocks");
         ResultSet rs=stmt.executeQuery(query);
         System.out.println("Record fetched successfully.");
@@ -467,7 +468,7 @@ int edit_bool;
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         String item_name = (String) jComboBox1.getSelectedItem();
-
+        
         if (item_name.equals(""))
         {
             JOptionPane.showMessageDialog(this,"Select an item to Edit.");
@@ -481,49 +482,51 @@ int edit_bool;
                 jTextField6.setEditable(true);
                 jComboBox2.setEnabled(true);
                 jLabel23.setVisible(true);
-                }
+                jLabel15.setVisible(true);
+                }  
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-//        // TODO add your handling code here:
-//        String item_name = (String) jComboBox1.getSelectedItem();
-//        int result=0;
-//        if (item_name.equals(""))
-//        {
-//            JOptionPane.showMessageDialog(this,"Select an item to delete.");
-//        }
-//        
-//        else
-//        {
-//            result = JOptionPane.showConfirmDialog(this,"Sure? You want to delete "+item_name,"Delete Item",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-//            if(result==JOptionPane.YES_OPTION)
-//            {
-//                
-//                try {
-//        // TODO add your handling code here:
-//        
-//                Class.forName("java.sql.DriverManager");
-//                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
-//                Statement stmt = (Statement) con.createStatement();
-//                String query = "delete from stocks where item_name = '"+ item_name +"'";
-//                stmt.executeUpdate(query);
-//                
-//                JOptionPane.showMessageDialog(this,"Account deleted");
-//            }   catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            
-//                
-//        }
-//        }
+        // TODO add your handling code here:
+        String item_name = (String) jComboBox1.getSelectedItem();
+        int result=0;
+        if (item_name.equals(""))
+        {
+            JOptionPane.showMessageDialog(this,"Select an item to delete.");
+        }
+        
+        else
+        {
+            result = JOptionPane.showConfirmDialog(this,"Sure? You want to delete "+item_name,"Delete Item",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if(result==JOptionPane.YES_OPTION)
+            {
+                
+                try {
+        // TODO add your handling code here:
+        
+                Class.forName("java.sql.DriverManager");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+                Statement stmt = (Statement) con.createStatement();
+                String query = "delete from stocks where item_name = '"+ item_name +"' AND username='"+username+"'";
+                stmt.executeUpdate(query);
+                
+                JOptionPane.showMessageDialog(this,"Account deleted");
+                this.setVisible(false);
+                new Stocks().setVisible(true);
+            }
+                catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+                
+        }
+        }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
             String item_name = (String) jComboBox1.getSelectedItem();
-        
-        
         
             if(edit_bool==JOptionPane.YES_OPTION)
             {
