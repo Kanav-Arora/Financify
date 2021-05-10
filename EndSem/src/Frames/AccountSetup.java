@@ -39,6 +39,7 @@ static String acc_delete;
         jTextField9.setEditable(false);
         jTextArea1.setEditable(false);
         jLabel23.setVisible(false);
+        jLabel22.setVisible(false);
         jComboBox2.setEnabled(false);
         jComboBox3.setEnabled(false);
         jComboBox4.setEnabled(false);
@@ -54,7 +55,7 @@ static String acc_delete;
          try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         Statement stmt = (Statement) con.createStatement();
         String query = "select name,id from states order by name";
         ResultSet rs=stmt.executeQuery(query);
@@ -540,7 +541,7 @@ static String acc_delete;
         // TODO add your handling code here:
         
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         Statement stmt = (Statement) con.createStatement();
         String query = "select * from accounts where username = '"+username+"' and acc_name = '"+ acc +"'";
         ResultSet rs=stmt.executeQuery(query);
@@ -615,24 +616,25 @@ static String acc_delete;
         jComboBox4.setEnabled(true);
         jLabel23.setText("Edit the fields and save to update record.");
         jLabel23.setVisible(true);
+        jLabel22.setVisible(true);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
         // TODO add your handling code here:
-        jTextField1.setEditable(false);
-        jTextField2.setEditable(false);
-        jTextField3.setEditable(false);
-        jTextField4.setEditable(false);
-        jTextField5.setEditable(false);
-        jTextField6.setEditable(false);
-        jTextField7.setEditable(false);
-        jTextField8.setEditable(false);
-        jTextField9.setEditable(false);
-        jTextArea1.setEditable(false);
-        jLabel23.setVisible(false);
-        jComboBox2.setEnabled(false);
-        jComboBox3.setEnabled(false);
-        jComboBox4.setEnabled(false);
+//        jTextField1.setEditable(false);
+//        jTextField2.setEditable(false);
+//        jTextField3.setEditable(false);
+//        jTextField4.setEditable(false);
+//        jTextField5.setEditable(false);
+//        jTextField6.setEditable(false);
+//        jTextField7.setEditable(false);
+//        jTextField8.setEditable(false);
+//        jTextField9.setEditable(false);
+//        jTextArea1.setEditable(false);
+//        jLabel23.setVisible(false);
+//        jComboBox2.setEnabled(false);
+//        jComboBox3.setEnabled(false);
+//        jComboBox4.setEnabled(false);
     }//GEN-LAST:event_jLabel22MouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
