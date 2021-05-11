@@ -20,8 +20,11 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  * @author Kanav
  */
 public class AccountSetup extends javax.swing.JFrame {
-String username;
-static String acc_delete;
+
+    String username;
+    static String acc_delete;
+    int edit_bool;
+
     /**
      * Creates new form AccountSetup
      */
@@ -49,77 +52,60 @@ static String acc_delete;
 //        jComboBox2.setEnabled(false);
 //        jComboBox3.setEnabled(false);
 //        jComboBox4.setEnabled(false);
-        
-        
-        
-         try {
 
-        Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
-        Statement stmt = (Statement) con.createStatement();
-        String query = "select name,id from states order by name";
-        ResultSet rs=stmt.executeQuery(query);
-        for(;;)
-        {
-            if(rs.next())
-            {
-                String state = rs.getString(1);
-                
-                jComboBox3.addItem(state);
+        try {
+
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select name,id from states order by name";
+            ResultSet rs = stmt.executeQuery(query);
+            for (;;) {
+                if (rs.next()) {
+                    String state = rs.getString(1);
+
+                    jComboBox3.addItem(state);
+                } else {
+                    break;
+                }
             }
-            else
-            {
-                break;
+            jComboBox3.setSelectedItem("");
+            AutoCompleteDecorator.decorate(jComboBox3);
+
+            query = "select city from cities order by city";
+            rs = stmt.executeQuery(query);
+
+            for (;;) {
+                if (rs.next()) {
+
+                    String city = rs.getString(1);
+                    jComboBox4.addItem(city);
+                } else {
+                    break;
+                }
             }
+            jComboBox4.setSelectedItem("");
+            AutoCompleteDecorator.decorate(jComboBox4);
+
+            query = "select acc_name from accounts where username = '" + username + "'";
+            rs = stmt.executeQuery(query);
+            for (;;) {
+                if (rs.next()) {
+                    String item = rs.getString(1);
+                    jComboBox1.addItem(item);
+                } else {
+                    break;
+                }
+
+            }
+            jComboBox1.setSelectedItem("");
+            AutoCompleteDecorator.decorate(jComboBox1);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jComboBox3.setSelectedItem("");
-        AutoCompleteDecorator.decorate(jComboBox3);
-        
-        
-        query = "select city from cities order by city";
-        rs=stmt.executeQuery(query);
-        
-        for(;;)
-        {
-            if(rs.next())
-            {
-                
-                String city = rs.getString(1);
-                jComboBox4.addItem(city);
-            }
-            else
-            {
-                break;
-            }
-        }
-        jComboBox4.setSelectedItem("");
-        AutoCompleteDecorator.decorate(jComboBox4);
-        
-        
-        
-        query = "select acc_name from accounts where username = '"+username+"'";
-        rs=stmt.executeQuery(query);
-        for(;;)
-        {
-            if(rs.next())
-            {   
-                String item=rs.getString(1);
-                jComboBox1.addItem(item);
-            }
-            else
-            {
-                break;
-            }
-                                  
-        }
-        jComboBox1.setSelectedItem("");
-        AutoCompleteDecorator.decorate(jComboBox1);
-          
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
-    }
     }
 
     /**
@@ -442,8 +428,8 @@ static String acc_delete;
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
+                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,115 +512,140 @@ static String acc_delete;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-    try {
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new Main().setVisible(true);
-    } catch (SQLException ex) {
-        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            // TODO add your handling code here:
+            this.setVisible(false);
+            new Main().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         String acc = (String) jComboBox1.getSelectedItem();
         try {
-        // TODO add your handling code here:
-        
-        Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
-        Statement stmt = (Statement) con.createStatement();
-        String query = "select * from accounts where username = '"+username+"' and acc_name = '"+ acc +"'";
-        ResultSet rs=stmt.executeQuery(query);
-        
-        if(rs.next())
-                {
-                    String id = "A-" + rs.getInt("acc_id");
-                    String type = rs.getString("acc_type");
-                    String address = rs.getString("address");
-                    String city = rs.getString("city");
-                    String state = rs.getString("state");
-                    int pincode = rs.getInt("pincode");
-                    String gst = rs.getString("gst");
-                    String pan = rs.getString("pan");
-                    String email = rs.getString("email");
-                    long mobile = rs.getLong("mobile");
-                    int credit_days = rs.getInt("credit_days");
-                    int interest = rs.getInt("interest");
-                    
-                    String combotype="";
-                    
-                    if (type.equals("dr"))
-                    {
-                        combotype = "Sundry Debtor";
-                    }
-                    else if (type.equals("cr"))
-                    {
-                        combotype = "Sundry Creditor";
-                    }
-                    
-                    
-                    jTextField1.setText(id);
-                    jTextField2.setText(acc);
-                    jComboBox2.setSelectedItem(combotype);
-                    jTextArea1.setText(address);
-                    jComboBox3.setSelectedItem(state);
-                    jComboBox4.setSelectedItem(city);
-                    jTextField3.setText(""+pincode);
-                    jTextField4.setText(""+ mobile);
-                    jTextField5.setText(email);
-                    jTextField6.setText(gst);
-                    jTextField7.setText(pan);
-                    jTextField8.setText(""+ credit_days);
-                    jTextField9.setText(""+ interest);
-                    
-                    
-                    
+            // TODO add your handling code here:
+
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                String id = "A-" + rs.getInt("acc_id");
+                String type = rs.getString("acc_type");
+                String address = rs.getString("address");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                int pincode = rs.getInt("pincode");
+                String gst = rs.getString("gst");
+                String pan = rs.getString("pan");
+                String email = rs.getString("email");
+                long mobile = rs.getLong("mobile");
+                int credit_days = rs.getInt("credit_days");
+                int interest = rs.getInt("interest");
+
+                String combotype = "";
+
+                if (type.equals("dr")) {
+                    combotype = "Sundry Debtor";
+                } else if (type.equals("cr")) {
+                    combotype = "Sundry Creditor";
                 }
-        
-        
-        
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-    }
+
+                jTextField1.setText(id);
+                jTextField2.setText(acc);
+                jComboBox2.setSelectedItem(combotype);
+                jTextArea1.setText(address);
+                jComboBox3.setSelectedItem(state);
+                jComboBox4.setSelectedItem(city);
+                jTextField3.setText("" + pincode);
+                jTextField4.setText("" + mobile);
+                jTextField5.setText(email);
+                jTextField6.setText(gst);
+                jTextField7.setText(pan);
+                jTextField8.setText("" + credit_days);
+                jTextField9.setText("" + interest);
+
+            }
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEditable(true);
-        jTextField9.setEditable(true);
-        jTextArea1.setEditable(true);
-        jComboBox2.setEnabled(true);
-        jComboBox3.setEnabled(true);
-        jComboBox4.setEnabled(true);
-        jLabel23.setText("Edit the fields and save to update record.");
-        jLabel23.setVisible(true);
-        jLabel22.setVisible(true);
+        String item_name = (String) jComboBox1.getSelectedItem();
+
+        if (item_name.equals("")) {
+            JOptionPane.showMessageDialog(this, "Select an item to Edit.");
+        }
+        edit_bool = JOptionPane.showConfirmDialog(this, "Sure? You want to edit " + item_name, "Edit Item", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (edit_bool == JOptionPane.YES_OPTION) {
+            jTextField2.setEditable(true);
+            jTextField3.setEditable(true);
+            jTextField4.setEditable(true);
+            jTextField5.setEditable(true);
+            jTextField6.setEditable(true);
+            jTextField7.setEditable(true);
+            jTextField8.setEditable(true);
+            jTextField9.setEditable(true);
+            jTextArea1.setEditable(true);
+            jComboBox2.setEnabled(true);
+            jComboBox3.setEnabled(true);
+            jComboBox4.setEnabled(true);
+            jLabel23.setText("Edit the fields and save to update record.");
+            jLabel23.setVisible(true);
+            jLabel22.setVisible(true);
+        }
+
+
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
-        // TODO add your handling code here:
-//        jTextField1.setEditable(false);
-//        jTextField2.setEditable(false);
-//        jTextField3.setEditable(false);
-//        jTextField4.setEditable(false);
-//        jTextField5.setEditable(false);
-//        jTextField6.setEditable(false);
-//        jTextField7.setEditable(false);
-//        jTextField8.setEditable(false);
-//        jTextField9.setEditable(false);
-//        jTextArea1.setEditable(false);
-//        jLabel23.setVisible(false);
-//        jComboBox2.setEnabled(false);
-//        jComboBox3.setEnabled(false);
-//        jComboBox4.setEnabled(false);
+        String acc_name = (String) jComboBox1.getSelectedItem();
+
+        if (edit_bool == JOptionPane.YES_OPTION) {
+
+            try {
+
+                Class.forName("java.sql.DriverManager");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+                Statement stmt = (Statement) con.createStatement();
+                String query = "delete from accounts where acc_name = '" + acc_name + "'";
+                stmt.executeUpdate(query);
+
+                username = new Login().user;
+                int id = Integer.parseInt(jTextField1.getText().substring(2));
+                String acc = jTextField2.getText();
+                String type = (String) jComboBox2.getSelectedItem();
+                String address = jTextArea1.getText();
+                String state = (String) jComboBox3.getSelectedItem();
+                String city = (String) jComboBox4.getSelectedItem();
+                int pincode = Integer.parseInt(jTextField3.getText());
+                long mobile = Long.parseLong(jTextField4.getText());
+                String email = jTextField5.getText();
+                String gst = jTextField6.getText();
+                String pan = jTextField7.getText();
+                int credit_days = Integer.parseInt(jTextField8.getText());
+                int interest = Integer.parseInt(jTextField9.getText());
+                
+                query="INSERT INTO accounts VALUES('"+username+"','"+id+"','"+acc+"','"+type+"','"+address+"','"+city+"','"+state+"','"+pincode+"','"+gst+"','"+pan+"','"+email+"','"+mobile+"','"+credit_days+"','"+interest+"');";
+                stmt.executeUpdate(query);
+                System.out.println("Stock Updated Successfully");
+                JOptionPane.showMessageDialog(this, "Stock Info Updated Successfully");
+                this.setVisible(false);
+                new Stocks().setVisible(true);
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }//GEN-LAST:event_jLabel22MouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -646,22 +657,18 @@ static String acc_delete;
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        this.setVisible(false);                        
+        this.setVisible(false);
         new AddAccount().setVisible(true);// TODO add your handling code here:
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-         acc_delete = (String) jComboBox1.getSelectedItem();
-         if (acc_delete.equals(""))
-        {
-            JOptionPane.showMessageDialog(this,"Select an account to delete.");
+        acc_delete = (String) jComboBox1.getSelectedItem();
+        if (acc_delete.equals("")) {
+            JOptionPane.showMessageDialog(this, "Select an account to delete.");
+        } else {
+            new Acc_Delete_Confirm().setVisible(true);
         }
-         
-         else
-         {
-             new Acc_Delete_Confirm().setVisible(true);
-         }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
