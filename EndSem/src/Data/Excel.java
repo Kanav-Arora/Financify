@@ -11,7 +11,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.poi.xssf.usermodel.*;
+import jxl.Workbook;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+
 /**
  *
  * @author Kanav
@@ -20,27 +24,26 @@ public class Excel {
     public static void createWorkbook(String name)
     {   
         System.out.println("Workbook method"+name + " " + new Frames.Login().user);
-//        FileOutputStream out = null;
-//        try {
-//            XSSFWorkbook workbook = new XSSFWorkbook();
-//            String home = System.getProperty("user.home");
-//            File file = new File(home+"/Documents/"+"Financify/"+new Frames.Login().user+"/"+name+".xlsx");
-////File file = new File(home);
-//            out = new FileOutputStream(file);
-//            workbook.write(out);
-//            out.close();
-//            
-//            System.out.println("createworkbook.xlsx written successfully");
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                out.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+        String filepath = name + ".xlsx";
+        WritableWorkbook workbook = null;
+        try {
+
+            workbook = Workbook.createWorkbook(new File(filepath));
+            System.out.println("File created");
+            WritableSheet excelSheet = workbook.createSheet("Sheet 1", 0);
+            workbook.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WriteException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public static void main(String args[])
+    {
+        Excel e = new Excel();
+        e.createWorkbook("try");
     }
 }
