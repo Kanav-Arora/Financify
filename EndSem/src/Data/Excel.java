@@ -5,56 +5,64 @@
  */
 package Data;
 
-import java.io.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jxl.Workbook;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  *
  * @author Kanav
  */
 public class Excel {
-    public static void createWorkbook(String name)
+    public static XSSFWorkbook createWorkbook(String name)
     {   
         System.out.println("Workbook method"+name + " " + new Frames.Login().user);
         String filepath = name + ".xlsx";
-        WritableWorkbook workbook = null;
+        XSSFWorkbook workbook = new XSSFWorkbook(); 
+        File f = new File(filepath);
         try {
-            File f = new File(filepath);
+            
             if(f.exists())
             {
                 System.out.println("Workbook exists");
+                FileInputStream existingFile = new FileInputStream(f);
+                workbook = new XSSFWorkbook(existingFile);
+                existingFile.close();
+            
             }
             
             else
             {
-            workbook = Workbook.createWorkbook(f);
-            System.out.println("File created");
+            FileOutputStream out = new FileOutputStream(filepath);
+            workbook.write(out);
+            System.out.println("createworkbook.xlsx written successfully");
+            out.close();
+            
             }
+            
+
         } catch (IOException ex) {
             Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
         }
+            return workbook;
     }
-    public static void createSheet(WritableWorkbook workbook,String sheetName, int sheetNumber)
+//    public static void createSheets(WritableWorkbook workbook,String sheetName, int sheetNumber)
+//    {
+//        WritableSheet excelSheet = workbook.createSheet(sheetName, sheetNumber);
+//    }
+//    
+//    public static void closeBook(WritableWorkbook workbook) throws IOException, WriteException
+//    {
+//        workbook.close();
+//    }
+    public static void main(String args[])
     {
-        try {
-            WritableSheet excelSheet = workbook.createSheet(sheetName, sheetNumber);
-            workbook.close();
-        } catch (IOException | WriteException ex) {
-            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public static void close(WritableWorkbook workbook) throws IOException, WriteException
-    {
-        workbook.close();
+        createWorkbook("try");
     }
 }
