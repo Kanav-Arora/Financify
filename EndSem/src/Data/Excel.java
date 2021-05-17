@@ -5,6 +5,7 @@
  */
 package Data;
 
+import java.io.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,23 +28,33 @@ public class Excel {
         String filepath = name + ".xlsx";
         WritableWorkbook workbook = null;
         try {
-
-            workbook = Workbook.createWorkbook(new File(filepath));
-            System.out.println("File created");
-            WritableSheet excelSheet = workbook.createSheet("Sheet 1", 0);
-            workbook.close();
+            File f = new File(filepath);
+            if(f.exists())
+            {
+                System.out.println("Workbook exists");
+            }
             
+            else
+            {
+            workbook = Workbook.createWorkbook(f);
+            System.out.println("File created");
+            }
         } catch (IOException ex) {
             Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (WriteException ex) {
+        }
+    }
+    public static void createSheet(WritableWorkbook workbook,String sheetName, int sheetNumber)
+    {
+        try {
+            WritableSheet excelSheet = workbook.createSheet(sheetName, sheetNumber);
+            workbook.close();
+        } catch (IOException | WriteException ex) {
             Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
-    public static void main(String args[])
+    public static void close(WritableWorkbook workbook) throws IOException, WriteException
     {
-        Excel e = new Excel();
-        e.createWorkbook("try");
+        workbook.close();
     }
 }
