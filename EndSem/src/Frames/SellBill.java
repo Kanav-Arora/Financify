@@ -6,19 +6,89 @@
 package Frames;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
  * @author Samriddh
  */
 public class SellBill extends javax.swing.JFrame {
+    String username;
 
     /**
      * Creates new form SellBill
      */
     public SellBill() {
         initComponents();
+        jLabel2.setVisible(false);
         jPanel3.setBackground(new Color(102,102,102,50));
+        username = new Login().user;
+        try {
+            
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        System.out.println("Connection is created successfully");
+        Statement stmt = (Statement) con.createStatement();
+        
+        String query = "select acc_name from accounts where username = '"+username+"'";
+        System.out.println("Fetching acc_name from database: jvp; table: accounts");
+        ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+               
+        for(;;)
+        {
+            if(rs.next())
+            {   
+                String item=rs.getString(1);
+                jComboBox1.addItem(item);
+            }
+            else
+            {
+                break;
+            }
+        
+                                  
+        }
+        
+        jComboBox1.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox1); 
+        
+        
+        query = "select item_name from stocks where username = '"+username+"'";
+        System.out.println("Fetching items from database: jvp; table: stocks");
+        rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+        
+        for(;;)
+        {
+            if(rs.next())
+            {
+                String item = rs.getString(1);
+                jComboBox2.addItem(item);
+            }
+            else{
+                break;
+            }
+        }
+        
+        jComboBox2.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox2);
+        
+    }
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(Stocks.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Stocks.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
     /**
@@ -56,6 +126,7 @@ public class SellBill extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -74,8 +145,9 @@ public class SellBill extends javax.swing.JFrame {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Item" }));
 
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Bill Number :");
+        jLabel9.setText("Bill No. :");
 
+        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,6 +305,8 @@ public class SellBill extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -272,9 +346,10 @@ public class SellBill extends javax.swing.JFrame {
                                     .addComponent(jLabel15)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(146, 146, 146)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(146, 146, 146)
                                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -318,7 +393,9 @@ public class SellBill extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField6))))
-                .addGap(72, 72, 72)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,6 +436,7 @@ public class SellBill extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -390,7 +468,35 @@ public class SellBill extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        try {
+        String item_name=(String) jComboBox2.getSelectedItem();
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        System.out.println("Connection is created successfully");
+        Statement stmt = (Statement) con.createStatement();
+        String query = "select * from stocks where username = '"+username+"'AND item_name='"+item_name+"'";
+        System.out.println("Fetching items from database: jvp; table: stocks");
+        ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+    
+        if(rs.next())
+        {
+            float weight = rs.getFloat("weight");
+            float price = rs.getFloat("price");
+            float quantity=rs.getInt("quantity");
+            jLabel2.setText("In Stock :"+quantity);
+            jLabel2.setVisible(true);
+            jTextField2.setText(""+price);
+            jTextField5.setText(""+weight);
+        }
         
+        
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(Stocks.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Stocks.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                                  
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -398,7 +504,12 @@ public class SellBill extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        
+        try {
+            this.setVisible(false);
+            new Main().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(SellBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -449,6 +560,7 @@ public class SellBill extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
