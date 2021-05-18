@@ -40,7 +40,7 @@ int edit_bool;
         try {
 
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select item_name from stocks where username = '"+username+"'";
@@ -396,14 +396,14 @@ int edit_bool;
     try {
         String item_name2=(String) jComboBox1.getSelectedItem();
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select * from stocks where username = '"+username+"'AND item_name='"+item_name2+"'";
         System.out.println("Fetching items from database: jvp; table: stocks");
         ResultSet rs=stmt.executeQuery(query);
         System.out.println("Record fetched successfully.");
-        
+    
         if(rs.next())
         {
             int item_id = rs.getInt("item_id");
@@ -505,7 +505,7 @@ int edit_bool;
         // TODO add your handling code here:
         
                 Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
                 Statement stmt = (Statement) con.createStatement();
                 String query = "delete from stocks where item_name = '"+ item_name +"' AND username='"+username+"'";
                 stmt.executeUpdate(query);
@@ -536,7 +536,7 @@ int edit_bool;
                     
 
                 Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
                 Statement stmt = (Statement) con.createStatement();
                 String query = "delete from stocks where item_name = '"+ item_name +"'";
                 stmt.executeUpdate(query);

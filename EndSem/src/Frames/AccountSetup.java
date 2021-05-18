@@ -63,7 +63,7 @@ public class AccountSetup extends javax.swing.JFrame {
         try {
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             String query = "select name,id from states order by name";
             ResultSet rs = stmt.executeQuery(query);
@@ -548,7 +548,7 @@ public class AccountSetup extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
             ResultSet rs = stmt.executeQuery(query);
@@ -635,7 +635,7 @@ public class AccountSetup extends javax.swing.JFrame {
             try {
 
                 Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
                 Statement stmt = (Statement) con.createStatement();
                 String query = "delete from accounts where acc_name = '" + acc_name + "'";
                 stmt.executeUpdate(query);

@@ -43,7 +43,7 @@ public class Main extends javax.swing.JFrame {
             
             
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
 
             Statement stmt = (Statement) con.createStatement();
             String query = "select name,gender from users where username = '"+username+"'";
@@ -303,6 +303,9 @@ public class Main extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Sale");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel6MouseEntered(evt);
             }
@@ -580,6 +583,12 @@ public class Main extends javax.swing.JFrame {
         this.setVisible(false);
         new Stocks().setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new SellBill().setVisible(true);
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments
