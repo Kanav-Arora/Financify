@@ -19,13 +19,13 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  *
  * @author Samriddh
  */
-public class SellBill extends javax.swing.JFrame {
+public class SaleBill extends javax.swing.JFrame {
     String username;
 
     /**
      * Creates new form SellBill
      */
-    public SellBill() {
+    public SaleBill() {
         initComponents();
         jLabel2.setVisible(false);
         jPanel3.setBackground(new Color(102,102,102,50));
@@ -33,7 +33,7 @@ public class SellBill extends javax.swing.JFrame {
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -398,7 +398,7 @@ public class SellBill extends javax.swing.JFrame {
         try {
         String item_name=(String) jComboBox2.getSelectedItem();
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         String query = "select * from stocks where username = '"+username+"'AND item_name='"+item_name+"'";
@@ -435,7 +435,7 @@ public class SellBill extends javax.swing.JFrame {
             this.setVisible(false);
             new Main().setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(SellBill.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaleBill.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jLabel4MouseClicked
@@ -456,7 +456,7 @@ public class SellBill extends javax.swing.JFrame {
          
                 try {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is created successfully");
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from stocks where username = '"+username+"'AND item_name='"+item_name+"'";
@@ -510,20 +510,21 @@ public class SellBill extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SellBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SaleBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SellBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SaleBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SellBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SaleBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SellBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SaleBill.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SellBill().setVisible(true);
+                new SaleBill().setVisible(true);
             }
         });
     }

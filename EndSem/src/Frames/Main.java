@@ -43,7 +43,7 @@ public class Main extends javax.swing.JFrame {
             
             
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
 
             Statement stmt = (Statement) con.createStatement();
             String query = "select name,gender from users where username = '"+username+"'";
@@ -587,7 +587,7 @@ public class Main extends javax.swing.JFrame {
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        new SellBill().setVisible(true);
+        new SaleBill().setVisible(true);
     }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
