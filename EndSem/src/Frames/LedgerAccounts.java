@@ -20,6 +20,9 @@ import javax.swing.JOptionPane;
 import Data.Excel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -696,8 +699,47 @@ int row;
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-
-    XSSFWorkbook workbook = Excel.createWorkbook("Ledger Account");
+        String acc_name = (String) jComboBox1.getSelectedItem();
+        String date_from = jTextField1.getText().substring(0,2);
+        String date_to = jTextField2.getText().substring(0,2);
+        XSSFWorkbook workbook = Excel.createWorkbook("Ledger Account");
+        XSSFSheet sheet = Excel.createSheets(workbook, acc_name + "("+date_from + "-"+date_to + ")");
+        
+        
+        /*
+        
+            Getting data from the table
+        
+        */
+        
+        int table_row = jTable1.getRowCount();
+        int table_col = jTable1.getColumnCount();
+        
+        for(int i=0; i<table_row; i++)
+        {
+            Row row = Excel.createRow(sheet);
+            
+            for(int j =0; j<table_col; j++)
+            {
+                Object data = jTable1.getModel().getValueAt(i, j);
+                Cell cell = row.createCell(j);
+                if (data instanceof String) {
+                    System.out.print((String) data);
+                    cell.setCellValue((String) data);
+                    
+                } else if (data instanceof Integer) {
+                    System.out.print((String) data);
+                    cell.setCellValue((Integer) data);
+                }
+                else if (data instanceof Float) {
+                    System.out.print((String) data);
+                    cell.setCellValue((Float) data);
+                }
+                
+                
+            }
+        }
+        
     }//GEN-LAST:event_jLabel24MouseClicked
 
     /**

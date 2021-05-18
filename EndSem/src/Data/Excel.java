@@ -12,6 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
@@ -52,17 +55,37 @@ public class Excel {
         }
             return workbook;
     }
-//    public static void createSheets(WritableWorkbook workbook,String sheetName, int sheetNumber)
-//    {
-//        WritableSheet excelSheet = workbook.createSheet(sheetName, sheetNumber);
-//    }
-//    
-//    public static void closeBook(WritableWorkbook workbook) throws IOException, WriteException
-//    {
-//        workbook.close();
-//    }
-    public static void main(String args[])
+    public static XSSFSheet createSheets(XSSFWorkbook workbook,String sheetName)
     {
-        createWorkbook("try");
+        XSSFSheet excelSheet = workbook.createSheet(sheetName);
+        return excelSheet;
     }
+    
+//    write functions
+    public static Row createRow(XSSFSheet excelSheet)
+    {
+        int rowCount = excelSheet.getLastRowNum();
+        Row row = excelSheet.createRow(rowCount+1);
+        
+        return row;
+    }
+    
+    public static void createCell(Row row, int cellCount, String value)
+    {
+        Cell cell = row.createCell(cellCount);
+        cell.setCellValue(value);
+    }
+    
+    public static void FileOutput(String name, XSSFWorkbook workbook)
+    {
+        try (FileOutputStream outputStream = new FileOutputStream(name + ".xlsx")) {
+            workbook.write(outputStream);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 }
