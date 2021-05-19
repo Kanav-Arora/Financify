@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -213,6 +213,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel2MouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="399" y="64" width="114" height="31"/>
@@ -272,12 +275,13 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="603" y="71" width="-1" height="-1"/>
+              <AbsoluteConstraints x="603" y="71" width="60" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField4">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
@@ -315,12 +319,13 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="603" y="114" width="-1" height="-1"/>
+              <AbsoluteConstraints x="603" y="114" width="70" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField5">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
@@ -357,7 +362,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="13" rowCount="0">
-                    <Column editable="true" title="SNo" type="java.lang.Integer"/>
+                    <Column editable="false" title="SNo" type="java.lang.Integer"/>
                     <Column editable="true" title="Item ID" type="java.lang.Object"/>
                     <Column editable="true" title="Item Name" type="java.lang.Object"/>
                     <Column editable="true" title="Pcs" type="java.lang.Integer"/>
@@ -367,7 +372,7 @@
                     <Column editable="false" title="Amount" type="java.lang.Float"/>
                     <Column editable="true" title="Discount" type="java.lang.Float"/>
                     <Column editable="true" title="Disc (%)" type="java.lang.Float"/>
-                    <Column editable="true" title="Taxable" type="java.lang.Float"/>
+                    <Column editable="false" title="Taxable" type="java.lang.Float"/>
                     <Column editable="false" title="GST (%)" type="java.lang.Integer"/>
                     <Column editable="false" title="GST" type="java.lang.Float"/>
                   </Table>
@@ -443,7 +448,6 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="columnSelectionAllowed" type="boolean" value="true"/>
-                <Property name="rowHeight" type="int" value="20"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
@@ -463,7 +467,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="92" y="110" width="450" height="-1"/>
+              <AbsoluteConstraints x="92" y="112" width="450" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
