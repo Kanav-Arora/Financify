@@ -5,21 +5,113 @@
  */
 package Frames;
 
-import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author Kanav
  */
 public class Sale extends javax.swing.JFrame {
-
+String username;
     /**
      * Creates new form Sale
      */
     public Sale() {
         initComponents();
-        jPanel3.setBackground(new Color(102,102,102,50));
+        username = new Login().user;
+        try {
+            
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        System.out.println("Connection is created successfully");
+        Statement stmt = (Statement) con.createStatement();
+        
+        String query = "select acc_name from accounts where username = '"+username+"'";
+        System.out.println("Fetching acc_name from database: jvp; table: accounts");
+        ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+               
+        for(;;)
+        {
+            if(rs.next())
+            {   
+                String item=rs.getString(1);
+                jComboBox1.addItem(item);
+            }
+            else
+            {
+                break;
+            }
+        
+                                  
+        }
+        
+        jComboBox1.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox1); 
+        
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
     }
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+        Date date = new Date();
+        String current_date = formatter.format(date);
+        jTextField2.setText(current_date);
+        
+    }
+    
+    public static void addItems(JComboBox combo, String username)
+    {
+        try {
+            
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        System.out.println("Connection is created successfully");
+        Statement stmt = (Statement) con.createStatement();
+        
+        String query = "select item_name from stocks where username = '"+username+"'";
+        System.out.println("Fetching items from database: jvp; table: stocks");
+        ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+        
+        for(;;)
+        {
+            if(rs.next())
+            {
+                String item = rs.getString(1);
+                combo.addItem(item);
+            }
+            else{
+                break;
+            }
+        }
+        
+        combo.setSelectedItem("");    
+        
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,6 +161,7 @@ public class Sale extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -102,7 +195,7 @@ public class Sale extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Bill No. :");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(20, 14, 44, 24);
+        jLabel9.setBounds(14, 14, 50, 24);
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
@@ -348,21 +441,21 @@ public class Sale extends javax.swing.JFrame {
         jLabel17.setText("Edit");
         jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         jPanel1.add(jLabel17);
-        jLabel17.setBounds(150, 510, 110, 32);
+        jLabel17.setBounds(180, 510, 110, 32);
 
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Add");
+        jLabel18.setText("Generate Bill");
         jLabel18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(20, 510, 110, 32);
+        jLabel18.setBounds(20, 510, 140, 32);
 
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Delete");
         jLabel19.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         jPanel1.add(jLabel19);
-        jLabel19.setBounds(280, 510, 110, 32);
+        jLabel19.setBounds(310, 510, 110, 32);
 
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
@@ -375,6 +468,15 @@ public class Sale extends javax.swing.JFrame {
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
         jTextField12.setBounds(653, 408, 181, 24);
+
+        jButton1.setText("Add Item");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(570, 350, 90, 32);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 850, 560));
 
@@ -397,6 +499,25 @@ public class Sale extends javax.swing.JFrame {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        username = new Login().user;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{0,new JComboBox<String>(),new JComboBox<String>(),0,0,0,0,0,0,0,0,0,0});
+        TableColumn col1 = jTable1.getColumnModel().getColumn(1);
+        TableColumn col2 = jTable1.getColumnModel().getColumn(2);
+        JComboBox combo1 = new JComboBox<String>();
+        JComboBox combo2 = new JComboBox<String>();
+        combo1.setSelectedItem("");
+        addItems(combo1,username);
+        AutoCompleteDecorator.decorate(combo1);
+        combo2.setSelectedItem("");
+        addItems(combo2,username);
+        AutoCompleteDecorator.decorate(combo2);
+        col1.setCellEditor(new DefaultCellEditor(combo1));
+        col2.setCellEditor(new DefaultCellEditor(combo2));
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -434,6 +555,7 @@ public class Sale extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
