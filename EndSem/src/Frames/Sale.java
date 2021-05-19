@@ -10,7 +10,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +38,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -80,7 +83,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -110,7 +113,40 @@ String username;
     }
     }
     
-    
+    public static void addItemNo(JComboBox combo,String username)
+    {
+                try {
+            
+        Class.forName("java.sql.DriverManager");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        System.out.println("Connection is created successfully");
+        Statement stmt = (Statement) con.createStatement();
+        
+        String query = "select item_id from stocks where username = '"+username+"'";
+        System.out.println("Fetching items from database: jvp; table: stocks");
+        ResultSet rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+        
+        for(;;)
+        {
+            if(rs.next())
+            {
+                String item = rs.getString(1);
+                combo.addItem("S-"+item);
+            }
+            else{
+                break;
+            }
+        }
+        
+        combo.setSelectedItem("");    
+        
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
     
 
     /**
@@ -206,12 +242,12 @@ String username;
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 24);
+        jTextField1.setBounds(82, 14, 90, 22);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 52, 24);
+        jLabel10.setBounds(209, 14, 49, 24);
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
@@ -221,7 +257,7 @@ String username;
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 24);
+        jTextField2.setBounds(279, 14, 90, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -240,7 +276,7 @@ String username;
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 24);
+        jTextField3.setBounds(483, 14, 90, 22);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -252,33 +288,39 @@ String username;
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Details");
         jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel2);
         jLabel2.setBounds(399, 64, 114, 31);
 
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 54, 16);
+        jLabel3.setBounds(20, 114, 48, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 72, 16);
+        jLabel4.setBounds(603, 18, 69, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 26);
+        jComboBox2.setBounds(705, 13, 98, 22);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(603, 71, 52, 16);
+        jLabel5.setBounds(603, 71, 60, 16);
 
+        jTextField4.setEditable(false);
         jTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 24);
+        jTextField4.setBounds(705, 67, 121, 22);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -289,13 +331,14 @@ String username;
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("GST No. :");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(603, 114, 50, 16);
+        jLabel6.setBounds(603, 114, 70, 16);
 
+        jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 24);
+        jTextField5.setBounds(705, 110, 121, 22);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -312,7 +355,7 @@ String username;
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, false, true, true, true, false, false
+                false, true, true, true, true, true, true, false, true, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -325,7 +368,6 @@ String username;
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable1.setColumnSelectionAllowed(true);
-        jTable1.setRowHeight(20);
         jScrollPane2.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -336,19 +378,19 @@ String username;
         jTextField6.setBackground(new java.awt.Color(255, 255, 255));
         jTextField6.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jTextField6);
-        jTextField6.setBounds(92, 110, 450, 24);
+        jTextField6.setBounds(92, 112, 450, 30);
 
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Item(s) :");
         jPanel1.add(jLabel15);
-        jLabel15.setBounds(718, 356, 46, 16);
+        jLabel15.setBounds(718, 356, 43, 16);
 
         jTextField11.setEditable(false);
         jTextField11.setBackground(new java.awt.Color(255, 255, 255));
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(782, 352, 52, 24);
+        jTextField11.setBounds(782, 352, 52, 22);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -429,7 +471,7 @@ String username;
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 487, 109);
+        jPanel3.setBounds(10, 350, 478, 105);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -460,14 +502,14 @@ String username;
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 70, 16);
+        jLabel20.setBounds(549, 412, 69, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 24);
+        jTextField12.setBounds(653, 408, 181, 22);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -476,7 +518,7 @@ String username;
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 32);
+        jButton1.setBounds(570, 350, 90, 22);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 850, 560));
 
@@ -504,13 +546,14 @@ String username;
         // TODO add your handling code here:
         username = new Login().user;
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.addRow(new Object[]{0,new JComboBox<String>(),new JComboBox<String>(),0,0,0,0,0,0,0,0,0,0});
+        int row = model.getRowCount();
+        model.addRow(new Object[]{row+1,new JComboBox<String>(),new JComboBox<String>(),0,0,0,0,0,0,0,0,0,0});
         TableColumn col1 = jTable1.getColumnModel().getColumn(1);
         TableColumn col2 = jTable1.getColumnModel().getColumn(2);
         JComboBox combo1 = new JComboBox<String>();
         JComboBox combo2 = new JComboBox<String>();
         combo1.setSelectedItem("");
-        addItems(combo1,username);
+        addItemNo(combo1,username);
         AutoCompleteDecorator.decorate(combo1);
         combo2.setSelectedItem("");
         addItems(combo2,username);
@@ -518,6 +561,71 @@ String username;
         col1.setCellEditor(new DefaultCellEditor(combo1));
         col2.setCellEditor(new DefaultCellEditor(combo2));
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        String acc = (String) jComboBox1.getSelectedItem();
+        String bill_date = jTextField2.getText();
+        int credit_days=0;
+        
+        try {
+            // TODO add your handling code here:
+
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                credit_days = rs.getInt("credit_days");
+                String address = rs.getString("address");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                String gst = rs.getString("gst");
+                int pincode = rs.getInt("pincode");
+                jTextField6.setText(""+address+","+city+","+state+" -"+pincode );
+                jTextField5.setText(gst);
+                
+            }
+            query = "select sum(debit),sum(credit) from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
+            System.out.println("Adding all values of transactions from database: jvp, table: transactions");
+            rs=stmt.executeQuery(query);
+            System.out.println("Record count fetched successfully.");
+            float credit_total = 0;
+            float debit_total = 0;
+        
+            if(rs.next()){
+                debit_total = rs.getFloat(1);
+                credit_total = rs.getFloat(2);
+                
+            }
+            if(credit_total>debit_total)
+                jTextField4.setText(""+Math.abs(credit_total-debit_total)+" Cr");
+            else
+                jTextField4.setText(""+Math.abs(credit_total-debit_total)+" Dr");
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+            Date date = new Date();
+            date = formatter.parse(bill_date);
+//            LocalDateTime.from(date.toInstant()).plusDays(credit_days);
+
+            Calendar c = Calendar.getInstance(); 
+            c.setTime(date); 
+            c.add(Calendar.DATE, credit_days);
+            date = c.getTime();
+            String final_date = formatter.format(date);
+            jTextField3.setText(final_date);
+
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
