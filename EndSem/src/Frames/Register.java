@@ -297,7 +297,7 @@ public class Register extends javax.swing.JFrame {
         try
         {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
             
@@ -370,7 +370,7 @@ public class Register extends javax.swing.JFrame {
             if (match.matches()== true)
             {
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             
                 

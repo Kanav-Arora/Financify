@@ -143,7 +143,7 @@ public class Acc_Delete_Confirm extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
      
             if(jRadioButton1.isSelected()==true)
