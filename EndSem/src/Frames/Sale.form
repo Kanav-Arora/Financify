@@ -373,7 +373,7 @@
                     <Column editable="true" title="Discount" type="java.lang.Float"/>
                     <Column editable="true" title="Disc (%)" type="java.lang.Float"/>
                     <Column editable="false" title="Taxable" type="java.lang.Float"/>
-                    <Column editable="false" title="GST (%)" type="java.lang.Integer"/>
+                    <Column editable="false" title="GST (%)" type="java.lang.Float"/>
                     <Column editable="false" title="GST" type="java.lang.Float"/>
                   </Table>
                 </Property>

@@ -351,7 +351,7 @@ String username;
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, true, true, true, true, true, true, false, true, true, false, false, false
@@ -638,12 +638,39 @@ String username;
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
-        for(int i=1; i<=row; i++)
+        int i=0;
+        float subtotal=0;
+        float discount_total=0;
+        float gst_total = 0;
+        float grand_total =0;
+        while(i<row)
         {
-            Object str1 = model.getValueAt(i,1);
-            System.out.println(str1);
-            
+            int s_no =  (int) model.getValueAt(i,0);
+            String item_id =  (String) model.getValueAt(i,1);
+            String item_name =  (String) model.getValueAt(i,2);
+            int pcs =  (int) model.getValueAt(i,3);
+            float quantity =  (float) model.getValueAt(i,4);
+            float net_rate =  (float) model.getValueAt(i,5);
+            float rate =  (float) model.getValueAt(i,6);
+            float amount =  (float) model.getValueAt(i,7);
+            float discount =  (float) model.getValueAt(i,8);
+            float discount_perc =  (float) model.getValueAt(i,9);
+            float taxable =  (float) model.getValueAt(i,10);
+            float gst_perc =  (float) model.getValueAt(i,11);
+            float gst =  (float) model.getValueAt(i,12);
+            subtotal += taxable;
+            discount_total += discount;
+            gst_total += gst;
+            i++;
         }
+        grand_total = subtotal - discount_total + gst_total;
+        jTextField7.setText(""+subtotal);
+        jTextField8.setText(""+discount_total);
+        float sgst = gst_total/2;
+        float cgst = gst_total/2;
+        jTextField9.setText(""+Math.round(sgst));
+        jTextField10.setText(""+Math.round(cgst));
+        jTextField12.setText(""+ Math.round(grand_total));
     }//GEN-LAST:event_jLabel18MouseClicked
 
     /**
