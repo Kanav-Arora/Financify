@@ -38,7 +38,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -83,7 +83,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -118,7 +118,7 @@ String username;
                 try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -580,7 +580,7 @@ String username;
             // TODO add your handling code here:
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
             ResultSet rs = stmt.executeQuery(query);
@@ -650,35 +650,35 @@ String username;
         String type = "sale";
         while(i<row)
         {   
-            int s_no =  (int) model.getValueAt(i,0);
+            int s_no = Integer.parseInt(model.getValueAt(i,0).toString());
             System.out.println(0);
-            String item_id =  (String) model.getValueAt(i,1);
+            int item_id =  Integer.parseInt(model.getValueAt(i,1).toString().substring(2));
             System.out.println(1);
             String item_name =  (String) model.getValueAt(i,2);
             System.out.println(2);
             int pcs =  (int) model.getValueAt(i,3);
             System.out.println(3);
-            float quantity =   model.getValueAt(i,4).toString().floatValue();
+            float quantity = Float.parseFloat(String.valueOf(model.getValueAt(i,4)));
             System.out.println(4);
-            float net_rate =  (float) model.getValueAt(i,5);
-            float rate =  (float) model.getValueAt(i,6);
-            float amount =  (float) model.getValueAt(i,7);
-            float discount =  (float) model.getValueAt(i,8);
-            float discount_perc =  (float) model.getValueAt(i,9);
-            float taxable =  (float) model.getValueAt(i,10);
-            float gst_perc =  (float) model.getValueAt(i,11);
-            float gst =  (float) model.getValueAt(i,12);
+            float net_rate =  Float.parseFloat(String.valueOf(model.getValueAt(i,5)));
+            float rate =  Float.parseFloat(String.valueOf(model.getValueAt(i,6)));
+            float amount = Float.parseFloat(String.valueOf(model.getValueAt(i,7)));
+            float discount =  Float.parseFloat(String.valueOf(model.getValueAt(i,8)));
+            float discount_perc =  Float.parseFloat(String.valueOf(model.getValueAt(i,9)));
+            float taxable =  Float.parseFloat(String.valueOf(model.getValueAt(i,10)));
+            float gst_perc =  Float.parseFloat(String.valueOf(model.getValueAt(i,11)));
+            float gst =  Float.parseFloat(String.valueOf(model.getValueAt(i,12)));
             
             subtotal += taxable;
             discount_total += discount;
             gst_total += gst;
             try{
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             String query="INSERT INTO bill VALUES('"+bill_no+"','"+s_no+"','"+item_id+"','"+item_name+"','"+pcs+"','"+quantity+"','"+net_rate+"','"+rate+"','"+amount+"','"+discount+"','"+discount_perc+"','"+taxable+"','"+gst_perc+"','"+gst+"','"+acc_name+"','"+username+"','"+type+"');";
                  
-            ResultSet rs = stmt.executeQuery(query);
+            stmt.executeUpdate(query);
             
                 
             } catch (ClassNotFoundException | SQLException ex) {
