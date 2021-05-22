@@ -23,8 +23,6 @@ import javax.swing.table.TableColumn;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
-import java.lang.Integer.*;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -42,7 +40,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -85,14 +83,14 @@ String username;
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             int row = target.getSelectedRow(); 
             int col = target.getSelectedColumn();
-            String item_id=model.getValueAt(row, col).toString();
+            String item_id=model.getValueAt(row,1).toString().substring(2);
             int pcs = 0;
             float weight_per_bag = 0;
             float net_weight=0;
             
             try{
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is created successfully");
             Statement stmt = (Statement) con.createStatement();
         
@@ -150,7 +148,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -185,7 +183,7 @@ String username;
                 try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -660,7 +658,7 @@ String username;
             // TODO add your handling code here:
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
             ResultSet rs = stmt.executeQuery(query);
@@ -754,7 +752,7 @@ String username;
             gst_total += gst;
             try{
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             String query="INSERT INTO bill VALUES('"+bill_no+"','"+s_no+"','"+item_id+"','"+item_name+"','"+pcs+"','"+quantity+"','"+net_rate+"','"+rate+"','"+amount+"','"+discount+"','"+discount_perc+"','"+taxable+"','"+gst_perc+"','"+gst+"','"+acc_name+"','"+username+"','"+type+"');";
                  
