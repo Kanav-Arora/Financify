@@ -64,6 +64,18 @@ String username;
         
         jComboBox1.setSelectedItem("");
         AutoCompleteDecorator.decorate(jComboBox1); 
+        String type = "bill";
+        query = "select max(bill_no) from bill where username = '"+username+"' and type = '"+ type + "'";
+        System.out.println("Fetching acc_name from database: jvp; table: bill");
+        rs=stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+        int bill_no = 0;
+        if(rs.next())
+        {
+            bill_no = rs.getInt(1);
+        }
+        
+        jTextField1.setText("B-"+(bill_no+1));
         
         } catch (ClassNotFoundException ex) {
         Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
@@ -502,6 +514,11 @@ String username;
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Exit");
         jLabel19.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel19);
         jLabel19.setBounds(300, 510, 110, 32);
 
@@ -648,7 +665,7 @@ String username;
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
         int i=0;
-        String bill_no = jTextField1.getText();
+        int bill_no = Integer.parseInt(jTextField1.getText().substring(2));
         username = new Login().user;
         float subtotal=0;
         float discount_total=0;
@@ -703,6 +720,15 @@ String username;
         jTextField10.setText(""+Math.round(cgst));
         jTextField12.setText(""+ Math.round(grand_total));
     }//GEN-LAST:event_jLabel18MouseClicked
+
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+    try {
+        this.setVisible(false);
+        new Main().setVisible(true);
+    } catch (SQLException ex) {
+        Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_jLabel19MouseClicked
 
     /**
      * @param args the command line arguments
