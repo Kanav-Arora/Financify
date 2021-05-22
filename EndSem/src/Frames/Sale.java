@@ -5,6 +5,8 @@
  */
 package Frames;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,6 +24,8 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import java.lang.Integer.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -38,7 +42,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -75,7 +79,70 @@ String username;
         Date date = new Date();
         String current_date = formatter.format(date);
         jTextField2.setText(current_date);
+        jTable1.addKeyListener(new KeyAdapter() {         
+        public void keyPressed(KeyEvent e) {
+            JTable target = (JTable)e.getSource();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            int row = target.getSelectedRow(); 
+            int col = target.getSelectedColumn();
+            String item_id=model.getValueAt(row, col).toString();
+            int pcs = 0;
+            float weight_per_bag = 0;
+            float net_weight=0;
+            
+            try{
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            System.out.println("Connection is created successfully");
+            Statement stmt = (Statement) con.createStatement();
         
+            String query = "select * from stocks where username = '"+username+"' and item_id = '"+item_id+"'";
+            System.out.println("Fetching stock info from database: jvp; table: stocks");
+            ResultSet rs=stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
+            if(rs.next())
+            {
+                pcs = rs.getInt("quantity");
+                weight_per_bag = rs.getFloat("weight");
+            }
+            
+                    if(col==3)
+                    {
+                        int t_pcs = Integer.parseInt(model.getValueAt(row,3).toString());
+                        System.out.println(t_pcs);
+                        System.out.println(pcs);
+                        
+                        if(t_pcs>pcs)
+                        {
+                            System.out.println("out of stock");
+                        }
+                        else
+                        {
+                            net_weight= weight_per_bag * t_pcs;
+                            model.setValueAt(net_weight,row,4);
+                            System.out.println("in else block");
+                            
+                        }
+                        
+                        
+                    }
+                
+                     
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        });
+        
+    }
+    
+    public static float addgst(int gst,float rate)
+    {
+        float net_rate=0;
+        net_rate = rate + ((float)gst/100)*rate;
+        return net_rate;
     }
     
     public static void addItems(JComboBox combo, String username)
@@ -83,7 +150,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -118,7 +185,7 @@ String username;
                 try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -243,12 +310,12 @@ String username;
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 24);
+        jTextField1.setBounds(82, 14, 90, 22);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 52, 24);
+        jLabel10.setBounds(209, 14, 49, 24);
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
@@ -258,7 +325,7 @@ String username;
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 24);
+        jTextField2.setBounds(279, 14, 90, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -277,7 +344,7 @@ String username;
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 24);
+        jTextField3.setBounds(483, 14, 90, 22);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -300,16 +367,16 @@ String username;
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 54, 16);
+        jLabel3.setBounds(20, 114, 48, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 72, 16);
+        jLabel4.setBounds(603, 18, 69, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 26);
+        jComboBox2.setBounds(705, 13, 98, 22);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -321,7 +388,7 @@ String username;
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 24);
+        jTextField4.setBounds(705, 67, 121, 22);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -339,7 +406,7 @@ String username;
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 24);
+        jTextField5.setBounds(705, 110, 121, 22);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -369,6 +436,11 @@ String username;
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable1.setColumnSelectionAllowed(true);
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -384,14 +456,14 @@ String username;
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Item(s) :");
         jPanel1.add(jLabel15);
-        jLabel15.setBounds(718, 356, 46, 16);
+        jLabel15.setBounds(718, 356, 43, 16);
 
         jTextField11.setEditable(false);
         jTextField11.setBackground(new java.awt.Color(255, 255, 255));
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(782, 352, 52, 24);
+        jTextField11.setBounds(782, 352, 52, 22);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -472,7 +544,7 @@ String username;
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 487, 109);
+        jPanel3.setBounds(10, 350, 478, 105);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -508,14 +580,14 @@ String username;
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 70, 16);
+        jLabel20.setBounds(549, 412, 69, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 24);
+        jTextField12.setBounds(653, 408, 181, 22);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -524,7 +596,7 @@ String username;
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 32);
+        jButton1.setBounds(570, 350, 90, 22);
 
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -588,7 +660,7 @@ String username;
             // TODO add your handling code here:
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
             ResultSet rs = stmt.executeQuery(query);
@@ -682,7 +754,7 @@ String username;
             gst_total += gst;
             try{
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
             Statement stmt = (Statement) con.createStatement();
             String query="INSERT INTO bill VALUES('"+bill_no+"','"+s_no+"','"+item_id+"','"+item_name+"','"+pcs+"','"+quantity+"','"+net_rate+"','"+rate+"','"+amount+"','"+discount+"','"+discount_perc+"','"+taxable+"','"+gst_perc+"','"+gst+"','"+acc_name+"','"+username+"','"+type+"');";
                  
@@ -703,6 +775,10 @@ String username;
         jTextField10.setText(""+Math.round(cgst));
         jTextField12.setText(""+ Math.round(grand_total));
     }//GEN-LAST:event_jLabel18MouseClicked
+
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1KeyReleased
 
     /**
      * @param args the command line arguments
