@@ -18,12 +18,17 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
 import Data.Excel;
+import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
 /**
  *
@@ -33,6 +38,7 @@ public class LedgerAccounts extends javax.swing.JFrame {
 String username;
 DefaultTableModel model;
 int row;
+public static String bill ="";
     /**
      * Creates new form LedgerAccounts
      */
@@ -88,6 +94,19 @@ int row;
     } catch (SQLException ex) {
         Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
     }
+    
+    
+    jTable1.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent me) {
+            if (me.getClickCount() == 2) {   
+               JTable target = (JTable)me.getSource();
+               int row = target.getSelectedRow(); 
+               model = (DefaultTableModel) jTable1.getModel();
+               bill = model.getValueAt(row,1).toString();
+               
+            }
+         }
+      });
         
     }
     
@@ -119,7 +138,10 @@ int row;
     }
      return final1;
     }
-
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -518,6 +540,9 @@ int row;
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
+    
+    
+    
     private void jRadioButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton3MouseClicked
         // TODO add your handling code here:
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
