@@ -367,8 +367,8 @@
                     <Column editable="true" title="Item Name" type="java.lang.Object"/>
                     <Column editable="true" title="Pcs" type="java.lang.Integer"/>
                     <Column editable="true" title="Qty (kg)" type="java.lang.Float"/>
-                    <Column editable="true" title="Net Rate" type="java.lang.Float"/>
                     <Column editable="true" title="Rate" type="java.lang.Float"/>
+                    <Column editable="true" title="Net Rate" type="java.lang.Float"/>
                     <Column editable="false" title="Amount" type="java.lang.Float"/>
                     <Column editable="true" title="Discount" type="java.lang.Float"/>
                     <Column editable="true" title="Disc (%)" type="java.lang.Float"/>
