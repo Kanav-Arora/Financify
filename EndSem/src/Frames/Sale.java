@@ -40,7 +40,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -94,9 +94,9 @@ String username;
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             int row = target.getSelectedRow(); 
             int col = target.getSelectedColumn();
-            String item_id="";
+            String item_id= model.getValueAt(row,1).toString().substring(2);
             int pcs = 0;
-            String item_name = "";
+            String item_name = model.getValueAt(row,2).toString();
             float weight_per_bag = 0;
             float net_weight=0;
             float rate=0;
@@ -106,18 +106,15 @@ String username;
             
             try{
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is created successfully");
             Statement stmt = (Statement) con.createStatement();
-        
-            String query = "select * from stocks where username = '"+username+"' and item_id = '"+item_id+"'";
+            String query = "select * from stocks where username = '"+username+"' and item_id = '"+item_id+"' or item_name = '"+ item_name +"'";
             System.out.println("Fetching stock info from database: jvp; table: stocks");
             ResultSet rs=stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
             if(rs.next())
             {
-                pcs = rs.getInt("quantity");
-                weight_per_bag = rs.getFloat("weight");
                 rate = rs.getFloat("price");
                 gst= rs.getFloat("gst_slab");
                 item_name=rs.getString("item_name");
@@ -125,6 +122,7 @@ String username;
             
                     if(col==1)
                     {   
+                        item_id= model.getValueAt(row,1).toString().substring(2);
                         query = "select * from stocks where username = '"+username+"' and item_id = '"+item_id+"'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
                         rs=stmt.executeQuery(query);
@@ -134,9 +132,8 @@ String username;
                             pcs = rs.getInt("quantity");
                             rate = rs.getFloat("price");
                             gst= rs.getFloat("gst_slab");
-                            item_id=rs.getString("item_id");
+                            item_name = rs.getString("item_name");
                         }
-                        item_id=model.getValueAt(row,1).toString().substring(2);
                         net_rate = rate + (rate *((float)gst/100));
                         model.setValueAt(item_name,row,2);
                         model.setValueAt(net_rate,row,6);
@@ -156,13 +153,11 @@ String username;
                             rate = rs.getFloat("price");
                             gst= rs.getFloat("gst_slab");
                             weight_per_bag = rs.getFloat("weight");
-                            System.out.println(weight_per_bag);
                             item_id=rs.getString("item_id");
                         }
                         net_rate = rate + (rate *((float)gst/100));
                         int t_pcs = Integer.parseInt(model.getValueAt(row,3).toString());
                         net_weight= weight_per_bag * t_pcs;
-                        System.out.println(net_weight);
                         model.setValueAt(net_weight,row,4);
                         model.setValueAt("S-"+item_id,row,1);
                         model.setValueAt(net_rate,row,6);
@@ -172,7 +167,8 @@ String username;
                     if(col==3)
                     {   
                         item_id=model.getValueAt(row,1).toString().substring(2);
-                        query = "select * from stocks where username = '"+username+"' and item_id = '"+item_id+"'";
+                        item_name = model.getValueAt(row,2).toString();
+                        query = "select * from stocks where username = '"+username+"' and item_id = '"+item_id+"' or item_name = '"+ item_name +"'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
                         rs=stmt.executeQuery(query);
                         System.out.println("Record fetched successfully.");
@@ -180,13 +176,8 @@ String username;
                         {
                             pcs = rs.getInt("quantity");
                             rate = rs.getFloat("price");
-                            gst = rs.getFloat("gst_slab");
-                            item_id = rs.getString("item_id");
                         }
                         int t_pcs = Integer.parseInt(model.getValueAt(row,3).toString());
-                        System.out.println(t_pcs);
-                        System.out.println(pcs);
-                        
                         if(t_pcs>pcs)
                         {
                             System.out.println("out of stock");
@@ -226,7 +217,7 @@ String username;
         try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -261,7 +252,7 @@ String username;
                 try {
             
         Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","Shivam@020401");
+        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
         
@@ -741,7 +732,7 @@ String username;
             // TODO add your handling code here:
 
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
             ResultSet rs = stmt.executeQuery(query);
@@ -835,7 +826,7 @@ String username;
             gst_total += gst;
             try{
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "Shivam@020401");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
             String query="INSERT INTO bill VALUES('"+bill_no+"','"+s_no+"','"+item_id+"','"+item_name+"','"+pcs+"','"+quantity+"','"+net_rate+"','"+rate+"','"+amount+"','"+discount+"','"+discount_perc+"','"+taxable+"','"+gst_perc+"','"+gst+"','"+acc_name+"','"+username+"','"+type+"');";
                  
