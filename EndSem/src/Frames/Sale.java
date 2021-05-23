@@ -104,6 +104,12 @@ public class Sale extends javax.swing.JFrame {
                 float disc_perc = 0;
                 float gst_amount = 0;
                 float taxable = 0;
+                float sub_total = 0;
+                float cgst = 0;
+                float sgst = 0;
+                float gst_sum = 0;
+                float discount = 0;
+                float bill_amount = 0;
 
                 try {
                     Class.forName("java.sql.DriverManager");
@@ -152,6 +158,7 @@ public class Sale extends javax.swing.JFrame {
                         model.setValueAt(net_rate, row, 6);
                         model.setValueAt(rate, row, 5);
                         model.setValueAt(gst, row, 11);
+
                     }
                     if (col == 3) {
                         item_id = model.getValueAt(row, 1).toString().substring(2);
@@ -176,64 +183,92 @@ public class Sale extends javax.swing.JFrame {
                             model.setValueAt(net_weight, row, 4);
                             model.setValueAt(amount, row, 7);
                             System.out.println("in else block");
+
+                            row = model.getRowCount();
+                            int i=0;
+                            while(i<row){
+                                sub_total = Float.parseFloat(model.getValueAt(row, 7).toString()) + sub_total;
+                                i++;
+                            }
+
+                            jTextField7.setText("" + sub_total);
                         }
 
                     }
-                    if(col==8)
-                    {  
+                    if (col == 8) {
                         item_id = model.getValueAt(row, 1).toString().substring(2);
                         item_name = model.getValueAt(row, 2).toString();
                         query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
-                        rs=stmt.executeQuery(query);
+                        rs = stmt.executeQuery(query);
                         System.out.println("Record fetched successfully.");
-                        if(rs.next())
-                        {   
+                        if (rs.next()) {
                             rate = rs.getFloat("price");
-                            gst= rs.getFloat("gst_slab");
+                            gst = rs.getFloat("gst_slab");
                         }
-                        int t_pcs = Integer.parseInt(model.getValueAt(row,3).toString());
-                        amount = t_pcs*rate;
-                        disc= (float) model.getValueAt(row,8);
-                        taxable=Math.abs(amount-disc);
-                        gst_amount=((taxable*gst)/100);
-                        disc_perc = ((disc/amount)*100);
-                        model.setValueAt(disc_perc,row,9);
-                        model.setValueAt(taxable,row,10);
-                        model.setValueAt(gst_amount,row,12);
-                        jTextField7.setText(""+amount);
-                        jTextField8.setText(""+disc);
-                        jTextField9.setText(""+(gst_amount/2));
-                        jTextField10.setText(""+(gst_amount/2));
-                        jTextField12.setText(""+(taxable+gst_amount));
+                        int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
+                        amount = t_pcs * rate;
+                        disc = (float) model.getValueAt(row, 8);
+                        taxable = Math.abs(amount - disc);
+                        gst_amount = ((taxable * gst) / 100);
+                        disc_perc = ((disc / amount) * 100);
+                        model.setValueAt(disc_perc, row, 9);
+                        model.setValueAt(taxable, row, 10);
+                        model.setValueAt(gst_amount, row, 12);
+
+                        row = model.getRowCount();
+                        int i=0;
+                        while(i<row){
+                            discount = Float.parseFloat(model.getValueAt(row, 8).toString()) + discount;
+                            gst_sum = Float.parseFloat(model.getValueAt(row, 12).toString()) + gst_sum;
+                            i++;
+                        }
+
+                        sub_total = Float.parseFloat(jTextField7.getText());
+                        jTextField8.setText("" + discount);
+                        sgst = gst_sum / 2;
+                        cgst = gst_sum / 2;
+                        jTextField9.setText("" + Math.round(sgst));
+                        jTextField10.setText("" + Math.round(cgst));
+                        jTextField12.setText("" + (sub_total + discount + sgst + cgst));
                     }
-                    if(col==9)
-                    {  
+                    if (col == 9) {
                         item_id = model.getValueAt(row, 1).toString().substring(2);
                         item_name = model.getValueAt(row, 2).toString();
                         query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
-                        rs=stmt.executeQuery(query);
+                        rs = stmt.executeQuery(query);
                         System.out.println("Record fetched successfully.");
-                        if(rs.next())
-                        {   
+                        if (rs.next()) {
                             rate = rs.getFloat("price");
-                            gst= rs.getFloat("gst_slab");
+                            gst = rs.getFloat("gst_slab");
                         }
-                        int t_pcs = Integer.parseInt(model.getValueAt(row,3).toString());
-                        amount = t_pcs*rate;
-                        disc_perc= (float) model.getValueAt(row,9);
-                        disc = (disc_perc*amount)/100;
-                        taxable=Math.abs(amount-disc);
-                        gst_amount=((taxable*gst)/100);
-                        model.setValueAt(disc,row,8);
-                        model.setValueAt(taxable,row,10);
-                        model.setValueAt(gst_amount,row,12);
-                        jTextField7.setText(""+amount);
-                        jTextField8.setText(""+disc);
-                        jTextField9.setText(""+(gst_amount/2));
-                        jTextField10.setText(""+(gst_amount/2));
-                        jTextField12.setText(""+(taxable+gst_amount));
+                        int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
+                        amount = t_pcs * rate;
+                        disc_perc = (float) model.getValueAt(row, 9);
+                        disc = (disc_perc * amount) / 100;
+                        taxable = Math.abs(amount - disc);
+                        gst_amount = ((taxable * gst) / 100);
+                        model.setValueAt(disc, row, 8);
+                        model.setValueAt(taxable, row, 10);
+                        model.setValueAt(gst_amount, row, 12);
+                        
+                        row = model.getRowCount();
+                        int i=0;
+                        while(i<row){
+                            discount = Float.parseFloat(model.getValueAt(row, 8).toString()) + discount;
+                            gst_sum = Float.parseFloat(model.getValueAt(row, 12).toString()) + gst_sum;
+                            i++;
+                        }
+
+                        sub_total = Float.parseFloat(jTextField7.getText());
+                        jTextField8.setText("" + discount);
+                        sgst = gst_sum / 2;
+                        cgst = gst_sum / 2;
+                        jTextField9.setText("" + Math.round(sgst));
+                        jTextField10.setText("" + Math.round(cgst));
+                        jTextField12.setText("" + (sub_total + discount + sgst + cgst));
+
                     }
 
                 } catch (ClassNotFoundException ex) {
@@ -408,12 +443,12 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 22);
+        jTextField1.setBounds(82, 14, 90, 24);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 49, 24);
+        jLabel10.setBounds(209, 14, 52, 24);
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
@@ -423,7 +458,7 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 22);
+        jTextField2.setBounds(279, 14, 90, 24);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -442,7 +477,7 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 22);
+        jTextField3.setBounds(483, 14, 90, 24);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -465,16 +500,16 @@ public class Sale extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 48, 16);
+        jLabel3.setBounds(20, 114, 54, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 69, 16);
+        jLabel4.setBounds(603, 18, 72, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 22);
+        jComboBox2.setBounds(705, 13, 98, 26);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -486,7 +521,7 @@ public class Sale extends javax.swing.JFrame {
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 22);
+        jTextField4.setBounds(705, 67, 121, 24);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -504,7 +539,7 @@ public class Sale extends javax.swing.JFrame {
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 22);
+        jTextField5.setBounds(705, 110, 121, 24);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -561,7 +596,7 @@ public class Sale extends javax.swing.JFrame {
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(764, 352, 70, 22);
+        jTextField11.setBounds(764, 352, 70, 24);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -642,7 +677,7 @@ public class Sale extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 478, 105);
+        jPanel3.setBounds(10, 350, 487, 109);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -683,14 +718,14 @@ public class Sale extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 69, 16);
+        jLabel20.setBounds(549, 412, 70, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 22);
+        jTextField12.setBounds(653, 408, 181, 24);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -699,7 +734,7 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 22);
+        jButton1.setBounds(570, 350, 90, 32);
 
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
