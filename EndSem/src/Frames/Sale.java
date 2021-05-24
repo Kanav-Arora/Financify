@@ -170,6 +170,7 @@ public class Sale extends javax.swing.JFrame {
                         if (rs.next()) {
                             pcs = rs.getInt("quantity");
                             rate = rs.getFloat("price");
+                            weight_per_bag = rs.getFloat("weight");
                         }
                         int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
                         if (t_pcs > pcs) {
@@ -177,17 +178,13 @@ public class Sale extends javax.swing.JFrame {
                         } else {
                             amount = (float) t_pcs * rate;
                             net_weight = (float) weight_per_bag * t_pcs;
-                            System.out.println(net_weight);
-                            System.out.println(t_pcs);
-                            System.out.println(rate);
                             model.setValueAt(net_weight, row, 4);
                             model.setValueAt(amount, row, 7);
-                            System.out.println("in else block");
 
                             row = model.getRowCount();
-                            int i=0;
-                            while(i<row){
-                                sub_total = Float.parseFloat(model.getValueAt(row, 7).toString()) + sub_total;
+                            int i = 0;
+                            while (i < row) {
+                                sub_total = Float.parseFloat(model.getValueAt(i, 7).toString()) + sub_total;
                                 i++;
                             }
 
@@ -217,10 +214,10 @@ public class Sale extends javax.swing.JFrame {
                         model.setValueAt(gst_amount, row, 12);
 
                         row = model.getRowCount();
-                        int i=0;
-                        while(i<row){
-                            discount = Float.parseFloat(model.getValueAt(row, 8).toString()) + discount;
-                            gst_sum = Float.parseFloat(model.getValueAt(row, 12).toString()) + gst_sum;
+                        int i = 0;
+                        while (i < row) {
+                            discount = Float.parseFloat(model.getValueAt(i, 8).toString()) + discount;
+                            gst_sum = Float.parseFloat(model.getValueAt(i, 12).toString()) + gst_sum;
                             i++;
                         }
 
@@ -252,12 +249,12 @@ public class Sale extends javax.swing.JFrame {
                         model.setValueAt(disc, row, 8);
                         model.setValueAt(taxable, row, 10);
                         model.setValueAt(gst_amount, row, 12);
-                        
+
                         row = model.getRowCount();
-                        int i=0;
-                        while(i<row){
-                            discount = Float.parseFloat(model.getValueAt(row, 8).toString()) + discount;
-                            gst_sum = Float.parseFloat(model.getValueAt(row, 12).toString()) + gst_sum;
+                        int i = 0;
+                        while (i < row) {
+                            discount = Float.parseFloat(model.getValueAt(i, 8).toString()) + discount;
+                            gst_sum = Float.parseFloat(model.getValueAt(i, 12).toString()) + gst_sum;
                             i++;
                         }
 
