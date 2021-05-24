@@ -63,7 +63,7 @@ public class Sale extends javax.swing.JFrame {
             jComboBox1.setSelectedItem("");
             AutoCompleteDecorator.decorate(jComboBox1);
 
-            String type = "bill";
+            String type = "sale";
             query = "select max(bill_no) from bill where username = '" + username + "' and type = '" + type + "'";
             System.out.println("Fetching acc_name from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
@@ -921,6 +921,16 @@ public class Sale extends javax.swing.JFrame {
             query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
             stmt.executeUpdate(query);
             
+            query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";
+            ResultSet rs1 = stmt.executeQuery(query);
+            int quantity_db =0;
+            if(rs1.next())
+            {
+                quantity_db = rs1.getInt("quantity");
+            }
+            
+            query = "UPDATE stocks SET quantity = '"+ (quantity_db - pcs) +"' where item_name = '"+ item_name +"' and username = '"+ username +"' ";
+            stmt.executeUpdate(query);
             } catch (SQLException ex) {
                 Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
             }
