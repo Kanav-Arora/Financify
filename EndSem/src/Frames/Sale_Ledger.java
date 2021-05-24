@@ -5,8 +5,6 @@
  */
 package Frames;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,7 +21,6 @@ import javax.swing.table.TableColumn;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
-import javax.swing.JTable;
 
 /**
  *
@@ -41,7 +38,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         initComponents();
         username = new Login().user;
         bill_number = new LedgerAccounts().bill;
-        jTextField1.setText();
     }
 
     public static float addgst(int gst, float rate) {

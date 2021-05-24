@@ -278,6 +278,28 @@ public class Sale extends javax.swing.JFrame {
 
     }
 
+    public static String rev(String date1) {
+        String findate = "";
+        String final1 = "";
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
+            findate = new SimpleDateFormat("yyyy/MM/dd").format(date);
+
+            for (int i = 0; i < findate.length(); i++) {
+                String ele = findate.substring(i, i + 1);
+                if (ele.equals("/")) {
+                    final1 = final1 + "-";
+                } else {
+                    final1 = final1 + ele;
+                }
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return final1;
+    }
+
     public static float addgst(int gst, float rate) {
         float net_rate = 0;
         net_rate = rate + ((float) gst / 100) * rate;
@@ -838,57 +860,81 @@ public class Sale extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
-        int i = 0;
-        int bill_no = Integer.parseInt(jTextField1.getText().substring(2));
+        String bill_no = jTextField1.getText();
+        int bill_no_int = Integer.parseInt(jTextField1.getText().substring(2));
         username = new Login().user;
         float subtotal = 0;
         float discount_total = 0;
         float gst_total = 0;
         float grand_total = 0;
+        float bill_amount = 0;
+        float quantity = 0;
+        float credit = 0;
+        float net_rate = 0;
+        float rate = 0;
+        float amount = 0;
+        float discount = 0;
+        float discount_perc = 0;
+        float taxable = 0;
+        float gst_perc = 0;
+        float gst = 0;
+        String query ="";
+        String date = "";
+        String due_date = "";
+        Statement stmt = null;
+        try {
+        Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+             stmt = (Statement) con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String acc_name = (String) jComboBox1.getSelectedItem();
         String type = "sale";
+        int i = 0;
         while (i < row) {
             int s_no = Integer.parseInt(model.getValueAt(i, 0).toString());
-            System.out.println(0);
             int item_id = Integer.parseInt(model.getValueAt(i, 1).toString().substring(2));
-            System.out.println(1);
             String item_name = (String) model.getValueAt(i, 2);
-            System.out.println(2);
             int pcs = (int) model.getValueAt(i, 3);
-            System.out.println(3);
-            float quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
-            System.out.println(4);
-            float net_rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 5)));
-            float rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 6)));
-            float amount = Float.parseFloat(String.valueOf(model.getValueAt(i, 7)));
-            float discount = Float.parseFloat(String.valueOf(model.getValueAt(i, 8)));
-            float discount_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 9)));
-            float taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
-            float gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
-            float gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
-            float bill_amount = 0;
-            float credit=0;        
+            quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
+            net_rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 5)));
+            rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 6)));
+            amount = Float.parseFloat(String.valueOf(model.getValueAt(i, 7)));
+            discount = Float.parseFloat(String.valueOf(model.getValueAt(i, 8)));
+            discount_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 9)));
+            taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
+            gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
+            gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
+
             subtotal += taxable;
             discount_total += discount;
             gst_total += gst;
-            bill_amount += taxable+gst_total;
+            bill_amount += Float.parseFloat(jTextField12.getText());
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+            date = rev(jTextField2.getText());
+            due_date = rev(jTextField3.getText());
+            
             try {
-                
-                
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                Statement stmt = (Statement) con.createStatement();
-                String query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
-                stmt.executeUpdate(query);
-                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
-
-            } catch (ClassNotFoundException | SQLException ex) {
+            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
+            stmt.executeUpdate(query);
+            
+            } catch (SQLException ex) {
                 Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
             }
-            i++;
             
+            i++;
         }
         
+        try {
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + credit + "','" + acc_name + "','" + username + "');";
+        stmt.executeUpdate(query);
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
