@@ -35,10 +35,97 @@ public class Sale_Ledger extends javax.swing.JFrame {
      * Creates new form Sale
      */
     public Sale_Ledger() {
-        initComponents();
-        username = new Login().user;
-        bill_number = new LedgerAccounts().bill;
+        try {
+            initComponents();
+            username = new Login().user;
+            bill_number = new LedgerAccounts().bill;
+
+            jTextField1.setText(bill_number);
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            System.out.println("Connection is created successfully");
+            Statement stmt = (Statement) con.createStatement();
+            
+            String query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "'";
+            System.out.println("Fetching items from database: jvp; table: bill");
+            ResultSet rs=stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
+            float taxable=0;
+            float disc=0;
+            float gst_amount=0;
+            String acc_name="";
+            float bill_amount=0;
+            int s_no=0;
+            if(rs.next())
+            {
+              taxable = rs.getFloat(1);
+              disc = rs.getFloat(2);
+              gst_amount = rs.getFloat(3);
+              s_no=rs.getInt(4);
+              acc_name=rs.getString("acc_name");
+              bill_amount = rs.getFloat("bill_amount"); 
+            }
+             
+            jComboBox1.setSelectedItem(""+acc_name);
+            jTextField7.setText(""+taxable);
+            jTextField8.setText(""+disc);
+            jTextField9.setText(""+(gst_amount/2));
+            jTextField10.setText(""+(gst_amount/2));
+            jTextField11.setText(""+s_no);
+            jTextField12.setText(""+bill_amount);
+            
+            for(int i=0;i<s_no;i++)
+            {   
+                model.addRow();
+                model.setValueAt(disc, i, 8);
+                model.setValueAt(taxable, i, 10);
+                model.setValueAt(gst_amount,i, 12);
+            }
+            
+            query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "'";
+            System.out.println("Adding all values of transactions from database: jvp, table: transactions");
+            rs = stmt.executeQuery(query);
+            System.out.println("Record count fetched successfully.");
+            float credit_total = 0;
+            float debit_total = 0;
+
+            if (rs.next()) {
+                debit_total = rs.getFloat(1);
+                credit_total = rs.getFloat(2);
+
+            }
+            if (credit_total > debit_total) {
+                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Cr");
+            } else {
+                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Dr");
+            }
+
+
+            query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc_name + "'" ;
+            rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                String address = rs.getString("address");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                String gst = rs.getString("gst");
+                int pincode = rs.getInt("pincode");
+                jTextField6.setText("" + address + "," + city + "," + state + " -" + pincode);
+                jTextField5.setText(gst);
+
+            }
+      
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+        
+    
 
     public static float addgst(int gst, float rate) {
         float net_rate = 0;
@@ -202,12 +289,12 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 24);
+        jTextField1.setBounds(82, 14, 90, 22);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 52, 24);
+        jLabel10.setBounds(209, 14, 49, 24);
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
@@ -217,7 +304,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 24);
+        jTextField2.setBounds(279, 14, 90, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -236,7 +323,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 24);
+        jTextField3.setBounds(483, 14, 90, 22);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -259,16 +346,16 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 54, 16);
+        jLabel3.setBounds(20, 114, 48, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 72, 16);
+        jLabel4.setBounds(603, 18, 69, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 26);
+        jComboBox2.setBounds(705, 13, 98, 22);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -280,7 +367,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 24);
+        jTextField4.setBounds(705, 67, 121, 22);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -298,7 +385,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 24);
+        jTextField5.setBounds(705, 110, 121, 22);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -355,7 +442,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(764, 352, 70, 24);
+        jTextField11.setBounds(764, 352, 70, 22);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -436,7 +523,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 487, 109);
+        jPanel3.setBounds(10, 350, 478, 105);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -477,14 +564,14 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 70, 16);
+        jLabel20.setBounds(549, 412, 69, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 24);
+        jTextField12.setBounds(653, 408, 181, 22);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -493,7 +580,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 32);
+        jButton1.setBounds(570, 350, 90, 22);
 
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
