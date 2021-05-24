@@ -7,6 +7,7 @@ package Frames;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.security.AccessControlContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -912,7 +913,7 @@ public class Sale extends javax.swing.JFrame {
             subtotal += taxable;
             discount_total += discount;
             gst_total += gst;
-            bill_amount += Float.parseFloat(jTextField12.getText());
+            bill_amount = Float.parseFloat(jTextField12.getText());
             SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
             date = rev(jTextField2.getText());
             due_date = rev(jTextField3.getText());
@@ -937,14 +938,23 @@ public class Sale extends javax.swing.JFrame {
             
             i++;
         }
-        
+        float balance_field = 0;
         try {
         query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + credit + "','" + acc_name + "','" + username + "');";
         stmt.executeUpdate(query);
+        String acc = (String) jComboBox1.getSelectedItem();
+        query = "SELECT sum(debit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
+        ResultSet rs1 = stmt.executeQuery(query);
+        
+        if(rs1.next())
+        {
+            jTextField4.setText("" + rs1.getFloat(1));
+        }
         
         } catch (SQLException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
