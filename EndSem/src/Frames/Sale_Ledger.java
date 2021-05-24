@@ -78,7 +78,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             
             for(int i=0;i<s_no;i++)
             {   
-                model.addRow();
+                model.addRow(new Object[]{i + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
                 model.setValueAt(disc, i, 8);
                 model.setValueAt(taxable, i, 10);
                 model.setValueAt(gst_amount,i, 12);
