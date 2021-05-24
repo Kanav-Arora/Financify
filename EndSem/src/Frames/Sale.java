@@ -866,22 +866,27 @@ public class Sale extends javax.swing.JFrame {
             float taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
             float gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
             float gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
-
+            float bill_amount = 0;
+            float credit=0;        
             subtotal += taxable;
             discount_total += discount;
             gst_total += gst;
+            bill_amount += taxable+gst_total;
             try {
+                
+                
                 Class.forName("java.sql.DriverManager");
                 Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
                 Statement stmt = (Statement) con.createStatement();
-                String query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "');";
-
+                String query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
                 stmt.executeUpdate(query);
+                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
 
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
             }
             i++;
+            
         }
         
     }//GEN-LAST:event_jLabel18MouseClicked
