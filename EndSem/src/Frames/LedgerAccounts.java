@@ -39,6 +39,7 @@ String username;
 DefaultTableModel model;
 int row;
 public static String bill ="";
+boolean bill_click = false;
     /**
      * Creates new form LedgerAccounts
      */
@@ -103,11 +104,22 @@ public static String bill ="";
                int row = target.getSelectedRow(); 
                model = (DefaultTableModel) jTable1.getModel();
                bill = model.getValueAt(row,1).toString();
-               
+               bill_click = true;
+               frameChange(true);
+               bill_click = false;
             }
          }
       });
         
+    }
+    
+    public void frameChange(boolean change)
+    {
+        if(change==true)
+        {
+            this.setVisible(false);
+            new Sale_Ledger().setVisible(true);
+        }
     }
     
     public static String rev(String date1)
