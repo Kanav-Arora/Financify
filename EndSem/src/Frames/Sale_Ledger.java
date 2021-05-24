@@ -29,14 +29,14 @@ import javax.swing.JTable;
  *
  * @author Kanav
  */
-public class Sale extends javax.swing.JFrame {
+public class Sale_Ledger extends javax.swing.JFrame {
 
     String username;
 
     /**
      * Creates new form Sale
      */
-    public Sale() {
+    public Sale_Ledger() {
         initComponents();
         username = new Login().user;
         try {
@@ -76,9 +76,9 @@ public class Sale extends javax.swing.JFrame {
             jTextField1.setText("B-" + (bill_no + 1));
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -269,9 +269,9 @@ public class Sale extends javax.swing.JFrame {
                     }
 
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
-                    Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -309,9 +309,9 @@ public class Sale extends javax.swing.JFrame {
             combo.setSelectedItem("");
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -340,9 +340,9 @@ public class Sale extends javax.swing.JFrame {
             combo.setSelectedItem("");
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -389,11 +389,13 @@ public class Sale extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -672,12 +674,19 @@ public class Sale extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 487, 109);
+        jPanel3.setBounds(10, 350, 0, 0);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
         jPanel1.add(jLabel16);
         jLabel16.setBounds(0, 490, 840, 16);
+
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Edit");
+        jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jPanel1.add(jLabel17);
+        jLabel17.setBounds(20, 510, 110, 32);
 
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -701,7 +710,7 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel19);
-        jLabel19.setBounds(20, 510, 110, 32);
+        jLabel19.setBounds(300, 510, 110, 32);
 
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
@@ -723,6 +732,13 @@ public class Sale extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1);
         jButton1.setBounds(570, 350, 90, 32);
+
+        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Delete");
+        jLabel21.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jPanel1.add(jLabel21);
+        jLabel21.setBounds(160, 510, 110, 32);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 850, 560));
 
@@ -830,7 +846,7 @@ public class Sale extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
@@ -879,7 +895,7 @@ public class Sale extends javax.swing.JFrame {
                 stmt.executeUpdate(query);
 
             } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
             }
             i++;
         }
@@ -895,7 +911,7 @@ public class Sale extends javax.swing.JFrame {
             this.setVisible(false);
             new Main().setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabel19MouseClicked
 
@@ -916,20 +932,21 @@ public class Sale extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sale.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Sale().setVisible(true);
+                new Sale_Ledger().setVisible(true);
             }
         });
     }
@@ -946,10 +963,12 @@ public class Sale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
