@@ -38,28 +38,33 @@ public class Sale_Ledger extends javax.swing.JFrame {
 
         try {
             initComponents();
-                jLabel2.setVisible(false);
-                jButton1.setVisible(false);
-                        
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                System.out.println("Connection is created successfully");
-                Statement stmt = (Statement) con.createStatement();
-                String query = "select acc_name from accounts where username = '" + username + "'";
-                System.out.println("Fetching acc_name from database: jvp; table: accounts");
-                ResultSet rs = stmt.executeQuery(query);
-                System.out.println("Record fetched successfully.");
-                for (;;) {
-                    if (rs.next()) {
-                        String item = rs.getString(1);
-                        jComboBox1.addItem(item);
-                    } else {
-                        break;
-                    }
+            jLabel2.setVisible(false);
+            jButton1.setVisible(false);
+            jLabel2.setVisible(false);
 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            String current_date = formatter.format(date);
+            jTextField2.setText(current_date);
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            System.out.println("Connection is created successfully");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select acc_name from accounts where username = '" + username + "'";
+            System.out.println("Fetching acc_name from database: jvp; table: accounts");
+            ResultSet rs = stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
+            for (;;) {
+                if (rs.next()) {
+                    String item = rs.getString(1);
+                    jComboBox1.addItem(item);
+                } else {
+                    break;
                 }
-                jComboBox1.setSelectedItem("");
-                AutoCompleteDecorator.decorate(jComboBox1);
+
+            }
+            jComboBox1.setSelectedItem("");
+            AutoCompleteDecorator.decorate(jComboBox1);
 
             username = new Login().user;
             bill_number = new LedgerAccounts().bill;
@@ -68,7 +73,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             System.out.println("Connection is created successfully");
-           
+
             query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "'";
             System.out.println("Fetching items from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
@@ -255,6 +260,25 @@ public class Sale_Ledger extends javax.swing.JFrame {
         }
     }
 
+    public boolean isCellEditable(int row, int column) { // custom isCellEditable function
+        boolean val = false;
+        if (column == 7) {
+            val = false;
+        } else if (column == 10) {
+            val = false;
+        } else if (column == 11) {
+            val = false;
+        } else if (column == 12) {
+            val = false;
+        } else if (column == 0) {
+            val = false;
+        } else {
+            val = true;
+        }
+
+        return val;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -349,12 +373,12 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 22);
+        jTextField1.setBounds(82, 14, 90, 24);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 49, 24);
+        jLabel10.setBounds(209, 14, 52, 24);
 
         jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
@@ -365,7 +389,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 22);
+        jTextField2.setBounds(279, 14, 90, 24);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -385,7 +409,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 22);
+        jTextField3.setBounds(483, 14, 90, 24);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -408,16 +432,16 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 48, 16);
+        jLabel3.setBounds(20, 114, 54, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 69, 16);
+        jLabel4.setBounds(603, 18, 72, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 22);
+        jComboBox2.setBounds(705, 13, 98, 26);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -429,7 +453,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 22);
+        jTextField4.setBounds(705, 67, 121, 24);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -447,7 +471,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 22);
+        jTextField5.setBounds(705, 110, 121, 24);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -464,7 +488,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, false, true, true, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -504,7 +528,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(764, 352, 70, 22);
+        jTextField11.setBounds(764, 352, 70, 24);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -585,7 +609,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 478, 105);
+        jPanel3.setBounds(10, 350, 487, 109);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -596,6 +620,11 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Edit");
         jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel17);
         jLabel17.setBounds(20, 510, 110, 32);
 
@@ -626,14 +655,14 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 69, 16);
+        jLabel20.setBounds(549, 412, 70, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 22);
+        jTextField12.setBounds(653, 408, 181, 24);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -642,7 +671,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 22);
+        jButton1.setBounds(570, 350, 90, 32);
 
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -821,6 +850,20 @@ public class Sale_Ledger extends javax.swing.JFrame {
         this.setVisible(false);
         new LedgerAccounts().setVisible(true);
     }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        jLabel2.setVisible(true);
+        jButton1.setVisible(true);
+        jLabel2.setVisible(true);
+
+        jTextField2.setEditable(true);
+        jTextField3.setEditable(true);
+        jTextField4.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+
+
+    }//GEN-LAST:event_jLabel17MouseClicked
 
     /**
      * @param args the command line arguments
