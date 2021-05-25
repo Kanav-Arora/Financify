@@ -5,6 +5,7 @@
  */
 package Frames;
 
+import static Frames.Sale.rev;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -80,7 +81,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             float bill_amount = 0;
             String item_id = "";
             String item_name = "";
-            float pcs = 0;
+            int pcs = 0;
             float quantity = 0;
             float rate = 0;
             float net_rate = 0;
@@ -648,6 +649,11 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Delete");
         jLabel21.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel21);
         jLabel21.setBounds(160, 510, 110, 32);
 
@@ -821,6 +827,52 @@ public class Sale_Ledger extends javax.swing.JFrame {
         this.setVisible(false);
         new LedgerAccounts().setVisible(true);
     }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int row = model.getRowCount();
+        model = (DefaultTableModel) jTable1.getModel();
+        String bill_no = jTextField1.getText();
+        int bill_no_int = Integer.parseInt(jTextField1.getText().substring(2));
+        username = new Login().user;
+        Statement stmt = null;
+        try {
+        Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+             stmt = (Statement) con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String acc_name = (String) jComboBox1.getSelectedItem();
+        
+        int i = 0;
+        while (i < row) {
+            String item_name = (String) model.getValueAt(i, 2);
+            int pcs = Integer.parseInt(model.getValueAt(i, 3).toString());
+            try {
+            String query = "";
+            ResultSet rs1;
+          
+            query = "UPDATE stocks SET quantity = quantity +'"+ pcs +"' where item_name = '"+ item_name +"' and username = '"+ username +"' ";
+            stmt.executeUpdate(query);
+          
+            query = "DELETE FROM bill where bill_no = '" + bill_no_int + "' and username='" + username + "' and type='"+"sale"+"';";
+            stmt.executeUpdate(query);
+            
+            query = "DELETE FROM transactions where bill_no = '" + bill_no + "' and username='" + username + "';";
+            stmt.executeUpdate(query);
+            
+            } catch (SQLException ex) {
+                Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            i++;
+        }
+        
+    }//GEN-LAST:event_jLabel21MouseClicked
 
     /**
      * @param args the command line arguments
