@@ -839,7 +839,6 @@ public class Sale extends javax.swing.JFrame {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = new Date();
             date = formatter.parse(bill_date);
-
             Calendar c = Calendar.getInstance();
             c.setTime(date);
             c.add(Calendar.DATE, credit_days);

@@ -5,6 +5,9 @@
  */
 package Frames;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.security.AccessControlContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,39 +24,34 @@ import javax.swing.table.TableColumn;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 
 /**
  *
  * @author Kanav
  */
-public class Sale_Ledger extends javax.swing.JFrame {
+public class Purchase extends javax.swing.JFrame {
 
     String username;
-    String bill_number;
 
     /**
      * Creates new form Sale
      */
-    public Sale_Ledger() {
-
+    public Purchase() {
+        initComponents();
+        username = new Login().user;
         try {
-            initComponents();
-            jLabel2.setVisible(false);
-            jButton1.setVisible(false);
-            jLabel2.setVisible(false);
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = new Date();
-            String current_date = formatter.format(date);
-            jTextField2.setText(current_date);
             Class.forName("java.sql.DriverManager");
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             System.out.println("Connection is created successfully");
             Statement stmt = (Statement) con.createStatement();
+
             String query = "select acc_name from accounts where username = '" + username + "'";
             System.out.println("Fetching acc_name from database: jvp; table: accounts");
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
+
             for (;;) {
                 if (rs.next()) {
                     String item = rs.getString(1);
@@ -61,135 +59,246 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 } else {
                     break;
                 }
-
             }
+
             jComboBox1.setSelectedItem("");
             AutoCompleteDecorator.decorate(jComboBox1);
 
-            username = new Login().user;
-            bill_number = new LedgerAccounts().bill;
-
-            jTextField1.setText(bill_number);
-
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            System.out.println("Connection is created successfully");
-
-            query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "'";
-            System.out.println("Fetching items from database: jvp; table: bill");
+            String type = "purchase";
+            query = "select max(bill_no) from bill where username = '" + username + "' and type = '" + type + "'";
+            System.out.println("Fetching acc_name from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
-            float taxable = 0;
-            float disc = 0;
-            float gst_amount = 0;
-            String acc_name = "";
-            float bill_amount = 0;
-            String item_id = "";
-            String item_name = "";
-            float pcs = 0;
-            float quantity = 0;
-            float rate = 0;
-            float net_rate = 0;
-            float amount = 0;
-            float disc_perc = 0;
-            int s_no = 0;
-            float gst_perc = 0;
+            int bill_no = 0;
             if (rs.next()) {
-                taxable = rs.getFloat(1);
-                disc = rs.getFloat(2);
-                gst_amount = rs.getFloat(3);
-                s_no = rs.getInt(4);
-                acc_name = rs.getString("acc_name");
-                bill_amount = rs.getFloat("bill_amount");
+                bill_no = rs.getInt(1);
             }
 
-            jComboBox1.setSelectedItem("" + acc_name);
-            jTextField7.setText("" + taxable);
-            jTextField8.setText("" + disc);
-            jTextField9.setText("" + (gst_amount / 2));
-            jTextField10.setText("" + (gst_amount / 2));
-            jTextField11.setText("" + s_no);
-            jTextField12.setText("" + bill_amount);
-
-            int i = 0;
-            while (i <= s_no) {
-
-                System.out.println(i);
-
-                query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' and s_no = '" + (i + 1) + "' ";
-                System.out.println("Fetching items from database: jvp; table: bill");
-                rs = stmt.executeQuery(query);
-                System.out.println("Record fetched successfully.");
-                if (rs.next()) {
-                    taxable = rs.getFloat("taxable");
-                    disc = rs.getFloat("disc");
-                    gst_amount = rs.getFloat("gst");
-                    s_no = rs.getInt("s_no");
-                    acc_name = rs.getString("acc_name");
-                    item_id = rs.getString("item_id");
-                    item_name = rs.getString("item_name");
-                    bill_amount = rs.getFloat("bill_amount");
-                    pcs = rs.getInt("pcs");
-                    quantity = rs.getFloat("quantity");
-                    net_rate = rs.getFloat("net_rate");
-                    rate = rs.getFloat("rate");
-                    amount = rs.getFloat("amount");
-                    disc_perc = rs.getFloat("disc_perc");
-                    gst_perc = rs.getFloat("gst_perc");
-                }
-                model.addRow(new Object[]{i + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-                model.setValueAt(s_no, i, 0);
-                model.setValueAt(item_id, i, 1);
-                model.setValueAt(item_name, i, 2);
-                model.setValueAt(pcs, i, 3);
-                model.setValueAt(quantity, i, 4);
-                model.setValueAt(rate, i, 5);
-                model.setValueAt(net_rate, i, 6);
-                model.setValueAt(amount, i, 7);
-                model.setValueAt(disc, i, 8);
-                model.setValueAt(disc_perc, i, 9);
-                model.setValueAt(taxable, i, 10);
-                model.setValueAt(gst_perc, i, 11);
-                model.setValueAt(gst_amount, i, 12);
-                i++;
-            }
-
-            query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "'";
-            System.out.println("Adding all values of transactions from database: jvp, table: transactions");
-            rs = stmt.executeQuery(query);
-            System.out.println("Record count fetched successfully.");
-            float credit_total = 0;
-            float debit_total = 0;
-
-            if (rs.next()) {
-                debit_total = rs.getFloat(1);
-                credit_total = rs.getFloat(2);
-
-            }
-            if (credit_total > debit_total) {
-                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Cr");
-            } else {
-                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Dr");
-            }
-
-            query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc_name + "'";
-            rs = stmt.executeQuery(query);
-
-            if (rs.next()) {
-                String address = rs.getString("address");
-                String city = rs.getString("city");
-                String state = rs.getString("state");
-                String gst = rs.getString("gst");
-                int pincode = rs.getInt("pincode");
-                jTextField6.setText("" + address + "," + city + "," + state + " -" + pincode);
-                jTextField5.setText(gst);
-
-            }
+            jTextField1.setText("P-" + (bill_no + 1));
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String current_date = formatter.format(date);
+        jTextField2.setText(current_date);
+        jTable1.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                JTable target = (JTable) e.getSource();
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                int row = target.getSelectedRow();
+                int col = target.getSelectedColumn();
+                String item_id = "";
+                int pcs = 0;
+                String item_name = "";
+                float weight_per_bag = 0;
+                float net_weight = 0;
+                float rate = 0;
+                float net_rate = 0;
+                float gst = 0;
+                float amount = 0;
+                float disc = 0;
+                float disc_perc = 0;
+                float gst_amount = 0;
+                float taxable = 0;
+                float sub_total = 0;
+                float cgst = 0;
+                float sgst = 0;
+                float gst_sum = 0;
+                float discount = 0;
+                float bill_amount = 0;
+
+                try {
+                    Class.forName("java.sql.DriverManager");
+                    Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+                    System.out.println("Connection is created successfully");
+                    Statement stmt = (Statement) con.createStatement();
+                    String query = "";
+                    ResultSet rs;
+
+                    if (col == 1) {
+                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "'";
+                        System.out.println("Fetching stock info from database: jvp; table: stocks");
+                        rs = stmt.executeQuery(query);
+                        System.out.println("Record fetched successfully.");
+                        if (rs.next()) {
+                            pcs = rs.getInt("quantity");
+                            rate = rs.getFloat("price");
+                            gst = rs.getFloat("gst_slab");
+                            item_name = rs.getString("item_name");
+                        }
+                        net_rate = rate + (rate * ((float) gst / 100));
+                        model.setValueAt(item_name, row, 2);
+                        model.setValueAt(net_rate, row, 6);
+                        model.setValueAt(rate, row, 5);
+                        model.setValueAt(gst, row, 11);
+                    }
+                    if (col == 2) {
+                        item_name = model.getValueAt(row, 2).toString();
+                        query = "select * from stocks where username = '" + username + "' and item_name = '" + item_name + "'";
+                        System.out.println("Fetching stock info from database: jvp; table: stocks");
+                        rs = stmt.executeQuery(query);
+                        System.out.println("Record fetched successfully.");
+                        if (rs.next()) {
+                            pcs = rs.getInt("quantity");
+                            rate = rs.getFloat("price");
+                            gst = rs.getFloat("gst_slab");
+                            weight_per_bag = rs.getFloat("weight");
+                            item_id = rs.getString("item_id");
+                        }
+                        net_rate = rate + (rate * ((float) gst / 100));
+                        int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
+                        net_weight = weight_per_bag * t_pcs;
+                        model.setValueAt(net_weight, row, 4);
+                        model.setValueAt("S-" + item_id, row, 1);
+                        model.setValueAt(net_rate, row, 6);
+                        model.setValueAt(rate, row, 5);
+                        model.setValueAt(gst, row, 11);
+
+                    }
+                    if (col == 3) {
+                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_name = model.getValueAt(row, 2).toString();
+                        query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
+                        System.out.println("Fetching stock info from database: jvp; table: stocks");
+                        rs = stmt.executeQuery(query);
+                        System.out.println("Record fetched successfully.");
+                        if (rs.next()) {
+                            pcs = rs.getInt("quantity");
+                            rate = rs.getFloat("price");
+                            weight_per_bag = rs.getFloat("weight");
+                        }
+                        int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
+                        if (t_pcs > pcs) {
+                            System.out.println("out of stock");
+                        } else {
+                            amount = (float) t_pcs * rate;
+                            net_weight = (float) weight_per_bag * t_pcs;
+                            model.setValueAt(net_weight, row, 4);
+                            model.setValueAt(amount, row, 7);
+
+                            row = model.getRowCount();
+                            int i = 0;
+                            while (i < row) {
+                                sub_total = Float.parseFloat(model.getValueAt(i, 7).toString()) + sub_total;
+                                i++;
+                            }
+
+                            jTextField7.setText("" + sub_total);
+                        }
+
+                    }
+                    if (col == 8) {
+                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_name = model.getValueAt(row, 2).toString();
+                        query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
+                        System.out.println("Fetching stock info from database: jvp; table: stocks");
+                        rs = stmt.executeQuery(query);
+                        System.out.println("Record fetched successfully.");
+                        if (rs.next()) {
+                            rate = rs.getFloat("price");
+                            gst = rs.getFloat("gst_slab");
+                        }
+                        int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
+                        amount = t_pcs * rate;
+                        disc = (float) model.getValueAt(row, 8);
+                        taxable = Math.abs(amount - disc);
+                        gst_amount = ((taxable * gst) / 100);
+                        disc_perc = ((disc / amount) * 100);
+                        model.setValueAt(disc_perc, row, 9);
+                        model.setValueAt(taxable, row, 10);
+                        model.setValueAt(gst_amount, row, 12);
+
+                        row = model.getRowCount();
+                        int i = 0;
+                        while (i < row) {
+                            discount = Float.parseFloat(model.getValueAt(i, 8).toString()) + discount;
+                            gst_sum = Float.parseFloat(model.getValueAt(i, 12).toString()) + gst_sum;
+                            i++;
+                        }
+
+                        sub_total = Float.parseFloat(jTextField7.getText());
+                        jTextField8.setText("" + discount);
+                        sgst = gst_sum / 2;
+                        cgst = gst_sum / 2;
+                        jTextField9.setText("" + Math.round(sgst));
+                        jTextField10.setText("" + Math.round(cgst));
+                        jTextField12.setText("" + (sub_total + discount + sgst + cgst));
+                    }
+                    if (col == 9) {
+                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_name = model.getValueAt(row, 2).toString();
+                        query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
+                        System.out.println("Fetching stock info from database: jvp; table: stocks");
+                        rs = stmt.executeQuery(query);
+                        System.out.println("Record fetched successfully.");
+                        if (rs.next()) {
+                            rate = rs.getFloat("price");
+                            gst = rs.getFloat("gst_slab");
+                        }
+                        int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
+                        amount = t_pcs * rate;
+                        disc_perc = (float) model.getValueAt(row, 9);
+                        disc = (disc_perc * amount) / 100;
+                        taxable = Math.abs(amount - disc);
+                        gst_amount = ((taxable * gst) / 100);
+                        model.setValueAt(disc, row, 8);
+                        model.setValueAt(taxable, row, 10);
+                        model.setValueAt(gst_amount, row, 12);
+
+                        row = model.getRowCount();
+                        int i = 0;
+                        while (i < row) {
+                            discount = Float.parseFloat(model.getValueAt(i, 8).toString()) + discount;
+                            gst_sum = Float.parseFloat(model.getValueAt(i, 12).toString()) + gst_sum;
+                            i++;
+                        }
+
+                        sub_total = Float.parseFloat(jTextField7.getText());
+                        jTextField8.setText("" + discount);
+                        sgst = gst_sum / 2;
+                        cgst = gst_sum / 2;
+                        jTextField9.setText("" + Math.round(sgst));
+                        jTextField10.setText("" + Math.round(cgst));
+                        jTextField12.setText("" + (sub_total + discount + sgst + cgst));
+
+                    }
+
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+    }
+
+    public static String rev(String date1) {
+        String findate = "";
+        String final1 = "";
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
+            findate = new SimpleDateFormat("yyyy/MM/dd").format(date);
+
+            for (int i = 0; i < findate.length(); i++) {
+                String ele = findate.substring(i, i + 1);
+                if (ele.equals("/")) {
+                    final1 = final1 + "-";
+                } else {
+                    final1 = final1 + ele;
+                }
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(LedgerAccounts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return final1;
     }
 
     public static float addgst(int gst, float rate) {
@@ -223,9 +332,9 @@ public class Sale_Ledger extends javax.swing.JFrame {
             combo.setSelectedItem("");
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -254,29 +363,10 @@ public class Sale_Ledger extends javax.swing.JFrame {
             combo.setSelectedItem("");
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public boolean isCellEditable(int row, int column) { // custom isCellEditable function
-        boolean val = false;
-        if (column == 7) {
-            val = false;
-        } else if (column == 10) {
-            val = false;
-        } else if (column == 11) {
-            val = false;
-        } else if (column == 12) {
-            val = false;
-        } else if (column == 0) {
-            val = false;
-        } else {
-            val = true;
-        }
-
-        return val;
     }
 
     /**
@@ -322,20 +412,18 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(23, 35, 51));
 
-        jLabel1.setText("Sale Bill");
+        jLabel1.setText("Purchase");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -344,7 +432,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addContainerGap(789, Short.MAX_VALUE))
+                .addContainerGap(788, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,7 +452,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jPanel1.add(jLabel9);
         jLabel9.setBounds(14, 14, 50, 24);
 
-        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -373,14 +460,13 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 24);
+        jTextField1.setBounds(82, 14, 90, 22);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 52, 24);
+        jLabel10.setBounds(209, 14, 51, 24);
 
-        jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -389,7 +475,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 24);
+        jTextField2.setBounds(279, 14, 90, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -400,7 +486,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jPanel1.add(jComboBox1);
         jComboBox1.setBounds(20, 64, 320, 31);
 
-        jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jTextField3.setForeground(new java.awt.Color(0, 0, 0));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
@@ -409,7 +494,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 24);
+        jTextField3.setBounds(483, 14, 90, 22);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -432,16 +517,16 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 54, 16);
+        jLabel3.setBounds(20, 114, 48, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Cash/Credit :");
+        jLabel4.setText("Cash/Debit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 72, 16);
+        jLabel4.setBounds(603, 18, 65, 16);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 26);
+        jComboBox2.setBounds(705, 13, 98, 22);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -453,7 +538,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 24);
+        jTextField4.setBounds(705, 67, 121, 22);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -471,7 +556,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 24);
+        jTextField5.setBounds(705, 110, 121, 22);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -488,7 +573,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, true, true, true, true, true, true, false, true, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -528,7 +613,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(764, 352, 70, 24);
+        jTextField11.setBounds(764, 352, 70, 22);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -609,24 +694,12 @@ public class Sale_Ledger extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 487, 109);
+        jPanel3.setBounds(10, 350, 478, 105);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
         jPanel1.add(jLabel16);
         jLabel16.setBounds(0, 490, 840, 16);
-
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Edit");
-        jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
-        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel17MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(20, 510, 110, 32);
 
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -650,19 +723,19 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel19);
-        jLabel19.setBounds(300, 510, 110, 32);
+        jLabel19.setBounds(20, 510, 110, 32);
 
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 70, 16);
+        jLabel20.setBounds(549, 412, 68, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 24);
+        jTextField12.setBounds(653, 408, 181, 22);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -671,14 +744,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 32);
-
-        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Delete");
-        jLabel21.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
-        jPanel1.add(jLabel21);
-        jLabel21.setBounds(160, 510, 110, 32);
+        jButton1.setBounds(570, 350, 90, 22);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 850, 560));
 
@@ -786,7 +852,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
@@ -794,52 +860,100 @@ public class Sale_Ledger extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
-        int i = 0;
-        int bill_no = Integer.parseInt(jTextField1.getText().substring(2));
+        String bill_no = jTextField1.getText();
+        int bill_no_int = Integer.parseInt(jTextField1.getText().substring(2));
         username = new Login().user;
         float subtotal = 0;
         float discount_total = 0;
         float gst_total = 0;
         float grand_total = 0;
+        float bill_amount = 0;
+        float quantity = 0;
+        float debit = 0;
+        float net_rate = 0;
+        float rate = 0;
+        float amount = 0;
+        float discount = 0;
+        float discount_perc = 0;
+        float taxable = 0;
+        float gst_perc = 0;
+        float gst = 0;
+        String query ="";
+        String date = "";
+        String due_date = "";
+        Statement stmt = null;
+        try {
+        Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+             stmt = (Statement) con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String acc_name = (String) jComboBox1.getSelectedItem();
-        String type = "sale";
+        String type = "purchase";
+        int i = 0;
         while (i < row) {
             int s_no = Integer.parseInt(model.getValueAt(i, 0).toString());
-            System.out.println(0);
             int item_id = Integer.parseInt(model.getValueAt(i, 1).toString().substring(2));
-            System.out.println(1);
             String item_name = (String) model.getValueAt(i, 2);
-            System.out.println(2);
             int pcs = (int) model.getValueAt(i, 3);
-            System.out.println(3);
-            float quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
-            System.out.println(4);
-            float net_rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 5)));
-            float rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 6)));
-            float amount = Float.parseFloat(String.valueOf(model.getValueAt(i, 7)));
-            float discount = Float.parseFloat(String.valueOf(model.getValueAt(i, 8)));
-            float discount_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 9)));
-            float taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
-            float gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
-            float gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
+            quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
+            net_rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 5)));
+            rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 6)));
+            amount = Float.parseFloat(String.valueOf(model.getValueAt(i, 7)));
+            discount = Float.parseFloat(String.valueOf(model.getValueAt(i, 8)));
+            discount_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 9)));
+            taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
+            gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
+            gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
 
             subtotal += taxable;
             discount_total += discount;
             gst_total += gst;
+            bill_amount = Float.parseFloat(jTextField12.getText());
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+            date = rev(jTextField2.getText());
+            due_date = rev(jTextField3.getText());
+            
             try {
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                Statement stmt = (Statement) con.createStatement();
-                String query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "');";
-
-                stmt.executeUpdate(query);
-
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
+            stmt.executeUpdate(query);
+            
+            query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";
+            ResultSet rs1 = stmt.executeQuery(query);
+            int quantity_db =0;
+            if(rs1.next())
+            {
+                quantity_db = rs1.getInt("quantity");
             }
+            
+            query = "UPDATE stocks SET quantity = '"+ (quantity_db + pcs) +"' where item_name = '"+ item_name +"' and username = '"+ username +"' ";
+            stmt.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             i++;
         }
-
+        float balance_field = 0;
+        try {
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + debit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
+        stmt.executeUpdate(query);
+        String acc = (String) jComboBox1.getSelectedItem();
+        query = "SELECT sum(credit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
+        ResultSet rs1 = stmt.executeQuery(query);
+        
+        if(rs1.next())
+        {
+            jTextField4.setText("" + rs1.getFloat(1));
+        }
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
@@ -847,23 +961,13 @@ public class Sale_Ledger extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1KeyReleased
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
-        this.setVisible(false);
-        new LedgerAccounts().setVisible(true);
+        try {
+            this.setVisible(false);
+            new Main().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel19MouseClicked
-
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        jLabel2.setVisible(true);
-        jButton1.setVisible(true);
-        jLabel2.setVisible(true);
-
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
-
-
-    }//GEN-LAST:event_jLabel17MouseClicked
 
     /**
      * @param args the command line arguments
@@ -882,13 +986,13 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Purchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Purchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Purchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sale_Ledger.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Purchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -896,7 +1000,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Sale_Ledger().setVisible(true);
+                new Purchase().setVisible(true);
             }
         });
     }
@@ -913,12 +1017,10 @@ public class Sale_Ledger extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
