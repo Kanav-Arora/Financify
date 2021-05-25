@@ -35,55 +35,119 @@ public class Sale_Ledger extends javax.swing.JFrame {
      * Creates new form Sale
      */
     public Sale_Ledger() {
+
         try {
             initComponents();
+                jLabel2.setVisible(false);
+                jButton1.setVisible(false);
+                        
+                Class.forName("java.sql.DriverManager");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+                System.out.println("Connection is created successfully");
+                Statement stmt = (Statement) con.createStatement();
+                String query = "select acc_name from accounts where username = '" + username + "'";
+                System.out.println("Fetching acc_name from database: jvp; table: accounts");
+                ResultSet rs = stmt.executeQuery(query);
+                System.out.println("Record fetched successfully.");
+                for (;;) {
+                    if (rs.next()) {
+                        String item = rs.getString(1);
+                        jComboBox1.addItem(item);
+                    } else {
+                        break;
+                    }
+
+                }
+                jComboBox1.setSelectedItem("");
+                AutoCompleteDecorator.decorate(jComboBox1);
+
             username = new Login().user;
             bill_number = new LedgerAccounts().bill;
 
             jTextField1.setText(bill_number);
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             System.out.println("Connection is created successfully");
-            Statement stmt = (Statement) con.createStatement();
-            
-            String query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "'";
+           
+            query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "'";
             System.out.println("Fetching items from database: jvp; table: bill");
-            ResultSet rs=stmt.executeQuery(query);
+            rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
-            float taxable=0;
-            float disc=0;
-            float gst_amount=0;
-            String acc_name="";
-            float bill_amount=0;
-            int s_no=0;
-            if(rs.next())
-            {
-              taxable = rs.getFloat(1);
-              disc = rs.getFloat(2);
-              gst_amount = rs.getFloat(3);
-              s_no=rs.getInt(4);
-              acc_name=rs.getString("acc_name");
-              bill_amount = rs.getFloat("bill_amount"); 
+            float taxable = 0;
+            float disc = 0;
+            float gst_amount = 0;
+            String acc_name = "";
+            float bill_amount = 0;
+            String item_id = "";
+            String item_name = "";
+            float pcs = 0;
+            float quantity = 0;
+            float rate = 0;
+            float net_rate = 0;
+            float amount = 0;
+            float disc_perc = 0;
+            int s_no = 0;
+            float gst_perc = 0;
+            if (rs.next()) {
+                taxable = rs.getFloat(1);
+                disc = rs.getFloat(2);
+                gst_amount = rs.getFloat(3);
+                s_no = rs.getInt(4);
+                acc_name = rs.getString("acc_name");
+                bill_amount = rs.getFloat("bill_amount");
             }
-             
-            jComboBox1.setSelectedItem(""+acc_name);
-            jTextField7.setText(""+taxable);
-            jTextField8.setText(""+disc);
-            jTextField9.setText(""+(gst_amount/2));
-            jTextField10.setText(""+(gst_amount/2));
-            jTextField11.setText(""+s_no);
-            jTextField12.setText(""+bill_amount);
-            
-            for(int i=0;i<s_no;i++)
-            {   
+
+            jComboBox1.setSelectedItem("" + acc_name);
+            jTextField7.setText("" + taxable);
+            jTextField8.setText("" + disc);
+            jTextField9.setText("" + (gst_amount / 2));
+            jTextField10.setText("" + (gst_amount / 2));
+            jTextField11.setText("" + s_no);
+            jTextField12.setText("" + bill_amount);
+
+            int i = 0;
+            while (i <= s_no) {
+
+                System.out.println(i);
+
+                query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' and s_no = '" + (i + 1) + "' ";
+                System.out.println("Fetching items from database: jvp; table: bill");
+                rs = stmt.executeQuery(query);
+                System.out.println("Record fetched successfully.");
+                if (rs.next()) {
+                    taxable = rs.getFloat("taxable");
+                    disc = rs.getFloat("disc");
+                    gst_amount = rs.getFloat("gst");
+                    s_no = rs.getInt("s_no");
+                    acc_name = rs.getString("acc_name");
+                    item_id = rs.getString("item_id");
+                    item_name = rs.getString("item_name");
+                    bill_amount = rs.getFloat("bill_amount");
+                    pcs = rs.getInt("pcs");
+                    quantity = rs.getFloat("quantity");
+                    net_rate = rs.getFloat("net_rate");
+                    rate = rs.getFloat("rate");
+                    amount = rs.getFloat("amount");
+                    disc_perc = rs.getFloat("disc_perc");
+                    gst_perc = rs.getFloat("gst_perc");
+                }
                 model.addRow(new Object[]{i + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+                model.setValueAt(s_no, i, 0);
+                model.setValueAt(item_id, i, 1);
+                model.setValueAt(item_name, i, 2);
+                model.setValueAt(pcs, i, 3);
+                model.setValueAt(quantity, i, 4);
+                model.setValueAt(rate, i, 5);
+                model.setValueAt(net_rate, i, 6);
+                model.setValueAt(amount, i, 7);
                 model.setValueAt(disc, i, 8);
+                model.setValueAt(disc_perc, i, 9);
                 model.setValueAt(taxable, i, 10);
-                model.setValueAt(gst_amount,i, 12);
+                model.setValueAt(gst_perc, i, 11);
+                model.setValueAt(gst_amount, i, 12);
+                i++;
             }
-            
+
             query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "'";
             System.out.println("Adding all values of transactions from database: jvp, table: transactions");
             rs = stmt.executeQuery(query);
@@ -102,8 +166,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Dr");
             }
 
-
-            query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc_name + "'" ;
+            query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc_name + "'";
             rs = stmt.executeQuery(query);
 
             if (rs.next()) {
@@ -116,7 +179,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 jTextField5.setText(gst);
 
             }
-      
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,8 +186,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
             Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-    
 
     public static float addgst(int gst, float rate) {
         float net_rate = 0;
@@ -296,6 +356,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jPanel1.add(jLabel10);
         jLabel10.setBounds(209, 14, 49, 24);
 
+        jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -315,6 +376,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jPanel1.add(jComboBox1);
         jComboBox1.setBounds(20, 64, 320, 31);
 
+        jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jTextField3.setForeground(new java.awt.Color(0, 0, 0));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
