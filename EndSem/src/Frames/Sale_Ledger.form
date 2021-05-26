@@ -365,15 +365,15 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="13" rowCount="0">
                     <Column editable="false" title="SNo" type="java.lang.Integer"/>
-                    <Column editable="false" title="Item ID" type="java.lang.Object"/>
-                    <Column editable="false" title="Item Name" type="java.lang.Object"/>
-                    <Column editable="false" title="Pcs" type="java.lang.Integer"/>
-                    <Column editable="false" title="Qty (kg)" type="java.lang.Float"/>
-                    <Column editable="false" title="Rate" type="java.lang.Float"/>
-                    <Column editable="false" title="Net Rate" type="java.lang.Float"/>
+                    <Column editable="true" title="Item ID" type="java.lang.Object"/>
+                    <Column editable="true" title="Item Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Pcs" type="java.lang.Integer"/>
+                    <Column editable="true" title="Qty (kg)" type="java.lang.Float"/>
+                    <Column editable="true" title="Rate" type="java.lang.Float"/>
+                    <Column editable="true" title="Net Rate" type="java.lang.Float"/>
                     <Column editable="false" title="Amount" type="java.lang.Float"/>
-                    <Column editable="false" title="Discount" type="java.lang.Float"/>
-                    <Column editable="false" title="Disc (%)" type="java.lang.Float"/>
+                    <Column editable="true" title="Discount" type="java.lang.Float"/>
+                    <Column editable="true" title="Disc (%)" type="java.lang.Float"/>
                     <Column editable="false" title="Taxable" type="java.lang.Float"/>
                     <Column editable="false" title="GST (%)" type="java.lang.Float"/>
                     <Column editable="false" title="GST" type="java.lang.Float"/>
@@ -802,9 +802,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel21MouseClicked"/>
-          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="160" y="510" width="110" height="32"/>

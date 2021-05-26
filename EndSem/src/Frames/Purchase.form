@@ -239,11 +239,11 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cash/Debit :"/>
+            <Property name="text" type="java.lang.String" value="Cash/Credit :"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="603" y="18" width="-1" height="-1"/>
+              <AbsoluteConstraints x="603" y="18" width="80" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -251,7 +251,7 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
-                <StringItem index="0" value="Debit"/>
+                <StringItem index="0" value="Credit"/>
                 <StringItem index="1" value="Cash"/>
               </StringArray>
             </Property>

@@ -30,6 +30,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
 
     String username;
     String bill_number;
+    boolean edit_on = false;
 
     /**
      * Creates new form Sale
@@ -41,7 +42,8 @@ public class Sale_Ledger extends javax.swing.JFrame {
             jLabel2.setVisible(false);
             jButton1.setVisible(false);
             jLabel2.setVisible(false);
-
+            jComboBox1.setEnabled(false);
+            jComboBox2.setEnabled(false);
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = new Date();
             String current_date = formatter.format(date);
@@ -85,7 +87,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             float bill_amount = 0;
             String item_id = "";
             String item_name = "";
-            float pcs = 0;
+            int pcs = 0;
             float quantity = 0;
             float rate = 0;
             float net_rate = 0;
@@ -111,7 +113,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             jTextField12.setText("" + bill_amount);
 
             int i = 0;
-            while (i <= s_no) {
+            while (i <s_no) {
 
                 System.out.println(i);
 
@@ -173,17 +175,30 @@ public class Sale_Ledger extends javax.swing.JFrame {
 
             query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc_name + "'";
             rs = stmt.executeQuery(query);
-
+            int credit_days =0;
             if (rs.next()) {
                 String address = rs.getString("address");
                 String city = rs.getString("city");
                 String state = rs.getString("state");
                 String gst = rs.getString("gst");
+                credit_days = rs.getInt("credit_days");
                 int pincode = rs.getInt("pincode");
                 jTextField6.setText("" + address + "," + city + "," + state + " -" + pincode);
                 jTextField5.setText(gst);
 
             }
+            
+            Calendar c = Calendar.getInstance();
+            try {
+            c.setTime(formatter.parse(current_date));
+            } catch (ParseException ex) {
+                Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            c.add(Calendar.DAY_OF_MONTH, credit_days);
+            String final_date = formatter.format(c.getTime());
+            jTextField3.setText(final_date);
+            
+            jTable1.setEnabled(false);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,27 +273,12 @@ public class Sale_Ledger extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
+    
+    
 
-    public boolean isCellEditable(int row, int column) { // custom isCellEditable function
-        boolean val = false;
-        if (column == 7) {
-            val = false;
-        } else if (column == 10) {
-            val = false;
-        } else if (column == 11) {
-            val = false;
-        } else if (column == 12) {
-            val = false;
-        } else if (column == 0) {
-            val = false;
-        } else {
-            val = true;
-        }
-
-        return val;
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -488,7 +488,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, true, true, true, true, true, true, false, true, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -725,71 +725,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField11.setText("" + row);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // TODO add your handling code here:
-        String acc = (String) jComboBox1.getSelectedItem();
-        String bill_date = jTextField2.getText();
-        int credit_days = 0;
-
-        try {
-            // TODO add your handling code here:
-
-            Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-            Statement stmt = (Statement) con.createStatement();
-            String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
-            ResultSet rs = stmt.executeQuery(query);
-
-            if (rs.next()) {
-                credit_days = rs.getInt("credit_days");
-                String address = rs.getString("address");
-                String city = rs.getString("city");
-                String state = rs.getString("state");
-                String gst = rs.getString("gst");
-                int pincode = rs.getInt("pincode");
-                jTextField6.setText("" + address + "," + city + "," + state + " -" + pincode);
-                jTextField5.setText(gst);
-
-            }
-            query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "' and acc_name = '" + acc + "'";
-            System.out.println("Adding all values of transactions from database: jvp, table: transactions");
-            rs = stmt.executeQuery(query);
-            System.out.println("Record count fetched successfully.");
-            float credit_total = 0;
-            float debit_total = 0;
-
-            if (rs.next()) {
-                debit_total = rs.getFloat(1);
-                credit_total = rs.getFloat(2);
-
-            }
-            if (credit_total > debit_total) {
-                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Cr");
-            } else {
-                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Dr");
-            }
-
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = new Date();
-            date = formatter.parse(bill_date);
-//            LocalDateTime.from(date.toInstant()).plusDays(credit_days);
-
-            Calendar c = Calendar.getInstance();
-            c.setTime(date);
-            c.add(Calendar.DATE, credit_days);
-            date = c.getTime();
-            String final_date = formatter.format(date);
-            jTextField3.setText(final_date);
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jLabel2MouseClicked
-
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
@@ -852,18 +787,71 @@ public class Sale_Ledger extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel19MouseClicked
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        edit_on = true;
+        jTable1.setEnabled(true);
         jLabel2.setVisible(true);
         jButton1.setVisible(true);
         jLabel2.setVisible(true);
-
+        jComboBox1.setEnabled(true);
+        jComboBox2.setEnabled(true);
         jTextField2.setEditable(true);
         jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
 
 
     }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        String acc = (String) jComboBox1.getSelectedItem();
+        String bill_date = jTextField2.getText();
+        int credit_days = 0;
+
+        try {
+            // TODO add your handling code here:
+
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc + "'";
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                credit_days = rs.getInt("credit_days");
+                String address = rs.getString("address");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                String gst = rs.getString("gst");
+                int pincode = rs.getInt("pincode");
+                jTextField6.setText("" + address + "," + city + "," + state + " -" + pincode);
+                jTextField5.setText(gst);
+
+            }
+            query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "' and acc_name = '" + acc + "'";
+            System.out.println("Adding all values of transactions from database: jvp, table: transactions");
+            rs = stmt.executeQuery(query);
+            System.out.println("Record count fetched successfully.");
+            float credit_total = 0;
+            float debit_total = 0;
+
+            if (rs.next()) {
+                debit_total = rs.getFloat(1);
+                credit_total = rs.getFloat(2);
+
+            }
+            if (credit_total > debit_total) {
+                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Cr");
+            } else {
+                jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Dr");
+            }
+
+            
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
