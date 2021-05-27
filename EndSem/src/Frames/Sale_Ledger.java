@@ -117,12 +117,13 @@ public class Sale_Ledger extends javax.swing.JFrame {
             System.out.println("Fetching items from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
-            int i = 0;
-            while (i <=s_no) {
-                System.out.println(i);
+            int row=0;
+            for(;;)
+            {
                 System.out.println(rs.next());
-                if (rs.next()) {
-                    
+                if (rs.next()==true) {
+                    System.out.println("i m in rs.next");
+                    model = (DefaultTableModel) jTable1.getModel();
                     taxable = rs.getFloat("taxable");
                     disc = rs.getFloat("disc");
                     gst_amount = rs.getFloat("gst");
@@ -138,23 +139,28 @@ public class Sale_Ledger extends javax.swing.JFrame {
                     amount = rs.getFloat("amount");
                     disc_perc = rs.getFloat("disc_perc");
                     gst_perc = rs.getFloat("gst_perc");
-                    model.addRow(new Object[]{i + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-                    model.setValueAt(s_no, i, 0);
-                    model.setValueAt(item_id, i, 1);
-                    model.setValueAt(item_name, i, 2);
-                    model.setValueAt(pcs, i, 3);
-                    model.setValueAt(quantity, i, 4);
-                    model.setValueAt(rate, i, 5);
-                    model.setValueAt(net_rate, i, 6);
-                    model.setValueAt(amount, i, 7);
-                    model.setValueAt(disc, i, 8);
-                    model.setValueAt(disc_perc, i, 9);
-                    model.setValueAt(taxable, i, 10);
-                    model.setValueAt(gst_perc, i, 11);
-                    model.setValueAt(gst_amount, i, 12);
-                    
+                    model.addRow(new Object[]{row+1 , null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+                    model.setValueAt(s_no, row, 0);
+                    model.setValueAt(item_id, row, 1);
+                    model.setValueAt(item_name, row, 2);
+                    model.setValueAt(pcs, row, 3);
+                    model.setValueAt(quantity, row, 4);
+                    model.setValueAt(rate, row, 5);
+                    model.setValueAt(net_rate, row, 6);
+                    model.setValueAt(amount, row, 7);
+                    model.setValueAt(disc, row, 8);
+                    model.setValueAt(disc_perc, row, 9);
+                    model.setValueAt(taxable, row, 10);
+                    model.setValueAt(gst_perc, row, 11);
+                    model.setValueAt(gst_amount, row, 12);
+                    jTable1.setModel(model);
+                    ++row;
                 }
-                ++i;
+                else
+                {
+                    break;
+                }
+               
             }
 
             query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "'";
