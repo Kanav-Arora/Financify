@@ -24,6 +24,8 @@ import javax.swing.table.TableColumn;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -856,6 +858,10 @@ public class Sale extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        
+        JFrame j=new JFrame();
+        JOptionPane.showMessageDialog(j,"Bill Generated");
+        
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
@@ -881,11 +887,17 @@ public class Sale extends javax.swing.JFrame {
         String date = "";
         String due_date = "";
         Statement stmt = null;
+        int cheque_number=0;
+        String status="cleared";
+        String status1 ="pending";
+        String payment_type =(String) jComboBox2.getSelectedItem();
+
         try {
         Class.forName("java.sql.DriverManager");
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
              stmt = (Statement) con.createStatement();
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
@@ -915,11 +927,17 @@ public class Sale extends javax.swing.JFrame {
             SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
             date = rev(jTextField2.getText());
             due_date = rev(jTextField3.getText());
-            
             try {
-            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
+            if(payment_type.equals("Cash"))
+            {     
+            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
             stmt.executeUpdate(query);
-            
+            }
+            if(payment_type.equals("Credit"))
+            { 
+            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status1 + "');";
+            stmt.executeUpdate(query);
+            }
             query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";
             ResultSet rs1 = stmt.executeQuery(query);
             int quantity_db =0;
@@ -930,29 +948,46 @@ public class Sale extends javax.swing.JFrame {
             
             query = "UPDATE stocks SET quantity = '"+ (quantity_db - pcs) +"' where item_name = '"+ item_name +"' and username = '"+ username +"' ";
             stmt.executeUpdate(query);
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             i++;
         }
-        float balance_field = 0;
+        
         try {
+        if(payment_type.equals("Cash"))
+        { 
         query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + credit + "','" + acc_name + "','" + username + "');";
         stmt.executeUpdate(query);
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + credit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
+        stmt.executeUpdate(query);
+        query = "INSERT INTO voucher VALUES('" + bill_no + "','" + date + "','" + payment_type + "','" + amount + "','" + "" + type + "','" + username + "','" + "" +cheque_number+ "');";
+        stmt.executeUpdate(query);
+
+        }
+        else
+        { 
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + credit + "','" + acc_name + "','" + username + "');";
+        stmt.executeUpdate(query);
+        }
+         
         String acc = (String) jComboBox1.getSelectedItem();
-        query = "SELECT sum(debit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
+        query = "SELECT sum(debit),sum(credit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
         ResultSet rs1 = stmt.executeQuery(query);
         
         if(rs1.next())
         {
-            jTextField4.setText("" + rs1.getFloat(1));
+          float debit=rs1.getFloat(1);
+          float credit1=rs1.getFloat(2);
+          float balance=Math.abs(debit-credit1);
+          jTextField4.setText("" +balance);
         }
         
         } catch (SQLException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
