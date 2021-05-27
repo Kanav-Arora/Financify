@@ -112,16 +112,16 @@ public class Sale_Ledger extends javax.swing.JFrame {
             jTextField11.setText("" + s_no);
             jTextField12.setText("" + bill_amount);
 
+            query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' order by s_no";
+            System.out.println("Fetching items from database: jvp; table: bill");
+            rs = stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
             int i = 0;
-            while (i <s_no) {
-
+            while (i <=s_no) {
                 System.out.println(i);
-
-                query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' and s_no = '" + (i + 1) + "' ";
-                System.out.println("Fetching items from database: jvp; table: bill");
-                rs = stmt.executeQuery(query);
-                System.out.println("Record fetched successfully.");
+                System.out.println(rs.next());
                 if (rs.next()) {
+                    
                     taxable = rs.getFloat("taxable");
                     disc = rs.getFloat("disc");
                     gst_amount = rs.getFloat("gst");
@@ -137,22 +137,23 @@ public class Sale_Ledger extends javax.swing.JFrame {
                     amount = rs.getFloat("amount");
                     disc_perc = rs.getFloat("disc_perc");
                     gst_perc = rs.getFloat("gst_perc");
+                    model.addRow(new Object[]{i + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+                    model.setValueAt(s_no, i, 0);
+                    model.setValueAt(item_id, i, 1);
+                    model.setValueAt(item_name, i, 2);
+                    model.setValueAt(pcs, i, 3);
+                    model.setValueAt(quantity, i, 4);
+                    model.setValueAt(rate, i, 5);
+                    model.setValueAt(net_rate, i, 6);
+                    model.setValueAt(amount, i, 7);
+                    model.setValueAt(disc, i, 8);
+                    model.setValueAt(disc_perc, i, 9);
+                    model.setValueAt(taxable, i, 10);
+                    model.setValueAt(gst_perc, i, 11);
+                    model.setValueAt(gst_amount, i, 12);
+                    
                 }
-                model.addRow(new Object[]{i + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-                model.setValueAt(s_no, i, 0);
-                model.setValueAt(item_id, i, 1);
-                model.setValueAt(item_name, i, 2);
-                model.setValueAt(pcs, i, 3);
-                model.setValueAt(quantity, i, 4);
-                model.setValueAt(rate, i, 5);
-                model.setValueAt(net_rate, i, 6);
-                model.setValueAt(amount, i, 7);
-                model.setValueAt(disc, i, 8);
-                model.setValueAt(disc_perc, i, 9);
-                model.setValueAt(taxable, i, 10);
-                model.setValueAt(gst_perc, i, 11);
-                model.setValueAt(gst_amount, i, 12);
-                i++;
+                ++i;
             }
 
             query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "'";
@@ -175,7 +176,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
 
             query = "select * from accounts where username = '" + username + "' and acc_name = '" + acc_name + "'";
             rs = stmt.executeQuery(query);
-            int credit_days =0;
+            int credit_days = 0;
             if (rs.next()) {
                 String address = rs.getString("address");
                 String city = rs.getString("city");
@@ -187,17 +188,17 @@ public class Sale_Ledger extends javax.swing.JFrame {
                 jTextField5.setText(gst);
 
             }
-            
+
             Calendar c = Calendar.getInstance();
             try {
-            c.setTime(formatter.parse(current_date));
+                c.setTime(formatter.parse(current_date));
             } catch (ParseException ex) {
                 Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
             }
             c.add(Calendar.DAY_OF_MONTH, credit_days);
             String final_date = formatter.format(c.getTime());
             jTextField3.setText(final_date);
-            
+
             jTable1.setEnabled(false);
 
         } catch (ClassNotFoundException ex) {
@@ -273,12 +274,9 @@ public class Sale_Ledger extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
-    
-    
 
-    
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -843,8 +841,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
             } else {
                 jTextField4.setText("" + Math.abs(credit_total - debit_total) + " Dr");
             }
-
-            
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
