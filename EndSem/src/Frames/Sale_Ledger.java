@@ -42,7 +42,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             jLabel2.setVisible(false);
             jButton1.setVisible(false);
             jLabel18.setVisible(false);
-            
+
             jComboBox1.setEnabled(false);
             jComboBox2.setEnabled(false);
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -113,17 +113,17 @@ public class Sale_Ledger extends javax.swing.JFrame {
             jTextField11.setText("" + s_no);
             jTextField12.setText("" + bill_amount);
 
-            query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' order by s_no";
-            System.out.println("Fetching items from database: jvp; table: bill");
-            rs = stmt.executeQuery(query);
-            System.out.println("Record fetched successfully.");
-            int row=0;
-            for(;;)
-            {
-                System.out.println(rs.next());
-                if (rs.next()==true) {
+            int row = 0; 
+            int s_no1 = 1;
+            for (;;) {
+                query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' and s_no = '"+ s_no1 +"'";
+                System.out.println("Fetching items from database: jvp; table: bill");
+                rs = stmt.executeQuery(query);
+                System.out.println("Record fetched successfully.");
+                model = (DefaultTableModel) jTable1.getModel();
+                if (rs.next() == true) {
                     System.out.println("i m in rs.next");
-                    model = (DefaultTableModel) jTable1.getModel();
+                    System.out.println(s_no1);
                     taxable = rs.getFloat("taxable");
                     disc = rs.getFloat("disc");
                     gst_amount = rs.getFloat("gst");
@@ -139,7 +139,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
                     amount = rs.getFloat("amount");
                     disc_perc = rs.getFloat("disc_perc");
                     gst_perc = rs.getFloat("gst_perc");
-                    model.addRow(new Object[]{row+1 , null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+                    model.addRow(new Object[]{row + 1, null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
                     model.setValueAt(s_no, row, 0);
                     model.setValueAt(item_id, row, 1);
                     model.setValueAt(item_name, row, 2);
@@ -153,14 +153,12 @@ public class Sale_Ledger extends javax.swing.JFrame {
                     model.setValueAt(taxable, row, 10);
                     model.setValueAt(gst_perc, row, 11);
                     model.setValueAt(gst_amount, row, 12);
-                    jTable1.setModel(model);
-                    ++row;
-                }
-                else
-                {
+                    s_no1++;
+                    row++;
+                } else {
                     break;
                 }
-               
+
             }
 
             query = "select sum(debit),sum(credit) from transactions WHERE username = '" + username + "'";
@@ -378,12 +376,12 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 22);
+        jTextField1.setBounds(82, 14, 90, 24);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 49, 24);
+        jLabel10.setBounds(209, 14, 52, 24);
 
         jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
@@ -394,7 +392,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 22);
+        jTextField2.setBounds(279, 14, 90, 24);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -414,7 +412,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 22);
+        jTextField3.setBounds(483, 14, 90, 24);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -437,16 +435,16 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 48, 16);
+        jLabel3.setBounds(20, 114, 54, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 69, 16);
+        jLabel4.setBounds(603, 18, 72, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 22);
+        jComboBox2.setBounds(705, 13, 98, 26);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -458,7 +456,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 22);
+        jTextField4.setBounds(705, 67, 121, 24);
 
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -476,7 +474,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 22);
+        jTextField5.setBounds(705, 110, 121, 24);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -533,7 +531,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(764, 352, 70, 22);
+        jTextField11.setBounds(764, 352, 70, 24);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -614,7 +612,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 478, 105);
+        jPanel3.setBounds(10, 350, 487, 109);
 
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
@@ -660,14 +658,14 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 69, 16);
+        jLabel20.setBounds(549, 412, 70, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 22);
+        jTextField12.setBounds(653, 408, 181, 24);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -676,7 +674,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 22);
+        jButton1.setBounds(570, 350, 90, 32);
 
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -863,7 +861,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         // TODO add your handling code here:
-         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
         String bill_no = jTextField1.getText();
@@ -871,37 +869,37 @@ public class Sale_Ledger extends javax.swing.JFrame {
         username = new Login().user;
         Statement stmt = null;
         try {
-        Class.forName("java.sql.DriverManager");
+            Class.forName("java.sql.DriverManager");
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-             stmt = (Statement) con.createStatement();
+            stmt = (Statement) con.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         }
         String acc_name = (String) jComboBox1.getSelectedItem();
-        
+
         int i = 0;
         while (i < row) {
             String item_name = (String) model.getValueAt(i, 2);
             int pcs = Integer.parseInt(model.getValueAt(i, 3).toString());
             try {
-            String query = "";
-            ResultSet rs1;
-          
-            query = "UPDATE stocks SET quantity = quantity +'"+ pcs +"' where item_name = '"+ item_name +"' and username = '"+ username +"' ";
-            stmt.executeUpdate(query);
-          
-            query = "DELETE FROM bill where bill_no = '" + bill_no_int + "' and username='" + username + "' and type='"+"sale"+"';";
-            stmt.executeUpdate(query);
-            
-            query = "DELETE FROM transactions where bill_no = '" + bill_no + "' and username='" + username + "';";
-            stmt.executeUpdate(query);
-            
+                String query = "";
+                ResultSet rs1;
+
+                query = "UPDATE stocks SET quantity = quantity +'" + pcs + "' where item_name = '" + item_name + "' and username = '" + username + "' ";
+                stmt.executeUpdate(query);
+
+                query = "DELETE FROM bill where bill_no = '" + bill_no_int + "' and username='" + username + "' and type='" + "sale" + "';";
+                stmt.executeUpdate(query);
+
+                query = "DELETE FROM transactions where bill_no = '" + bill_no + "' and username='" + username + "';";
+                stmt.executeUpdate(query);
+
             } catch (SQLException ex) {
                 Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             i++;
         }
     }//GEN-LAST:event_jLabel21MouseClicked
