@@ -24,6 +24,7 @@ import javax.swing.table.TableColumn;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -65,17 +66,6 @@ public class Purchase extends javax.swing.JFrame {
             AutoCompleteDecorator.decorate(jComboBox1);
 
             String type = "purchase";
-            query = "select max(bill_no) from bill where username = '" + username + "' and type = '" + type + "'";
-            System.out.println("Fetching acc_name from database: jvp; table: bill");
-            rs = stmt.executeQuery(query);
-            System.out.println("Record fetched successfully.");
-            int bill_no = 0;
-            if (rs.next()) {
-                bill_no = rs.getInt(1);
-            }
-
-            jTextField1.setText("P-" + (bill_no + 1));
-
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -916,9 +906,17 @@ public class Purchase extends javax.swing.JFrame {
             SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
             date = rev(jTextField2.getText());
             due_date = rev(jTextField3.getText());
-            
+            String status="";
+            if(jComboBox2.getSelectedItem()=="Cash")
+            {
+                status="cleared";
+            }
+            else if(jComboBox2.getSelectedItem()=="Credit")
+            {
+                status="pending";
+            }
             try {
-            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "');";
+            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
             stmt.executeUpdate(query);
             
             query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";
@@ -937,18 +935,39 @@ public class Purchase extends javax.swing.JFrame {
             
             i++;
         }
-        float balance_field = 0;
+        float credit=0;
+        int cheque_number=0;
         try {
-        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + debit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
+        if(jComboBox2.getSelectedItem().equals("Cash"))
+        { 
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + credit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
+        stmt.executeUpdate(query);    
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + credit + "','" + acc_name + "','" + username + "');";
         stmt.executeUpdate(query);
+        query = "INSERT INTO voucher VALUES('" + bill_no + "','" + date + "','" + "Cash" + "','" + bill_amount + "','" + "" + type + "','" + username + "','" + "" +cheque_number+ "');";
+        stmt.executeUpdate(query);
+
+        }
+        else if(jComboBox2.getSelectedItem().equals("Credit"))
+        { 
+        query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + credit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
+        stmt.executeUpdate(query);
+        }
+         
         String acc = (String) jComboBox1.getSelectedItem();
-        query = "SELECT sum(credit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
+        query = "SELECT sum(debit),sum(credit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
         ResultSet rs1 = stmt.executeQuery(query);
         
         if(rs1.next())
         {
-            jTextField4.setText("" + rs1.getFloat(1));
+          debit=rs1.getFloat(1);
+          float credit1=rs1.getFloat(2);
+          float balance=Math.abs(debit-credit1);
+          jTextField4.setText("" +balance);
         }
+        JOptionPane.showMessageDialog(this,"Bill Generated");
+        this.setVisible(false);
+        new Main().setVisible(true);
         
         } catch (SQLException ex) {
             Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);

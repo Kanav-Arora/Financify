@@ -2012,7 +2012,7 @@ public class Sale extends javax.swing.JFrame {
         stmt.executeUpdate(query);
         query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + credit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
         stmt.executeUpdate(query);
-        query = "INSERT INTO voucher VALUES('" + bill_no + "','" + date + "','" + payment_type + "','" + amount + "','" + "" + type + "','" + username + "','" + "" +cheque_number+ "');";
+        query = "INSERT INTO voucher VALUES('" + bill_no + "','" + date + "','" + payment_type + "','" + bill_amount + "','" + "" + type + "','" + username + "','" + "" +cheque_number+ "');";
         stmt.executeUpdate(query);
 
         }
@@ -2033,10 +2033,14 @@ public class Sale extends javax.swing.JFrame {
           float balance=Math.abs(debit-credit1);
           jTextField4.setText("" +balance);
         }
-        
-        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this,"Bill Generated");
+        this.setVisible(false);
+        new Main().setVisible(true); 
+        }
+        catch (SQLException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
