@@ -47,7 +47,7 @@ public class Purchase extends javax.swing.JFrame {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             System.out.println("Connection is created successfully");
             Statement stmt = (Statement) con.createStatement();
-
+            jComboBox1.setSelectedItem("Select Account");
             String query = "select acc_name from accounts where username = '" + username + "'";
             System.out.println("Fetching acc_name from database: jvp; table: accounts");
             ResultSet rs = stmt.executeQuery(query);
@@ -64,8 +64,6 @@ public class Purchase extends javax.swing.JFrame {
 
             jComboBox1.setSelectedItem("");
             AutoCompleteDecorator.decorate(jComboBox1);
-
-            String type = "purchase";
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
