@@ -30,63 +30,58 @@ public class Trial_Balance extends javax.swing.JFrame {
         username = new Login().user;
         float debit_total = 0;
         float credit_total = 0;
-            try {
+        try {
 
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                System.out.println("Connection is created successfully");
-                Statement stmt = (Statement) con.createStatement();
-                String query = "select * from accounts where username = '" + username + "'";
-                ResultSet rs = stmt.executeQuery(query);
-                System.out.println("Record fetched successfully.");
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();;
-                int row=0;
-                for (;;) {
-                    if (rs.next()) {
-                        String acc_name = rs.getString("acc_name");
-                        String city = rs.getString("city");
-                        float debit = 0;
-                        float credit = 0;
-                        String annexure = "";
-                        Statement stmt1 = (Statement) con.createStatement();
-                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '"+ acc_name +"'";
-                        ResultSet rs1 = stmt1.executeQuery(query1);
-                        System.out.println("Record fetched successfully.");
-                        for(;;)
-                        {
-                            if (rs1.next()) {
-                                debit = debit + rs1.getFloat("debit");
-                                credit = credit + rs1.getFloat("credit"); 
-                            }
-                            else{
-                                break;
-                            }
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            System.out.println("Connection is created successfully");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select * from accounts where username = '" + username + "'";
+            ResultSet rs = stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();;
+            int row = 0;
+            for (;;) {
+                if (rs.next()) {
+                    String acc_name = rs.getString("acc_name");
+                    String city = rs.getString("city");
+                    float debit = 0;
+                    float credit = 0;
+                    String annexure = "";
+                    Statement stmt1 = (Statement) con.createStatement();
+                    String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
+                    ResultSet rs1 = stmt1.executeQuery(query1);
+                    System.out.println("Record fetched successfully.");
+                    for (;;) {
+                        if (rs1.next()) {
+                            debit = debit + rs1.getFloat("debit");
+                            credit = credit + rs1.getFloat("credit");
+                        } else {
+                            break;
                         }
-                        if(debit>credit)
-                        {
-                            annexure = "dr";
-                        }
-                        else if(credit>debit)
-                        {
-                            annexure = "cr";
-                        }
-                        debit_total = debit_total + debit;
-                        credit_total = credit_total + credit;
-                        row++;
-                        model.addRow(new Object[] {row,acc_name, city, debit, credit, annexure});
-                        
-                    } else {
-                        break;
                     }
+                    if (debit > credit) {
+                        annexure = "dr";
+                    } else if (credit > debit) {
+                        annexure = "cr";
+                    }
+                    debit_total = debit_total + debit;
+                    credit_total = credit_total + credit;
+                    row++;
+                    model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
 
+                } else {
+                    break;
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
-            
+
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+
         }
-            jTextField3.setText(""+ debit_total);
-            jTextField4.setText(""+ credit_total);
-            jTextField5.setText("" + Math.abs(debit_total - credit_total));
+        jTextField3.setText("" + debit_total);
+        jTextField4.setText("" + credit_total);
+        jTextField5.setText("" + Math.abs(debit_total - credit_total));
     }
 
     /**
@@ -110,6 +105,9 @@ public class Trial_Balance extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -205,6 +203,22 @@ public class Trial_Balance extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Sort By:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Credit Only", "Debit Only", "Zero Balance" }));
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Refresh");
+        jLabel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -229,11 +243,24 @@ public class Trial_Balance extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 103, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,6 +291,91 @@ public class Trial_Balance extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
 
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        String sort = (String) jComboBox1.getSelectedItem();
+        float debit_total = 0;
+        float credit_total = 0;
+        try {
+            Class.forName("java.sql.DriverManager");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            System.out.println("Connection is created successfully");
+            Statement stmt = (Statement) con.createStatement();
+            String query = "select * from accounts where username = '" + username + "'";
+            ResultSet rs = stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            int row = 0;
+            for (;;) {
+                if (rs.next()) {
+                    String acc_name = rs.getString("acc_name");
+                    String city = rs.getString("city");
+                    float debit = 0;
+                    float credit = 0;
+                    String annexure = "";
+                    Statement stmt1 = (Statement) con.createStatement();
+                    String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
+                    ResultSet rs1 = stmt1.executeQuery(query1);
+                    System.out.println("Record fetched successfully.");
+                    for (;;) {
+                        if (rs1.next()) {
+                            debit = debit + rs1.getFloat("debit");
+                            credit = credit + rs1.getFloat("credit");
+                        } else {
+                            break;
+                        }
+                    }
+                    if (debit > credit) {
+                        annexure = "dr";
+                    } else if (credit > debit) {
+                        annexure = "cr";
+                    }
+                    debit_total = debit_total + debit;
+                    credit_total = credit_total + credit;
+                    model.setRowCount(0);
+                    row++;
+                    if (sort.equals("All")) {
+
+                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                    }
+                    else if (sort.equals("Credit Only") && debit_total == 0) {
+
+                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                    }
+                    else if (sort.equals("Credit Only") && credit_total == 0) {
+
+                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                    }
+                    else if (sort.equals("Credit Only") && debit_total == credit_total) {
+
+                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                    }
+
+                } else {
+                    break;
+                }
+
+                int table_row = jTable1.getRowCount();
+                int count = 0;
+                float sum_debit = 0;
+                float sum_credit = 0;
+                while (count < table_row) {
+                    float row_debit = Float.parseFloat(jTable1.getModel().getValueAt(count, 3).toString());
+                    float row_credit = Float.parseFloat(jTable1.getModel().getValueAt(count, 4).toString());
+                    sum_debit = sum_debit + row_debit;
+                    sum_credit = sum_credit + row_credit;
+                }
+                jTextField3.setText("" + sum_debit);
+                jTextField4.setText("" + sum_credit);
+                jTextField5.setText("" + Math.abs(sum_debit - sum_credit));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -305,11 +417,14 @@ public class Trial_Balance extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
