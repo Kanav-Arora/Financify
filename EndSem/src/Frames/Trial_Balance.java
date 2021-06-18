@@ -296,6 +296,7 @@ public class Trial_Balance extends javax.swing.JFrame {
         String sort = (String) jComboBox1.getSelectedItem();
         float debit_total = 0;
         float credit_total = 0;
+
         try {
             Class.forName("java.sql.DriverManager");
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
@@ -305,76 +306,108 @@ public class Trial_Balance extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
+            model.setRowCount(0);
             int row = 0;
-            for (;;) {
-                if (rs.next()) {
-                    String acc_name = rs.getString("acc_name");
-                    String city = rs.getString("city");
-                    float debit = 0;
-                    float credit = 0;
-                    String annexure = "";
-                    Statement stmt1 = (Statement) con.createStatement();
-                    String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
-                    ResultSet rs1 = stmt1.executeQuery(query1);
-                    System.out.println("Record fetched successfully.");
-                    for (;;) {
-                        if (rs1.next()) {
-                            debit = debit + rs1.getFloat("debit");
-                            credit = credit + rs1.getFloat("credit");
-                        } else {
-                            break;
+            if (sort.equals("All")) {
+                for (;;) {
+                    if (rs.next()) {
+                        String acc_name = rs.getString("acc_name");
+                        String city = rs.getString("city");
+                        float debit = 0;
+                        float credit = 0;
+                        String annexure = "";
+                        Statement stmt1 = (Statement) con.createStatement();
+                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
+                        ResultSet rs1 = stmt1.executeQuery(query1);
+                        System.out.println("Record fetched successfully.");
+                        for (;;) {
+                            if (rs1.next()) {
+                                debit = debit + rs1.getFloat("debit");
+                                credit = credit + rs1.getFloat("credit");
+                            } else {
+                                break;
+                            }
                         }
-                    }
-                    if (debit > credit) {
-                        annexure = "dr";
-                    } else if (credit > debit) {
-                        annexure = "cr";
-                    }
-                    debit_total = debit_total + debit;
-                    credit_total = credit_total + credit;
-                    model.setRowCount(0);
-                    row++;
-                    if (sort.equals("All")) {
-
+                        if (debit > credit) {
+                            annexure = "dr";
+                        } else if (credit > debit) {
+                            annexure = "cr";
+                        }
+                        debit_total = debit_total + debit;
+                        credit_total = credit_total + credit;
+                        row++;
                         model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                    }
-                    else if (sort.equals("Credit Only") && debit_total == 0) {
 
-                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                    }
-                    else if (sort.equals("Credit Only") && credit_total == 0) {
-
-                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                    }
-                    else if (sort.equals("Credit Only") && debit_total == credit_total) {
-
-                        model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                    } else {
+                        break;
                     }
 
-                } else {
-                    break;
                 }
+            } else {
+                for (;;) {
+                    if (rs.next()) {
+                        String acc_name = rs.getString("acc_name");
+                        String city = rs.getString("city");
+                        float debit = 0;
+                        float credit = 0;
+                        String annexure = "";
+                        Statement stmt1 = (Statement) con.createStatement();
+                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
+                        ResultSet rs1 = stmt1.executeQuery(query1);
+                        System.out.println("Record fetched successfully.");
+                        for (;;) {
+                            if (rs1.next()) {
+                                debit = debit + rs1.getFloat("debit");
+                                credit = credit + rs1.getFloat("credit");
+                            } else {
+                                break;
+                            }
+                        }
+                        if (debit > credit) {
+                            annexure = "dr";
+                        } else if (credit > debit) {
+                            annexure = "cr";
+                        }
+                        debit_total = debit_total + debit;
+                        credit_total = credit_total + credit;
 
-                int table_row = jTable1.getRowCount();
-                int count = 0;
-                float sum_debit = 0;
-                float sum_credit = 0;
-                while (count < table_row) {
-                    float row_debit = Float.parseFloat(jTable1.getModel().getValueAt(count, 3).toString());
-                    float row_credit = Float.parseFloat(jTable1.getModel().getValueAt(count, 4).toString());
-                    sum_debit = sum_debit + row_debit;
-                    sum_credit = sum_credit + row_credit;
+                        row++;
+                        if (sort.equals("Credit Only") && debit_total == 0) {
+
+                            model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                        } else if (sort.equals("Credit Only") && credit_total == 0) {
+
+                            model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                        } else if (sort.equals("Credit Only") && debit_total == credit_total) {
+
+                            model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                        }
+
+                    } else {
+                        break;
+                    }
+
                 }
-                jTextField3.setText("" + sum_debit);
-                jTextField4.setText("" + sum_credit);
-                jTextField5.setText("" + Math.abs(sum_debit - sum_credit));
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        int table_row = jTable1.getRowCount();
+        int count = 0;
+        float sum_debit = 0;
+        float sum_credit = 0;
+        while (count < table_row) {
+            float row_debit = Float.parseFloat(jTable1.getModel().getValueAt(count, 3).toString());
+            float row_credit = Float.parseFloat(jTable1.getModel().getValueAt(count, 4).toString());
+            sum_debit = sum_debit + row_debit;
+            sum_credit = sum_credit + row_credit;
+        }
+        jTextField3.setText("" + sum_debit);
+        jTextField4.setText("" + sum_credit);
+        jTextField5.setText("" + Math.abs(sum_debit - sum_credit));
     }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
