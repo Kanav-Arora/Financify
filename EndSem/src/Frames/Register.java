@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Kanav
  */
 public class Register extends javax.swing.JFrame {
-
+boolean check=true;
     /**
      * Creates new form Register
      */
@@ -371,12 +371,14 @@ public class Register extends javax.swing.JFrame {
                     jLabel7.setVisible(true);
                     jLabel7.setText("Username Unavailable");
                     jLabel7.setForeground(new Color(255,0,0));
+                    check=false;
                 }
                 else
                 {
                     jLabel7.setVisible(true);
                     jLabel7.setText("Username Available");
                     jLabel7.setForeground(new Color(0,255,0));
+                    check=true;
                 }
             }
             else
@@ -384,6 +386,7 @@ public class Register extends javax.swing.JFrame {
                     jLabel7.setVisible(true);
                     jLabel7.setText("Invalid Username: Alphanumeric, symbol(_, .) are allowed.");
                     jLabel7.setForeground(new Color(255,0,0));
+                    check=false;
             }
             
         } catch (ClassNotFoundException ex) {
@@ -405,10 +408,12 @@ public class Register extends javax.swing.JFrame {
             jLabel8.setVisible(true);
             jLabel8.setText("Name Invalid");
             jLabel8.setForeground(new Color(255,0,0));
+            check=false;
         }
         else
         {
             jLabel8.setVisible(false);
+            check=true;
         }
     }//GEN-LAST:event_jTextField4KeyReleased
 
@@ -423,10 +428,12 @@ public class Register extends javax.swing.JFrame {
             jLabel9.setVisible(true);
             jLabel9.setText("Invalid Email");
             jLabel9.setForeground(new Color(255,0,0));
+            check=false;
         }
         else
         {
             jLabel9.setVisible(false);
+            check=true;
         }
     }//GEN-LAST:event_jTextField3KeyReleased
 
@@ -443,12 +450,14 @@ public class Register extends javax.swing.JFrame {
             jLabel10.setText("unique symbol and length in 8-20 characters.");
             jLabel4.setForeground(new Color(255,0,0));
             jLabel10.setForeground(new Color(255,0,0));
+            check=false;
             
         }
         else
         {
             jLabel4.setVisible(false);
             jLabel10.setVisible(false);   
+            check=true;
         }
     }//GEN-LAST:event_jPasswordField1KeyReleased
 
@@ -459,12 +468,14 @@ public class Register extends javax.swing.JFrame {
             jLabel11.setVisible(true);
             jLabel11.setText("Select a Gender");
             jLabel11.setForeground(new Color(255,0,0));
+            check=false;
             
         }
         else
         {
             jLabel11.setVisible(false);
-            jLabel11.setVisible(false);  
+            jLabel11.setVisible(false); 
+            check=true;
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -489,14 +500,21 @@ public class Register extends javax.swing.JFrame {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
-            
-            String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"','"+gender+"');";
-            stmt.executeUpdate(query);
-            JOptionPane.showMessageDialog(this,"You have succesfully registered "+ username);
-            
-            Login login = new Login();
-            login.setVisible(true);
-            this.setVisible(false);
+            if(check==true)
+            {
+                String query="INSERT INTO users VALUES('"+username+"','"+pass+"','"+email+"','"+name+"','"+gender+"');";
+                stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(this,"You have succesfully registered "+ username);
+
+                Login login = new Login();
+                login.setVisible(true);
+                this.setVisible(false);
+            }
+            else if(check==false)
+            {
+               JOptionPane.showMessageDialog(this,"Invalid Information Detected ");
+ 
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
