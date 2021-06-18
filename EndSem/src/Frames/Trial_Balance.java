@@ -375,10 +375,10 @@ public class Trial_Balance extends javax.swing.JFrame {
                         if (sort.equals("Credit Only") && debit_total == 0) {
 
                             model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                        } else if (sort.equals("Credit Only") && credit_total == 0) {
+                        } else if (sort.equals("Debit Only") && credit_total == 0) {
 
                             model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                        } else if (sort.equals("Credit Only") && debit_total == credit_total) {
+                        } else if (sort.equals("Zero Balance") && debit_total == credit_total) {
 
                             model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
                         }
