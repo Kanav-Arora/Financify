@@ -296,19 +296,18 @@ public class Trial_Balance extends javax.swing.JFrame {
         String sort = (String) jComboBox1.getSelectedItem();
         float debit_total = 0;
         float credit_total = 0;
-
-        try {
-            Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-            System.out.println("Connection is created successfully");
-            Statement stmt = (Statement) con.createStatement();
-            String query = "select * from accounts where username = '" + username + "'";
-            ResultSet rs = stmt.executeQuery(query);
-            System.out.println("Record fetched successfully.");
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            int row = 0;
-            if (sort.equals("All")) {
+        if (sort.equals("All")) {
+            try {
+                Class.forName("java.sql.DriverManager");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+                System.out.println("Connection is created successfully");
+                Statement stmt = (Statement) con.createStatement();
+                String query = "select * from accounts where username = '" + username + "'";
+                ResultSet rs = stmt.executeQuery(query);
+                System.out.println("Record fetched successfully.");
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+                int row = 0;
                 for (;;) {
                     if (rs.next()) {
                         String acc_name = rs.getString("acc_name");
@@ -343,7 +342,24 @@ public class Trial_Balance extends javax.swing.JFrame {
                     }
 
                 }
-            } else {
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                Class.forName("java.sql.DriverManager");
+                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+                System.out.println("Connection is created successfully");
+                Statement stmt = (Statement) con.createStatement();
+                String query = "select * from accounts where username = '" + username + "'";
+                ResultSet rs = stmt.executeQuery(query);
+                System.out.println("Record fetched successfully.");
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+                int row = 0;
+
                 for (;;) {
                     if (rs.next()) {
                         String acc_name = rs.getString("acc_name");
@@ -388,11 +404,12 @@ public class Trial_Balance extends javax.swing.JFrame {
                     }
 
                 }
+
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         int table_row = jTable1.getRowCount();
