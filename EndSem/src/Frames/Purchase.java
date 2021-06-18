@@ -849,7 +849,6 @@ public class Purchase extends javax.swing.JFrame {
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
         String bill_no = jTextField1.getText();
-        int bill_no_int = Integer.parseInt(jTextField1.getText().substring(2));
         username = new Login().user;
         float subtotal = 0;
         float discount_total = 0;
@@ -914,7 +913,7 @@ public class Purchase extends javax.swing.JFrame {
                 status="pending";
             }
             try {
-            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
+            query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
             stmt.executeUpdate(query);
             
             query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";

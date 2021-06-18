@@ -33,6 +33,8 @@ public class Voucher extends javax.swing.JFrame {
     public Voucher() {
         initComponents();
         String username = new Login().user;
+        jLabel1.setVisible(false);
+        jTextField1.setVisible(false);
         try {
         
         Class.forName("java.sql.DriverManager");
@@ -222,8 +224,13 @@ public class Voucher extends javax.swing.JFrame {
         });
         panel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(589, 540, 140, 32));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Credit" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Cheque" }));
         jComboBox3.setSelectedItem("Select Payment Type");
+        jComboBox3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox3MouseClicked(evt);
+            }
+        });
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox3ActionPerformed(evt);
@@ -252,6 +259,7 @@ public class Voucher extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
+        jComboBox2.removeAllItems();
         String acc = (String) jComboBox1.getSelectedItem();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
@@ -277,7 +285,7 @@ public class Voucher extends javax.swing.JFrame {
         {
             total_records = rs.getInt(1);
         }
-        query = "select * from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
+        query = "select * from transactions,bill WHERE transactions.username = '"+username+"' and transactions.acc_name = '"+acc +"' and bill.status='"+"pending"+"'";
         System.out.println("Fetching records from database: jvp, table: transactions");
         rs=stmt.executeQuery(query);
         System.out.println("Records fetched successfully.");
@@ -291,32 +299,18 @@ public class Voucher extends javax.swing.JFrame {
                 float debit = rs.getFloat("debit");
                 float credit = rs.getFloat("credit");
                 row++;
+                jComboBox2.addItem(bill_no);
                 model.addRow(new Object[] {bill_no,date,debit,credit});
+                
             }
             else
             {
                 break;
             }
         }
-        query = "select bill_no from transactions where username = '"+username+"'";
-        System.out.println("Fetching items from database: jvp; table: transactions");
-        rs=stmt.executeQuery(query);
-        System.out.println("Record fetched successfully.");
         
-        for(;;)
-        {
-            if(rs.next())
-            {
-                String item = rs.getString(1);
-                jComboBox2.addItem(item);
-            }
-            else{
-                break;
-            }
-        }
-        
-        jComboBox1.setSelectedItem("");
-        AutoCompleteDecorator.decorate(jComboBox1);
+        jComboBox2.setSelectedItem("");
+        AutoCompleteDecorator.decorate(jComboBox2);
         
         
         
@@ -334,119 +328,6 @@ public class Voucher extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-//        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-//        int row = model.getRowCount();
-//        model = (DefaultTableModel) jTable1.getModel();
-//        String bill_no = jTextField1.getText();
-//        int bill_no_int = Integer.parseInt(jTextField1.getText().substring(2));
-//        String username = new Login().user;
-//        float bill_amount = 0;
-//        float debit = 0;
-//        float credit = 0;
-//        String query ="";
-//        String date = "";
-//        String due_date = "";
-//        Statement stmt = null;
-//        try {
-//            Class.forName("java.sql.DriverManager");
-//            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-//            stmt = (Statement) con.createStatement();
-//        } catch (SQLException ex) { 
-//            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        String acc_name = (String) jComboBox1.getSelectedItem();
-//        String type = "purchase";
-//        int i = 0;
-//        while (i < row) {
-//            int s_no = Integer.parseInt(model.getValueAt(i, 0).toString());
-//            int item_id = Integer.parseInt(model.getValueAt(i, 1).toString().substring(2));
-//            String item_name = (String) model.getValueAt(i, 2);
-//            int pcs = (int) model.getValueAt(i, 3);
-//            quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
-//            net_rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 5)));
-//            rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 6)));
-//            amount = Float.parseFloat(String.valueOf(model.getValueAt(i, 7)));
-//            discount = Float.parseFloat(String.valueOf(model.getValueAt(i, 8)));
-//            discount_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 9)));
-//            taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
-//            gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
-//            gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
-//
-//            subtotal += taxable;
-//            discount_total += discount;
-//            gst_total += gst;
-//            bill_amount = Float.parseFloat(jTextField12.getText());
-//            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-//            date = rev(jTextField2.getText());
-//            due_date = rev(jTextField3.getText());
-//            String status="";
-//            if(jComboBox2.getSelectedItem()=="Cash")
-//            {
-//                status="cleared";
-//            }
-//            else if(jComboBox2.getSelectedItem()=="Credit")
-//            {
-//                status="pending";
-//            }
-//            try {
-//                query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
-//                stmt.executeUpdate(query);
-//
-//                query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";
-//                ResultSet rs1 = stmt.executeQuery(query);
-//                int quantity_db =0;
-//                if(rs1.next())
-//                {
-//                    quantity_db = rs1.getInt("quantity");
-//                }
-//
-//                query = "UPDATE stocks SET quantity = '"+ (quantity_db + pcs) +"' where item_name = '"+ item_name +"' and username = '"+ username +"' ";
-//                stmt.executeUpdate(query);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            i++;
-//        }
-//        float credit=0;
-//        int cheque_number=0;
-//        try {
-//            if(jComboBox2.getSelectedItem().equals("Cash"))
-//            {
-//                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + credit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
-//                stmt.executeUpdate(query);
-//                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + bill_amount + "','" + credit + "','" + acc_name + "','" + username + "');";
-//                stmt.executeUpdate(query);
-//                query = "INSERT INTO voucher VALUES('" + bill_no + "','" + date + "','" + "Cash" + "','" + bill_amount + "','" + "" + type + "','" + username + "','" + "" +cheque_number+ "');";
-//                stmt.executeUpdate(query);
-//
-//            }
-//            else if(jComboBox2.getSelectedItem().equals("Credit"))
-//            {
-//                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + date + "','" + credit + "','" + bill_amount + "','" + acc_name + "','" + username + "');";
-//                stmt.executeUpdate(query);
-//            }
-//
-//            String acc = (String) jComboBox1.getSelectedItem();
-//            query = "SELECT sum(debit),sum(credit) FROM transactions where username = '" + username + "' and acc_name = '" + acc + "'";
-//            ResultSet rs1 = stmt.executeQuery(query);
-//
-//            if(rs1.next())
-//            {
-//                debit=rs1.getFloat(1);
-//                float credit1=rs1.getFloat(2);
-//                float balance=Math.abs(debit-credit1);
-//                jTextField4.setText("" +balance);
-//            }
-//            JOptionPane.showMessageDialog(this,"Bill Generated");
-//            this.setVisible(false);
-//            new Main().setVisible(true);
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Purchase.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
     }//GEN-LAST:event_jLabel18MouseClicked
 
@@ -457,6 +338,20 @@ public class Voucher extends javax.swing.JFrame {
     private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel2MouseEntered
+
+    private void jComboBox3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox3MouseClicked
+        // TODO add your handling code here:
+        if(jComboBox3.getSelectedItem()=="Credit")
+        {jLabel1.setVisible(true);
+        jTextField1.setVisible(true);
+        }
+        else
+        {
+        jLabel1.setVisible(false);
+        jTextField1.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_jComboBox3MouseClicked
 
     /**
      * @param args the command line arguments
