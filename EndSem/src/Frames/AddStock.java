@@ -28,12 +28,13 @@ String username;
      */
     public AddStock() {
         initComponents();
+        username = new Login().user;
          try{
             Class.forName("java.sql.DriverManager");
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
-            String query = "select count(*) from stocks ";
+            String query = "select count(*) from stocks where username ='"+ username+"' ";
             ResultSet rs=stmt.executeQuery(query);
             if(rs.next())
             {

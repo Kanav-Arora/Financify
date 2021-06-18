@@ -14,6 +14,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -21,6 +23,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -67,12 +70,44 @@ public class Main extends javax.swing.JFrame {
                    Icon myimgicon = new ImageIcon(myimgpath);
                    jLabel12.setIcon(myimgicon);
                }
-                    
-
-                
-                
                 
             }
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            int row = model.getRowCount();
+            model = (DefaultTableModel) jTable1.getModel();
+            int rowcount = model.getRowCount();
+            for(int i= rowcount-1; i>=0; i--)
+            {
+                model.removeRow(i);
+            }
+            row =0;
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+            Date date = new Date();
+            String current_date = formatter.format(date);
+            query="select * from bill where due_date < '"+current_date+"' and status='"+"pending"+"'";
+            rs=stmt.executeQuery(query);
+         
+            
+            for(;;)
+            {
+                if(rs.next())
+                {
+                    String bill_no = rs.getString("bill_no");
+                    String acc_name = rs.getString("acc_name");
+                    Date due_date = rs.getDate("due_date");
+                    float amount = rs.getFloat("bill_amount");
+                    row++;
+                    model.addRow(new Object[] {"B-"+bill_no,acc_name,due_date,amount});
+
+                }
+                else
+                {
+                    break;
+                }
+            }
+        
+            
+           
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -402,17 +437,20 @@ public class Main extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null},
-                {"", null, null},
-                {"", null, null},
-                {"", null, null},
-                {"", null, null}
+
             },
             new String [] {
-                "Date", "Debit", "Credit"
+                "Bill no.", "Account Name", "Due Date", "Amount"
             }
-        ));
-        jTable1.setAutoscrolls(false);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jTable1.setShowGrid(false);
         jScrollPane1.setViewportView(jTable1);
@@ -442,28 +480,28 @@ public class Main extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(268, 268, 268)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(268, 268, 268)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(274, 274, 274))
+                .addGap(75, 75, 75)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("");
