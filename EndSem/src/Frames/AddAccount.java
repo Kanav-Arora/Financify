@@ -21,6 +21,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class AddAccount extends javax.swing.JFrame {
 String username;
+
     /**
      * Creates new form AddAccount
      */
@@ -29,6 +30,7 @@ String username;
 
             initComponents();
             jTextField1.setEditable(false);
+            username = new Login().user;
             try {
                 
                 Class.forName("java.sql.DriverManager");
@@ -82,7 +84,7 @@ String username;
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
-            String query = "select count(*) from accounts ";
+            String query = "select count(*) from accounts where username = '"+username+"' ";
             ResultSet rs=stmt.executeQuery(query);
             if(rs.next())
             {
