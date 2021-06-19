@@ -40,6 +40,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class Main extends javax.swing.JFrame {
 
+    String username;
+
     /**
      * Creates new form Main
      */
@@ -48,7 +50,7 @@ public class Main extends javax.swing.JFrame {
         jPanel6.setBackground(new Color(23, 35, 51));
         jPanel7.setBackground(new Color(23, 35, 51));
         jLabel12.setText("");
-        String username = new Login().user;
+        username = Login.user;
         try {
 
             Class.forName("java.sql.DriverManager");
@@ -102,6 +104,118 @@ public class Main extends javax.swing.JFrame {
                 }
             }
 
+            DefaultCategoryDataset dc = new DefaultCategoryDataset();
+            float sum1 = 0;
+            float sum2 = 0;
+            float sum3 = 0;
+            int month = date.getMonth();
+            int iter_month = 0;
+            String quarter = "";
+            if (month >= 3 && month <= 5) {
+                quarter = "Q1";
+                query = "select * from transactions where username = '" + username + "' and credit = '" + 0 + "' and month(date) >=4 and month(date)<=6";
+                rs = stmt.executeQuery(query);
+                for (;;) {
+                    if (rs.next()) {
+                        Date date_sql = rs.getDate("date");
+                        iter_month = date_sql.getMonth();
+                        if (iter_month == 3) {
+                            sum1 = sum1 + rs.getFloat("debit");
+                        } else if (iter_month == 4) {
+                            sum2 = sum2 + rs.getFloat("debit");
+                        } else if (iter_month == 5) {
+                            sum3 = sum3 + rs.getFloat("debit");
+                        }
+                    } else {
+                        dc.addValue(sum1, "Amount", "April");
+                        dc.addValue(sum2, "Amount", "May");
+                        dc.addValue(sum3, "Amount", "June");
+                        break;
+                    }
+                }
+            } else if (month >= 6 && month <= 8) {
+                quarter = "Q2";
+                query = "select * from transactions where username = '" + username + "' and credit = '" + 0 + "' and month(date) >=7 and month(date)<=9";
+                rs = stmt.executeQuery(query);
+                for (;;) {
+                    if (rs.next()) {
+                        Date date_sql = rs.getDate("date");
+                        iter_month = date_sql.getMonth();
+                        if (iter_month == 6) {
+                            sum1 = sum1 + rs.getFloat("debit");
+                        } else if (iter_month == 7) {
+                            sum2 = sum2 + rs.getFloat("debit");
+                        } else if (iter_month == 8) {
+                            sum3 = sum3 + rs.getFloat("debit");
+                        }
+                    } else {
+                        dc.addValue(sum1, "Amount", "July");
+                        dc.addValue(sum2, "Amount", "August");
+                        dc.addValue(sum3, "Amount", "September");
+                        break;
+                    }
+                }
+            } else if (month <= 9 && month >= 11) {
+                quarter = "Q3";
+                query = "select * from transactions where username = '" + username + "' and credit = '" + 0 + "' and month(date) >=10 and month(date)<=12";
+                rs = stmt.executeQuery(query);
+                for (;;) {
+                    if (rs.next()) {
+                        Date date_sql = rs.getDate("date");
+                        iter_month = date_sql.getMonth();
+                        if (iter_month == 9) {
+                            sum1 = sum1 + rs.getFloat("debit");
+                        } else if (iter_month == 10) {
+                            sum2 = sum2 + rs.getFloat("debit");
+                        } else if (iter_month == 11) {
+                            sum3 = sum3 + rs.getFloat("debit");
+                        }
+                    } else {
+                        dc.addValue(sum1, "Amount", "October");
+                        dc.addValue(sum2, "Amount", "November");
+                        dc.addValue(sum3, "Amount", "December");
+                        break;
+                    }
+                }
+            } else if (month >= 0 && month <= 2) {
+                quarter = "Q4";
+                query = "select * from transactions where username = '" + username + "' and credit = '" + 0 + "' and month(date) >=1 and month(date)<=3";
+                rs = stmt.executeQuery(query);
+                for (;;) {
+                    if (rs.next()) {
+                        Date date_sql = rs.getDate("date");
+                        iter_month = date_sql.getMonth();
+                        if (iter_month == 0) {
+                            sum1 = sum1 + rs.getFloat("debit");
+                        } else if (iter_month == 1) {
+                            sum2 = sum2 + rs.getFloat("debit");
+                        } else if (iter_month == 2) {
+                            sum3 = sum3 + rs.getFloat("debit");
+                        }
+                    } else {
+                        dc.addValue(sum1, "Amount", "January");
+                        dc.addValue(sum2, "Amount", "February");
+                        dc.addValue(sum3, "Amount", "March");
+                        break;
+                    }
+                }
+            }
+
+            JFreeChart chart = ChartFactory.createBarChart(quarter, "Month", "Amount", dc, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot plot = chart.getCategoryPlot();
+            plot.setRangeGridlinePaint(Color.BLACK);
+            BarRenderer renderer = (BarRenderer) plot.getRenderer();
+            renderer.setMaximumBarWidth(.05);
+            plot.getDomainAxis().setCategoryMargin(0.0);
+            plot.getDomainAxis().setLowerMargin(0.0);
+            plot.getDomainAxis().setUpperMargin(0.0);
+            ChartPanel chPanel = new ChartPanel(chart);
+            chPanel.setPreferredSize(new Dimension(460, 200));
+            chPanel.setMouseWheelEnabled(true);
+            jPanel5.setLayout(new java.awt.BorderLayout());
+            jPanel5.add(chPanel);
+            jPanel5.setVisible(true);
+            jPanel5.validate();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,23 +223,6 @@ public class Main extends javax.swing.JFrame {
         JTableHeader header = jTable1.getTableHeader();
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
-        DefaultCategoryDataset dc = new DefaultCategoryDataset();
-        dc.addValue(50, "Marks", "Student 1");
-        dc.addValue(20, "Marks", "Student 2");
-        dc.addValue(80, "Marks", "Student 3");
-        dc.addValue(90, "Marks", "Student 4");
-        JFreeChart chart = ChartFactory.createBarChart("Sales", "Student Name", "Marks", dc, PlotOrientation.VERTICAL, false, true, false);
-        CategoryPlot p = chart.getCategoryPlot();
-        p.setRangeGridlinePaint(Color.BLACK);
-        BarRenderer renderer = (BarRenderer) p.getRenderer();
-        renderer.setMaximumBarWidth(.05);
-        ChartPanel chPanel = new ChartPanel(chart);
-        chPanel.setPreferredSize(new Dimension(460, 200));
-        chPanel.setMouseWheelEnabled(true);
-        jPanel5.setLayout(new java.awt.BorderLayout());
-        jPanel5.add(chPanel);
-        jPanel5.setVisible(true);
-        jPanel5.validate();
     }
 
     /**
