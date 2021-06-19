@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,7 +27,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -37,92 +43,91 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    
     public Main() throws SQLException {
         initComponents();
-        jPanel6.setBackground(new Color(23,35,51));
-        jPanel7.setBackground(new Color(23,35,51));
+        jPanel6.setBackground(new Color(23, 35, 51));
+        jPanel7.setBackground(new Color(23, 35, 51));
         jLabel12.setText("");
         String username = new Login().user;
         try {
-            
-            
+
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
 
             Statement stmt = (Statement) con.createStatement();
-            String query = "select name,gender from users where username = '"+username+"'";
-            ResultSet rs=stmt.executeQuery(query);
-            if(rs.next())
-            {
+            String query = "select name,gender from users where username = '" + username + "'";
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
                 String name = rs.getString(1);
                 String gender = rs.getString(2);
                 jTextField1.setText(name);
-                if(gender.equals("Male"))              
-               {
-                   String myimgpath; 
-                   myimgpath= "./src/Icons/male 64 pixel.png";
-                   Icon myimgicon = new ImageIcon(myimgpath);
-                   jLabel12.setIcon(myimgicon);
-               }
-               else if (gender.equals("Female"))
-               {                    
-                   String myimgpath; 
-                   myimgpath= "./src/Icons/female 64 pixel.png";
-                   Icon myimgicon = new ImageIcon(myimgpath);
-                   jLabel12.setIcon(myimgicon);
-               }
-                
+                if (gender.equals("Male")) {
+                    String myimgpath;
+                    myimgpath = "./src/Icons/male 64 pixel.png";
+                    Icon myimgicon = new ImageIcon(myimgpath);
+                    jLabel12.setIcon(myimgicon);
+                } else if (gender.equals("Female")) {
+                    String myimgpath;
+                    myimgpath = "./src/Icons/female 64 pixel.png";
+                    Icon myimgicon = new ImageIcon(myimgpath);
+                    jLabel12.setIcon(myimgicon);
+                }
+
             }
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             int row = model.getRowCount();
             model = (DefaultTableModel) jTable1.getModel();
             int rowcount = model.getRowCount();
-            for(int i= rowcount-1; i>=0; i--)
-            {
+            for (int i = rowcount - 1; i >= 0; i--) {
                 model.removeRow(i);
             }
-            row =0;
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+            row = 0;
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             String current_date = formatter.format(date);
-            query="select * from bill where due_date < '"+current_date+"' and status='"+"pending"+"'";
-            rs=stmt.executeQuery(query);
-         
-            
-            for(;;)
-            {
-                if(rs.next())
-                {
+            query = "select * from bill where due_date < '" + current_date + "' and status='" + "pending" + "' and username = '" + username + "'";
+            rs = stmt.executeQuery(query);
+
+            for (;;) {
+                if (rs.next()) {
                     String bill_no = rs.getString("bill_no");
                     String acc_name = rs.getString("acc_name");
                     Date due_date = rs.getDate("due_date");
                     float amount = rs.getFloat("bill_amount");
                     row++;
-                    model.addRow(new Object[] {"B-"+bill_no,acc_name,due_date,amount});
+                    model.addRow(new Object[]{"B-" + bill_no, acc_name, due_date, amount});
 
-                }
-                else
-                {
+                } else {
                     break;
                 }
             }
-        
-            
-           
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         JTableHeader header = jTable1.getTableHeader();
-        ((DefaultTableCellRenderer)header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
-        
-        
-        
-    }   
-    
-    
-    
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+        DefaultCategoryDataset dc = new DefaultCategoryDataset();
+        dc.addValue(50, "Marks", "Student 1");
+        dc.addValue(20, "Marks", "Student 2");
+        dc.addValue(80, "Marks", "Student 3");
+        dc.addValue(90, "Marks", "Student 4");
+        JFreeChart chart = ChartFactory.createBarChart("Sales", "Student Name", "Marks", dc, PlotOrientation.VERTICAL, false, true, false);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.BLACK);
+        BarRenderer renderer = (BarRenderer) p.getRenderer();
+        renderer.setMaximumBarWidth(.05);
+        ChartPanel chPanel = new ChartPanel(chart);
+        chPanel.setPreferredSize(new Dimension(460, 200));
+        chPanel.setMouseWheelEnabled(true);
+        jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanel5.add(chPanel);
+        jPanel5.setVisible(true);
+        jPanel5.validate();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -479,6 +484,9 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("FINANCIFY");
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -515,14 +523,12 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(75, 75, 75)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50))
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -536,13 +542,13 @@ public class Main extends javax.swing.JFrame {
     private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
         // TODO add your handling code here:
         jLabel2.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
-        
+
     }//GEN-LAST:event_jLabel2MouseEntered
 
     private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
         // TODO add your handling code here:
         jLabel2.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
-        
+
     }//GEN-LAST:event_jLabel2MouseExited
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
@@ -609,22 +615,22 @@ public class Main extends javax.swing.JFrame {
 
     private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
         // TODO add your handling code here:
-        jPanel6.setBackground(new Color(255,0,0,60));
+        jPanel6.setBackground(new Color(255, 0, 0, 60));
     }//GEN-LAST:event_jPanel6MouseEntered
 
     private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
         // TODO add your handling code here:
-        jPanel6.setBackground(new Color(23,35,51));
+        jPanel6.setBackground(new Color(23, 35, 51));
     }//GEN-LAST:event_jPanel6MouseExited
 
     private void jPanel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseEntered
         // TODO add your handling code here:
-        jPanel7.setBackground(new Color(255,0,0,60));
+        jPanel7.setBackground(new Color(255, 0, 0, 60));
     }//GEN-LAST:event_jPanel7MouseEntered
 
     private void jPanel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseExited
         // TODO add your handling code here:
-        jPanel7.setBackground(new Color(23,35,51));
+        jPanel7.setBackground(new Color(23, 35, 51));
     }//GEN-LAST:event_jPanel7MouseExited
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
