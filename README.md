@@ -6,3 +6,15 @@
 ![Github stars](https://img.shields.io/github/stars/Kanav-Arora/Financify?style=social)
 
 We are proposing an idea to make an accounting software using Java programming language and MySQL database. The desktop application will have a user-friendly UI and a database to keep track of all records.
+
+# License
+
+This project comes under [MIT License](https://github.com/Kanav-Arora/Financify/blob/main/LICENSE).
+
+<br>
+
+# Contribution Guide
+
+Check the contribution guide.
+
+
