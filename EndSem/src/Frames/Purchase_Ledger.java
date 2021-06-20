@@ -31,14 +31,14 @@ public class Purchase_Ledger extends javax.swing.JFrame {
     String username;
     String bill_number;
     boolean edit_on = false;
-
-    /**
+        /**
      * Creates new form Sale
      */
     public Purchase_Ledger() {
 
         try {
             initComponents();
+            jLabel1.setForeground(new java.awt.Color(187, 187, 187));
             jLabel2.setVisible(false);
             jButton1.setVisible(false);
             jLabel18.setVisible(false);
@@ -307,7 +307,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -324,7 +323,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -332,13 +330,15 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jTextField12 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(23, 35, 51));
 
-        jLabel1.setText("Sale Bill");
+        jLabel1.setText("Purchase Bill");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -347,7 +347,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addContainerGap(789, Short.MAX_VALUE))
+                .addContainerGap(767, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,12 +458,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jPanel1.add(jTextField4);
         jTextField4.setBounds(705, 67, 121, 22);
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
-        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(0, 148, 844, 16);
-
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("GST No. :");
         jPanel1.add(jLabel6);
@@ -513,7 +507,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(6, 170, 828, 170);
+        jScrollPane2.setBounds(10, 160, 828, 170);
 
         jTextField6.setEditable(false);
         jTextField6.setBackground(new java.awt.Color(255, 255, 255));
@@ -612,12 +606,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 0, 0);
-
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
-        jPanel1.add(jLabel16);
-        jLabel16.setBounds(0, 490, 840, 16);
+        jPanel3.setBounds(10, 350, 478, 105);
 
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -629,7 +618,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel17);
-        jLabel17.setBounds(20, 510, 110, 32);
+        jLabel17.setBounds(20, 490, 110, 32);
 
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -641,7 +630,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(690, 510, 140, 32);
+        jLabel18.setBounds(690, 490, 140, 32);
 
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -653,7 +642,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel19);
-        jLabel19.setBounds(300, 510, 110, 32);
+        jLabel19.setBounds(300, 490, 110, 32);
 
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
@@ -686,7 +675,11 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel21);
-        jLabel21.setBounds(160, 510, 110, 32);
+        jLabel21.setBounds(160, 490, 110, 32);
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(0, 470, 860, 10);
+        jPanel1.add(jSeparator2);
+        jSeparator2.setBounds(-10, 150, 860, 10);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 850, 560));
 
@@ -953,7 +946,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -964,13 +956,14 @@ public class Purchase_Ledger extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
