@@ -36,6 +36,7 @@ public class Sale extends javax.swing.JFrame {
      */
     public Sale() {
         initComponents();
+        jLabel1.setForeground(new java.awt.Color(187, 187, 187));
         username = new Login().user;
         try {
 
@@ -391,7 +392,6 @@ public class Sale extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -408,12 +408,13 @@ public class Sale extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -458,12 +459,12 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField1);
-        jTextField1.setBounds(82, 14, 90, 24);
+        jTextField1.setBounds(82, 14, 90, 22);
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Bill Date :");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(209, 14, 52, 24);
+        jLabel10.setBounds(209, 14, 49, 24);
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
@@ -473,7 +474,7 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(279, 14, 90, 24);
+        jTextField2.setBounds(279, 14, 90, 22);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -492,7 +493,7 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jTextField3);
-        jTextField3.setBounds(483, 14, 90, 24);
+        jTextField3.setBounds(483, 14, 90, 22);
 
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Due Date :");
@@ -515,16 +516,16 @@ public class Sale extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Address :");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 114, 54, 16);
+        jLabel3.setBounds(20, 114, 48, 16);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Cash/Credit :");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(603, 18, 72, 16);
+        jLabel4.setBounds(603, 18, 69, 16);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credit", "Cash" }));
         jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(705, 13, 98, 26);
+        jComboBox2.setBounds(705, 13, 98, 22);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Balance :");
@@ -536,13 +537,7 @@ public class Sale extends javax.swing.JFrame {
         jTextField4.setForeground(new java.awt.Color(0, 0, 0));
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField4);
-        jTextField4.setBounds(705, 67, 121, 24);
-
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
-        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(0, 148, 844, 16);
+        jTextField4.setBounds(705, 67, 121, 22);
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("GST No. :");
@@ -554,7 +549,7 @@ public class Sale extends javax.swing.JFrame {
         jTextField5.setForeground(new java.awt.Color(0, 0, 0));
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(705, 110, 121, 24);
+        jTextField5.setBounds(705, 110, 121, 22);
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
@@ -593,7 +588,7 @@ public class Sale extends javax.swing.JFrame {
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(6, 170, 828, 170);
+        jScrollPane2.setBounds(10, 160, 828, 170);
 
         jTextField6.setEditable(false);
         jTextField6.setBackground(new java.awt.Color(255, 255, 255));
@@ -611,7 +606,7 @@ public class Sale extends javax.swing.JFrame {
         jTextField11.setForeground(new java.awt.Color(0, 0, 0));
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField11);
-        jTextField11.setBounds(764, 352, 70, 24);
+        jTextField11.setBounds(764, 352, 70, 22);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
@@ -692,12 +687,7 @@ public class Sale extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 350, 487, 109);
-
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
-        jPanel1.add(jLabel16);
-        jLabel16.setBounds(0, 490, 840, 16);
+        jPanel3.setBounds(10, 350, 478, 105);
 
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -726,14 +716,14 @@ public class Sale extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
         jPanel1.add(jLabel20);
-        jLabel20.setBounds(549, 412, 70, 16);
+        jLabel20.setBounds(549, 412, 69, 16);
 
         jTextField12.setEditable(false);
         jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(jTextField12);
-        jTextField12.setBounds(653, 408, 181, 24);
+        jTextField12.setBounds(653, 408, 181, 22);
 
         jButton1.setText("Add Item");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -742,7 +732,11 @@ public class Sale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(570, 350, 90, 32);
+        jButton1.setBounds(570, 350, 90, 22);
+        jPanel1.add(jSeparator2);
+        jSeparator2.setBounds(-10, 150, 860, 10);
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(0, 470, 860, 10);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 850, 560));
 
@@ -1048,7 +1042,6 @@ public class Sale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1057,13 +1050,14 @@ public class Sale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;

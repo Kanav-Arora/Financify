@@ -32,6 +32,7 @@ public class Voucher extends javax.swing.JFrame {
      */
     public Voucher() {
         initComponents();
+        jLabel3.setForeground(new java.awt.Color(187, 187, 187));
         String username = new Login().user;
         jLabel1.setVisible(false);
         jTextField1.setVisible(false);
@@ -88,7 +89,6 @@ public class Voucher extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -99,6 +99,7 @@ public class Voucher extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -154,11 +155,7 @@ public class Voucher extends javax.swing.JFrame {
                 jLabel19MouseClicked(evt);
             }
         });
-        panel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 110, 32));
-
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel16.setText("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
-        panel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 518, -1, -1));
+        panel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 520, 110, 32));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -222,7 +219,7 @@ public class Voucher extends javax.swing.JFrame {
                 jLabel18MouseClicked(evt);
             }
         });
-        panel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(589, 540, 140, 32));
+        panel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 520, 140, 32));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Cheque" }));
         jComboBox3.setSelectedItem("Select Payment Type");
@@ -237,6 +234,7 @@ public class Voucher extends javax.swing.JFrame {
             }
         });
         panel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 200, -1));
+        panel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 850, 10));
 
         getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 590));
 
@@ -395,7 +393,6 @@ public class Voucher extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -406,6 +403,7 @@ public class Voucher extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
