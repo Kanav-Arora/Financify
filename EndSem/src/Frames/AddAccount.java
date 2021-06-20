@@ -31,7 +31,6 @@ String username;
             initComponents();
             jTextField1.setEditable(false);
             username = new Login().user;
-
             jLabel1.setForeground(new java.awt.Color(187, 187, 187));
             try {
                 
@@ -56,8 +55,6 @@ String username;
                 }
                 jComboBox3.setSelectedItem("");
                 AutoCompleteDecorator.decorate(jComboBox3);
-                
-                
                 query = "select city from cities order by city";
                 rs=stmt.executeQuery(query);
                 
@@ -76,7 +73,8 @@ String username;
                 }
                 jComboBox4.setSelectedItem("");
                 AutoCompleteDecorator.decorate(jComboBox4);
-               
+                jComboBox3.setSelectedItem("Select State");
+                jComboBox4.setSelectedItem("Select City");
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AddAccount.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
