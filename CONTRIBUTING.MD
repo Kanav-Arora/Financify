@@ -4,7 +4,7 @@ We love your inputs! We want to make the contribution process as easy as possibl
 
 <br>
 
-# Getting the project locally
+## Getting the project locally
 
 - Fork the repo
 <br>
