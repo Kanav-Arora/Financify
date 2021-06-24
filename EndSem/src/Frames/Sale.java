@@ -63,17 +63,25 @@ public class Sale extends javax.swing.JFrame {
             AutoCompleteDecorator.decorate(jComboBox1);
 
             String type = "sale";
-            query = "select max(bill_no) from bill where username = '" + username + "' and type = '" + type + "'";
+            query = "select max(bill_no),count(bill_no) from bill where username = '" + username + "' and type = '" + type + "'";
             System.out.println("Fetching acc_name from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
-            int bill_no = 0;
+            String bill_no = "";
+            int count=0;
             if (rs.next()) {
-                bill_no = rs.getInt(1);
+                bill_no = rs.getString(1);
+                count=rs.getInt(2);  
             }
-
-            jTextField1.setText("B-" + (bill_no + 1));
-
+            System.out.println(bill_no);
+            if(count==0)
+            {
+                jTextField1.setText("B-1");
+            }
+            else
+            {
+            jTextField1.setText("B-"+ (Integer.parseInt(bill_no.substring(bill_no.length()-1,bill_no.length()))+1) );
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -849,7 +857,7 @@ public class Sale extends javax.swing.JFrame {
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
         
         JFrame j=new JFrame();
-        JOptionPane.showMessageDialog(j,"Bill Generated");
+       
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
@@ -919,12 +927,12 @@ public class Sale extends javax.swing.JFrame {
             try {
             if(payment_type.equals("Cash"))
             {     
-            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
+            query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status + "');";
             stmt.executeUpdate(query);
             }
             if(payment_type.equals("Credit"))
             { 
-            query = "INSERT INTO bill VALUES('" + bill_no_int + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status1 + "');";
+            query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "','" + date + "','" + bill_amount + "','" + due_date + "','" + status1 + "');";
             stmt.executeUpdate(query);
             }
             query = "select * from stocks where item_name = '"+ item_name +"' and username = '"+ username +"' ";

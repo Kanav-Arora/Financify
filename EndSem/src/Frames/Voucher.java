@@ -262,11 +262,7 @@ public class Voucher extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int row = model.getRowCount();
         model = (DefaultTableModel) jTable1.getModel();
-        int rowcount = model.getRowCount();
-        for(int i= rowcount-1; i>=0; i--)
-        {
-            model.removeRow(i);
-        }
+        model.setRowCount(0);
         row =0;
         String username = new Login().user;
         try {
@@ -274,18 +270,18 @@ public class Voucher extends javax.swing.JFrame {
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
-        String query = "select count(*) from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
-        System.out.println("Counting records from database: jvp, table: transactions");
-        ResultSet rs=stmt.executeQuery(query);
-        System.out.println("Record count fetched successfully.");
-        int total_records =0;
-        if(rs.next())
-        {
-            total_records = rs.getInt(1);
-        }
-        query = "select * from transactions,bill WHERE transactions.username = '"+username+"' and transactions.acc_name = '"+acc +"' and bill.status='"+"pending"+"'";
+//        String query = "select count(*) from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
+//        System.out.println("Counting records from database: jvp, table: transactions");
+//        ResultSet rs=stmt.executeQuery(query);
+//        System.out.println("Record count fetched successfully.");
+//        int total_records =0;
+//        if(rs.next())
+//        {
+//            total_records = rs.getInt(1);
+//        }
+        String query = "select * from transactions,bill WHERE transactions.username = '"+username+"' and transactions.acc_name = '"+acc +"' and bill.status='"+"pending"+"'";
         System.out.println("Fetching records from database: jvp, table: transactions");
-        rs=stmt.executeQuery(query);
+        ResultSet rs=stmt.executeQuery(query);
         System.out.println("Records fetched successfully.");
         
         for(;;)
