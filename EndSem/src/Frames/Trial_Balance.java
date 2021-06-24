@@ -22,6 +22,9 @@ public class Trial_Balance extends javax.swing.JFrame {
 
     String username = "";
 
+    Connection con;
+    Statement stmt;
+
     /**
      * Creates new form Trial_Balance
      */
@@ -32,57 +35,57 @@ public class Trial_Balance extends javax.swing.JFrame {
         float debit_total = 0;
         float credit_total = 0;
         try {
-
             Class.forName("java.sql.DriverManager");
-            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            stmt = (Statement) con.createStatement();
             System.out.println("Connection is created successfully");
-            Statement stmt = (Statement) con.createStatement();
-            String query = "select * from accounts where username = '" + username + "'";
-            ResultSet rs = stmt.executeQuery(query);
-            System.out.println("Record fetched successfully.");
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();;
-            int row = 0;
-            for (;;) {
-                if (rs.next()) {
-                    String acc_name = rs.getString("acc_name");
-                    String city = rs.getString("city");
-                    float debit = 0;
-                    float credit = 0;
-                    String annexure = "";
-                    Statement stmt1 = (Statement) con.createStatement();
-                    String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
-                    ResultSet rs1 = stmt1.executeQuery(query1);
-                    System.out.println("Record fetched successfully.");
-                    for (;;) {
-                        if (rs1.next()) {
-                            debit = debit + rs1.getFloat("debit");
-                            credit = credit + rs1.getFloat("credit");
-                        } else {
-                            break;
-                        }
-                    }
-                    if (debit > credit) {
-                        annexure = "dr";
-                    } else if (credit > debit) {
-                        annexure = "cr";
-                    }
-                    debit_total = debit_total + debit;
-                    credit_total = credit_total + credit;
-                    row++;
-                    model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-
-                } else {
-                    break;
-                }
-
-            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String query = "select * from accounts where username = '" + username + "'";
+        ResultSet rs = stmt.executeQuery(query);
+        System.out.println("Record fetched successfully.");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();;
+        int row = 0;
+        for (;;) {
+            if (rs.next()) {
+                String acc_name = rs.getString("acc_name");
+                String city = rs.getString("city");
+                float debit = 0;
+                float credit = 0;
+                String annexure = "";
+                Statement stmt1 = (Statement) con.createStatement();
+                String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "' order by lower(acc_name) asc";
+                ResultSet rs1 = stmt1.executeQuery(query1);
+                System.out.println("Record fetched successfully.");
+                for (;;) {
+                    if (rs1.next()) {
+                        debit = debit + rs1.getFloat("debit");
+                        credit = credit + rs1.getFloat("credit");
+                    } else {
+                        break;
+                    }
+                }
+                if (debit > credit) {
+                    annexure = "dr";
+                } else if (credit > debit) {
+                    annexure = "cr";
+                }
+                debit_total = debit_total + debit;
+                credit_total = credit_total + credit;
+                row++;
+                model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+
+            } else {
+                break;
+            }
 
         }
         jTextField3.setText("" + debit_total);
         jTextField4.setText("" + credit_total);
         jTextField5.setText("" + Math.abs(debit_total - credit_total));
+
     }
 
     /**
@@ -300,20 +303,14 @@ public class Trial_Balance extends javax.swing.JFrame {
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         String sort = (String) jComboBox1.getSelectedItem();
-        float debit_total = 0;
-        float credit_total = 0;
+        int row = 0;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
         if (sort.equals("All")) {
             try {
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                System.out.println("Connection is created successfully");
-                Statement stmt = (Statement) con.createStatement();
                 String query = "select * from accounts where username = '" + username + "'";
                 ResultSet rs = stmt.executeQuery(query);
                 System.out.println("Record fetched successfully.");
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                model.setRowCount(0);
-                int row = 0;
                 for (;;) {
                     if (rs.next()) {
                         String acc_name = rs.getString("acc_name");
@@ -322,7 +319,7 @@ public class Trial_Balance extends javax.swing.JFrame {
                         float credit = 0;
                         String annexure = "";
                         Statement stmt1 = (Statement) con.createStatement();
-                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
+                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "' order by lower(acc_name)";
                         ResultSet rs1 = stmt1.executeQuery(query1);
                         System.out.println("Record fetched successfully.");
                         for (;;) {
@@ -338,8 +335,6 @@ public class Trial_Balance extends javax.swing.JFrame {
                         } else if (credit > debit) {
                             annexure = "cr";
                         }
-                        debit_total = debit_total + debit;
-                        credit_total = credit_total + credit;
                         row++;
                         model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
 
@@ -348,23 +343,15 @@ public class Trial_Balance extends javax.swing.JFrame {
                     }
 
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         } else {
             try {
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                System.out.println("Connection is created successfully");
-                Statement stmt = (Statement) con.createStatement();
                 String query = "select * from accounts where username = '" + username + "'";
                 ResultSet rs = stmt.executeQuery(query);
                 System.out.println("Record fetched successfully.");
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                model.setRowCount(0);
-                int row = 0;
 
                 for (;;) {
                     if (rs.next()) {
@@ -374,7 +361,7 @@ public class Trial_Balance extends javax.swing.JFrame {
                         float credit = 0;
                         String annexure = "";
                         Statement stmt1 = (Statement) con.createStatement();
-                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "'";
+                        String query1 = "select * from transactions where username = '" + username + "' and acc_name = '" + acc_name + "' order by lower(acc_name)";
                         ResultSet rs1 = stmt1.executeQuery(query1);
                         System.out.println("Record fetched successfully.");
                         for (;;) {
@@ -390,17 +377,18 @@ public class Trial_Balance extends javax.swing.JFrame {
                         } else if (credit > debit) {
                             annexure = "cr";
                         }
-                        debit_total = debit_total + debit;
-                        credit_total = credit_total + credit;
+                        if (sort.equals("Credit Only") && debit == 0 && credit != 0) {
 
-                        row++;
-                        if (sort.equals("Credit Only") && debit_total == 0) {
+                            row++;
+                            model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
+                        } else if (sort.equals("Debit Only") && credit == 0 && debit != 0) {
+
+                            row++;
 
                             model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                        } else if (sort.equals("Debit Only") && credit_total == 0) {
+                        } else if (sort.equals("Zero Balance") && debit == credit) {
 
-                            model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
-                        } else if (sort.equals("Zero Balance") && debit_total == credit_total) {
+                            row++;
 
                             model.addRow(new Object[]{row, acc_name, city, debit, credit, annexure});
                         }
@@ -411,8 +399,6 @@ public class Trial_Balance extends javax.swing.JFrame {
 
                 }
 
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(Trial_Balance.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -427,6 +413,7 @@ public class Trial_Balance extends javax.swing.JFrame {
             float row_credit = Float.parseFloat(jTable1.getModel().getValueAt(count, 4).toString());
             sum_debit = sum_debit + row_debit;
             sum_credit = sum_credit + row_credit;
+            count++;
         }
         jTextField3.setText("" + sum_debit);
         jTextField4.setText("" + sum_credit);
