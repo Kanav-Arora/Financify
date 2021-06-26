@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -37,13 +38,13 @@ public class Excel {
                 FileInputStream existingFile = new FileInputStream(f);
                 workbook = new XSSFWorkbook(existingFile);
                 existingFile.close();
-            
             }
             
             else
             {
             FileOutputStream out = new FileOutputStream(filepath);
             workbook.write(out);
+            Sheet s1 = workbook.createSheet("Sheet 1");
             System.out.println("createworkbook.xlsx written successfully");
             out.close();
             

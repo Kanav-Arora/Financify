@@ -757,16 +757,16 @@ boolean bill_click = false;
                 Object data = jTable1.getModel().getValueAt(i, j);
                 Cell cell = row.createCell(j);
                 if (data instanceof String) {
-                    System.out.print((String) data);
-                    cell.setCellValue((String) data);
+                    System.out.print(data.toString());
+                    cell.setCellValue(data.toString());
                     
                 } else if (data instanceof Integer) {
-                    System.out.print((String) data);
-                    cell.setCellValue((Integer) data);
+                    System.out.print(Integer.parseInt(data.toString()));
+                    cell.setCellValue(Integer.parseInt(data.toString()));
                 }
                 else if (data instanceof Float) {
-                    System.out.print((String) data);
-                    cell.setCellValue((Float) data);
+                    System.out.print(Float.parseFloat(data.toString()));
+                    cell.setCellValue(Float.parseFloat(data.toString()));
                 }
                 
                 
