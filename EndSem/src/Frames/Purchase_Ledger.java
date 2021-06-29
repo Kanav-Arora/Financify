@@ -77,7 +77,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             System.out.println("Connection is created successfully");
 
-            query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "'";
+            query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + bill_number + "'";
             System.out.println("Fetching items from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
@@ -116,7 +116,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             int row = 0; 
             int s_no1 = 1;
             for (;;) {
-                query = "select * from bill where bill_no = '" + Integer.parseInt(bill_number.substring(2)) + "' and s_no = '"+ s_no1 +"'";
+                query = "select * from bill where bill_no = '" + bill_number + "' and s_no = '"+ s_no1 +"'";
                 System.out.println("Fetching items from database: jvp; table: bill");
                 rs = stmt.executeQuery(query);
                 System.out.println("Record fetched successfully.");

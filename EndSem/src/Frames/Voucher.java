@@ -6,12 +6,17 @@
 package Frames;
 
 import static Frames.LedgerAccounts.rev;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,42 +37,7 @@ public class Voucher extends javax.swing.JFrame {
      */
     public Voucher() {
         initComponents();
-        jLabel3.setForeground(new java.awt.Color(187, 187, 187));
-        String username = new Login().user;
-        jLabel1.setVisible(false);
-        jTextField1.setVisible(false);
-        try {
         
-        Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
-        System.out.println("Connection is created successfully");
-        Statement stmt = (Statement) con.createStatement();
-        String query = "select acc_name from accounts where username = '"+username+"'";
-        System.out.println("Fetching items from database: jvp; table: transactions");
-        ResultSet rs=stmt.executeQuery(query);
-        System.out.println("Record fetched successfully.");
-        
-        for(;;)
-        {
-            if(rs.next())
-            {
-                String item = rs.getString(1);
-                jComboBox1.addItem(item);
-            }
-            else{
-                break;
-            }
-        }
-        
-        jComboBox1.setSelectedItem("");
-        AutoCompleteDecorator.decorate(jComboBox1);
-        
-        
-    }   catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Stocks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Stocks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -257,63 +227,6 @@ public class Voucher extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        jComboBox2.removeAllItems();
-        String acc = (String) jComboBox1.getSelectedItem();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int row = model.getRowCount();
-        model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        row =0;
-        String username = new Login().user;
-        try {
-        Class.forName("java.sql.DriverManager");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
-        System.out.println("Connection is created successfully");
-        Statement stmt = (Statement) con.createStatement();
-//        String query = "select count(*) from transactions WHERE username = '"+username+"' and acc_name = '"+acc +"'";
-//        System.out.println("Counting records from database: jvp, table: transactions");
-//        ResultSet rs=stmt.executeQuery(query);
-//        System.out.println("Record count fetched successfully.");
-//        int total_records =0;
-//        if(rs.next())
-//        {
-//            total_records = rs.getInt(1);
-//        }
-        String query = "select * from transactions,bill WHERE transactions.username = '"+username+"' and transactions.acc_name = '"+acc +"' and bill.status='"+"pending"+"'";
-        System.out.println("Fetching records from database: jvp, table: transactions");
-        ResultSet rs=stmt.executeQuery(query);
-        System.out.println("Records fetched successfully.");
-        
-        for(;;)
-        {
-            if(rs.next())
-            {
-                String bill_no = rs.getString("bill_no");
-                Date date = rs.getDate("date");
-                float debit = rs.getFloat("debit");
-                float credit = rs.getFloat("credit");
-                row++;
-                jComboBox2.addItem(bill_no);
-                model.addRow(new Object[] {bill_no,date,debit,credit});
-                
-            }
-            else
-            {
-                break;
-            }
-        }
-        
-        jComboBox2.setSelectedItem("");
-        AutoCompleteDecorator.decorate(jComboBox2);
-        
-        
-        
-    }
-        catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         
     }//GEN-LAST:event_jLabel2MouseClicked
 
@@ -322,7 +235,7 @@ public class Voucher extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-
+        
     }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
@@ -335,11 +248,12 @@ public class Voucher extends javax.swing.JFrame {
 
     private void jComboBox3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox3MouseClicked
         // TODO add your handling code here:
-        if(jComboBox3.getSelectedItem()=="Credit")
+            
+        if(jComboBox3.getSelectedItem()=="Cheque")
         {jLabel1.setVisible(true);
         jTextField1.setVisible(true);
         }
-        else
+        else if(jComboBox3.getSelectedItem()=="Cash")
         {
         jLabel1.setVisible(false);
         jTextField1.setVisible(false);
