@@ -5,6 +5,7 @@
  */
 package Frames;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,14 +15,14 @@ import java.sql.ResultSet;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -29,12 +30,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author shivam
  */
 public class Analysis extends javax.swing.JFrame {
-
-    Connection con = null;
-
-    Statement stmt = null;
-
-    ResultSet rs = null;
 
     String query = "";
 
@@ -45,56 +40,28 @@ public class Analysis extends javax.swing.JFrame {
      */
     public Analysis() {
         initComponents();
-        username = Login.user;
-        try {
-            Class.forName("java.sql.DriverManager");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-            stmt = (Statement) con.createStatement();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Analysis.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Analysis.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        CategoryPlot plot = new CategoryPlot();
-        CategoryItemRenderer lineRenderer = new LineAndShapeRenderer();
-        plot.setDataset(0, createDataset());
-        plot.setRenderer(0, lineRenderer);
-        CategoryItemRenderer baRenderer = new BarRenderer();
-        plot.setDataset(1, createDataset());
-        plot.setRenderer(1, baRenderer);
-        plot.getDomainAxis().setCategoryMargin(0.0);
-        plot.getDomainAxis().setLowerMargin(0.0);
-        plot.getDomainAxis().setUpperMargin(0.0);
-        plot.setDomainAxis(new CategoryAxis("Month"));
-        plot.setRangeAxis(new NumberAxis("Amount (in Rs.)"));
-        JFreeChart chart = new JFreeChart(plot);
-        chart.setTitle(" ");
-        ChartPanel chPanel = new ChartPanel(chart);
-        chPanel.setPreferredSize(new Dimension(733, 156));
-        chPanel.setMouseWheelEnabled(true);
-        jPanel3.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(chPanel);
-        jPanel3.setVisible(true);
-        jPanel3.validate();
-    }
-
-    private DefaultCategoryDataset createDataset() {
+//        username = Login.user;
+username = "kgp";
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Date date = new Date();
         int month = date.getMonth();
         float jan_s = 0, feb_s = 0, march_s = 0, april_s = 0, may_s = 0, june_s = 0, july_s = 0, august_s = 0, sep_s = 0, oct_s = 0, nov_s = 0, dec_s = 0;
         float jan_p = 0, feb_p = 0, march_p = 0, april_p = 0, may_p = 0, june_p = 0, july_p = 0, august_p = 0, sep_p = 0, oct_p = 0, nov_p = 0, dec_p = 0;
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         try {
             String bill_no = "";
             int month_backend = 0;
             float bill_amount = 0;
             String type = "";
             Class.forName("java.sql.DriverManager");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-            stmt = (Statement) con.createStatement();
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
+            System.out.println("Connection success!!");
+            Statement stmt = (Statement) con.createStatement();
+            System.out.println("Statement success!!");
             query = "SELECT DISTINCT(bill_no), month(date), bill_amount, type FROM bill where status = '" + "cleared" + "' and username = '" + username + "' ";
-            rs = stmt.executeQuery(query);
+            System.out.println("Query success!!");
+            ResultSet rs = stmt.executeQuery(query);
+            System.out.println("ResultSet success!!");
+
             for (;;) {
                 if (rs.next()) {
                     bill_no = rs.getString(1);
@@ -184,7 +151,7 @@ public class Analysis extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Analysis.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.out.println("Dataset success!!");
         String series1 = "Sale";
         dataset.addValue(april_s, series1, "April");
         dataset.addValue(may_s, series1, "May");
@@ -211,8 +178,23 @@ public class Analysis extends javax.swing.JFrame {
         dataset.addValue(jan_p, series2, "January");
         dataset.addValue(feb_p, series2, "February");
         dataset.addValue(march_p, series2, "March");
-
-        return dataset;
+        CategoryPlot plot = new CategoryPlot();
+        plot.setDomainAxis(new CategoryAxis("Month"));
+        plot.setRangeAxis(new NumberAxis("Amount (in Rs.)"));
+        JFreeChart chart = ChartFactory.createBarChart(" ",
+                "Month",
+                "Amount (in Rs.)",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
+        plot.setRangeGridlinePaint(Color.BLACK);
+        ChartPanel chPanel = new ChartPanel(chart);
+        chPanel.setPreferredSize(new Dimension(733, 300));
+        chPanel.setMouseWheelEnabled(true);
+        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(chPanel);
+        jPanel3.setVisible(true);
+        jPanel3.validate();
     }
 
     /**
