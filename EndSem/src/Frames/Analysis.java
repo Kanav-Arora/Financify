@@ -45,8 +45,10 @@ public class Analysis extends javax.swing.JFrame {
      */
     public Analysis() {
         initComponents();
-       // username = Login.user;
-        username="kgp";
+        jLabel1.setForeground(new java.awt.Color(187, 187, 187));
+        username = Login.user;
+      
+        
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Date date = new Date();
         int month = date.getMonth();
@@ -196,13 +198,30 @@ public class Analysis extends javax.swing.JFrame {
                 
             }
             
-                DecimalFormat formatter = new DecimalFormat("##,##,###.00");
+                DecimalFormat formatter = new DecimalFormat("##,##,###.##");
                 
-                jLabel7.setText("Rs."+formatter.format(sales_total));
-                jLabel8.setText("Rs."+formatter.format(purchase_total));
-                jLabel9.setText("Rs."+formatter.format(pending_payment));
-                jLabel10.setText("Rs."+formatter.format(gst_total));
-            
+                jLabel7.setText("Rs. "+formatter.format(sales_total));
+                jLabel8.setText("Rs. "+formatter.format(purchase_total));
+                jLabel9.setText("Rs. "+formatter.format(pending_payment));
+                jLabel10.setText("Rs. "+formatter.format(gst_total));
+                
+                if(sales_total==0)
+                {
+                    jLabel7.setText("Rs. 0.0");
+                }
+                if(purchase_total==0)
+                {
+                    jLabel8.setText("Rs. 0.0");
+                }
+                if(pending_payment==0)
+                {
+                    jLabel9.setText("Rs. 0.0");
+                }
+                if(gst_total==0)
+                {
+                    jLabel10.setText("Rs. 0.0");
+                }
+                
        
             
             
