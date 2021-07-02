@@ -266,7 +266,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             for (;;) {
                 if (rs.next()) {
                     String item = rs.getString(1);
-                    combo.addItem("S-" + item);
+                    combo.addItem(item);
                 } else {
                     break;
                 }
