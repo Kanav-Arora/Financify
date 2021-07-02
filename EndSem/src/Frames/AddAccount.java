@@ -85,13 +85,25 @@ String username;
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
-            String query = "select count(*) from accounts where username = '"+username+"' ";
+            String query = "select max(acc_id),count(acc_id) from accounts where username = '" + username + "' ";
+            System.out.println("Fetching acc_name from database: jvp; table: accounts");
             ResultSet rs=stmt.executeQuery(query);
-            if(rs.next())
+            System.out.println("Record fetched successfully.");
+            String acc_id="";
+            int count=0;
+            if (rs.next()) 
             {
-                int count=rs.getInt(1);
-                jTextField1.setText("A-"+Integer.toString(count+1));
-                
+                acc_id = rs.getString(1);
+                count=rs.getInt(2);  
+            }
+            System.out.println(acc_id);
+            if(count==0)
+            {
+                jTextField1.setText("A-1");
+            }
+            else
+            {
+            jTextField1.setText("A-"+ (Integer.parseInt(acc_id.substring(acc_id.length()-1,acc_id.length()))+1) );
             }
             
             

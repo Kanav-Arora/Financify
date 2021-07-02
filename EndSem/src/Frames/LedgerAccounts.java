@@ -71,7 +71,7 @@ boolean bill_click = false;
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
-        String query = "select acc_name from accounts where username = '"+username+"'";
+        String query = "select acc_name from accounts where username = '"+username+"' ORDER BY acc_name";
         System.out.println("Fetching acc_name from database: jvp; table: accounts");
         ResultSet rs=stmt.executeQuery(query);
         System.out.println("Record fetched successfully.");
@@ -79,8 +79,8 @@ boolean bill_click = false;
         {
             if(rs.next())
             {   
-                String item=rs.getString(1);
-                jComboBox1.addItem(item);
+                String acc_name=rs.getString(1);
+                jComboBox1.addItem(acc_name);
             }
             else
             {
