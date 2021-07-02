@@ -44,7 +44,7 @@ int edit_bool;
         Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
         System.out.println("Connection is created successfully");
         Statement stmt = (Statement) con.createStatement();
-        String query = "select item_name from stocks where username = '"+username+"'";
+        String query = "select item_name from stocks where username = '"+username+"' order by item_name";
         System.out.println("Fetching items from database: jvp; table: stocks");
         ResultSet rs=stmt.executeQuery(query);
         System.out.println("Record fetched successfully.");
@@ -291,8 +291,8 @@ int edit_bool;
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                                        .addComponent(jTextField2)
+                                        .addGap(212, 212, 212)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel14)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -324,7 +324,7 @@ int edit_bool;
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -402,14 +402,14 @@ int edit_bool;
     
         if(rs.next())
         {
-            int item_id = rs.getInt("item_id");
+            String item_id = rs.getString("item_id");
             String item_name = rs.getString("item_name");
             int gst_slab = rs.getInt("gst_slab");
             long quantity = rs.getLong("quantity");
             float weight = rs.getFloat("weight");
             float price = rs.getFloat("price");
             
-            jTextField1.setText("S-"+item_id);
+            jTextField1.setText(item_id);
             jTextField2.setText(item_name);
             jComboBox2.setSelectedItem(""+gst_slab+" %");
             jTextField4.setText(""+quantity);
@@ -538,7 +538,7 @@ int edit_bool;
                 stmt.executeUpdate(query);
                 
 
-                int item_id = Integer.parseInt(jTextField1.getText().substring(2));
+                String item_id = jTextField1.getText();
                 String percentage= (String) jComboBox2.getSelectedItem();
                 int gst_slab = Integer.parseInt(percentage.substring(0, percentage.length()-2));
                 long quantity = Long.parseLong(jTextField4.getText());

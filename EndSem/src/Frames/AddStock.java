@@ -35,12 +35,21 @@ String username;
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp","root","bhulgaya123");
             System.out.println("Connection is Created Successfully");
             Statement stmt = (Statement) con.createStatement();
-            String query = "select count(*) from stocks where username ='"+ username+"' ";
+            String query = "select max(item_id),count(*) from stocks where username ='"+ username+"' ";
             ResultSet rs=stmt.executeQuery(query);
             if(rs.next())
             {
-                int count=rs.getInt(1);
-                jTextField1.setText("S-"+Integer.toString(count+1));
+                String max_item_id = rs.getString(1);
+                int count=rs.getInt(2);
+                if(count==0)
+                {
+                    jTextField1.setText("S-1");
+                }
+                else
+                {
+                    jTextField1.setText("S-"+ (Integer.parseInt(max_item_id.substring(max_item_id.length()-1,max_item_id.length()))+1));
+                }
+                
                 
             }
         
@@ -307,7 +316,7 @@ String username;
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         username = new Login().user;
-        int item_id = Integer.parseInt(jTextField1.getText().substring(2));
+        String item_id = jTextField1.getText();
         String item_name = jTextField2.getText();
         String percentage= (String) jComboBox2.getSelectedItem();
         int gst_slab = Integer.parseInt(percentage.substring(0, percentage.length()-2));
