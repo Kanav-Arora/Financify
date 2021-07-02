@@ -33,7 +33,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class Vouchers extends javax.swing.JFrame {
 
     /**
-     * Creates new form Voucher
+     * Creates new form Vouchers
      */
     public Vouchers() {
         initComponents();
