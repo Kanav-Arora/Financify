@@ -127,7 +127,7 @@ public class Sale extends javax.swing.JFrame {
                     ResultSet rs;
 
                     if (col == 1) {
-                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_id = model.getValueAt(row, 1).toString();
                         query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
                         rs = stmt.executeQuery(query);
@@ -161,14 +161,14 @@ public class Sale extends javax.swing.JFrame {
                         int t_pcs = Integer.parseInt(model.getValueAt(row, 3).toString());
                         net_weight = weight_per_bag * t_pcs;
                         model.setValueAt(net_weight, row, 4);
-                        model.setValueAt("S-" + item_id, row, 1);
+                        model.setValueAt(item_id, row, 1);
                         model.setValueAt(net_rate, row, 6);
                         model.setValueAt(rate, row, 5);
                         model.setValueAt(gst, row, 11);
 
                     }
                     if (col == 3) {
-                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_id = model.getValueAt(row, 1).toString();
                         item_name = model.getValueAt(row, 2).toString();
                         query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
@@ -200,7 +200,7 @@ public class Sale extends javax.swing.JFrame {
 
                     }
                     if (col == 8) {
-                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_id = model.getValueAt(row, 1).toString();
                         item_name = model.getValueAt(row, 2).toString();
                         query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
@@ -237,7 +237,7 @@ public class Sale extends javax.swing.JFrame {
                         jTextField12.setText("" + (sub_total + discount + sgst + cgst));
                     }
                     if (col == 9) {
-                        item_id = model.getValueAt(row, 1).toString().substring(2);
+                        item_id = model.getValueAt(row, 1).toString();
                         item_name = model.getValueAt(row, 2).toString();
                         query = "select * from stocks where username = '" + username + "' and item_id = '" + item_id + "' or item_name = '" + item_name + "'";
                         System.out.println("Fetching stock info from database: jvp; table: stocks");
@@ -360,7 +360,7 @@ public class Sale extends javax.swing.JFrame {
             for (;;) {
                 if (rs.next()) {
                     String item = rs.getString(1);
-                    combo.addItem("S-" + item);
+                    combo.addItem(item);
                 } else {
                     break;
                 }
@@ -904,7 +904,7 @@ public class Sale extends javax.swing.JFrame {
         int i = 0;
         while (i < row) {
             int s_no = Integer.parseInt(model.getValueAt(i, 0).toString());
-            int item_id = Integer.parseInt(model.getValueAt(i, 1).toString().substring(2));
+            String item_id = model.getValueAt(i, 1).toString();
             String item_name = (String) model.getValueAt(i, 2);
             int pcs = (int) model.getValueAt(i, 3);
             quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
