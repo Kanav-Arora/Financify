@@ -591,12 +591,12 @@ public class AccountSetup extends javax.swing.JFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-        String item_name = (String) jComboBox1.getSelectedItem();
+        String acc_name = (String) jComboBox1.getSelectedItem();
 
-        if (item_name.equals("")) {
-            JOptionPane.showMessageDialog(this, "Select an item to Edit.");
+        if (acc_name.equals("")) {
+            JOptionPane.showMessageDialog(this, "Select an Account to Edit.");
         }
-        edit_bool = JOptionPane.showConfirmDialog(this, "Sure? You want to edit " + item_name, "Edit Item", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        edit_bool = JOptionPane.showConfirmDialog(this, "Sure? You want to edit " + acc_name, "'s Account ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (edit_bool == JOptionPane.YES_OPTION) {
             jTextField2.setEditable(true);
             jTextField3.setEditable(true);
@@ -648,10 +648,10 @@ public class AccountSetup extends javax.swing.JFrame {
                 
                 query="INSERT INTO accounts VALUES('"+username+"','"+id+"','"+acc+"','"+type+"','"+address+"','"+city+"','"+state+"','"+pincode+"','"+gst+"','"+pan+"','"+email+"','"+mobile+"','"+credit_days+"','"+interest+"');";
                 stmt.executeUpdate(query);
-                System.out.println("Stock Updated Successfully");
-                JOptionPane.showMessageDialog(this, "Stock Info Updated Successfully");
+                System.out.println("Account Details Updated Successfully");
+                JOptionPane.showMessageDialog(this, "Account Details Updated Successfully");
                 this.setVisible(false);
-                new Stocks().setVisible(true);
+                new AccountSetup().setVisible(true);
 
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(AccountSetup.class.getName()).log(Level.SEVERE, null, ex);
