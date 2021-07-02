@@ -28,14 +28,14 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
- * @author shivam
+ * @author Kinshuk
  */
-public class Voucher extends javax.swing.JFrame {
+public class Vouchers extends javax.swing.JFrame {
 
     /**
      * Creates new form Voucher
      */
-    public Voucher() {
+    public Vouchers() {
         initComponents();
         
     }
@@ -116,7 +116,6 @@ public class Voucher extends javax.swing.JFrame {
         });
         panel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 64, 300, -1));
 
-        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Exit");
         jLabel19.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
@@ -148,7 +147,6 @@ public class Voucher extends javax.swing.JFrame {
         panel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 137, 833, 190));
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Refresh");
         jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
@@ -171,16 +169,13 @@ public class Voucher extends javax.swing.JFrame {
         panel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, 200, -1));
         panel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 450, 108, -1));
 
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Enter Cheque Number :");
         panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 450, -1, -1));
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Amount :");
         panel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, -1, -1));
         panel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 108, -1));
 
-        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Generate Bill");
         jLabel18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
@@ -221,7 +216,7 @@ public class Voucher extends javax.swing.JFrame {
         try {
             new Main().setVisible(true);
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vouchers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }   
     }//GEN-LAST:event_jLabel19MouseClicked
 
@@ -278,20 +273,21 @@ public class Voucher extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vouchers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vouchers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vouchers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Voucher.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vouchers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Voucher().setVisible(true);
+                new Vouchers().setVisible(true);
             }
         });
     }
