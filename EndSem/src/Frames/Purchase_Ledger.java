@@ -323,7 +323,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -608,18 +607,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(10, 350, 478, 105);
 
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Edit");
-        jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
-        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel17MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(20, 490, 110, 32);
-
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Generate Bill");
@@ -787,20 +774,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
         new LedgerAccounts().setVisible(true);
     }//GEN-LAST:event_jLabel19MouseClicked
 
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        edit_on = true;
-        jTable1.setEnabled(true);
-        jLabel2.setVisible(true);
-        jButton1.setVisible(true);
-        jLabel18.setVisible(true);
-        jComboBox1.setEnabled(true);
-        jComboBox2.setEnabled(true);
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-
-
-    }//GEN-LAST:event_jLabel17MouseClicked
-
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         String acc = (String) jComboBox1.getSelectedItem();
@@ -946,7 +919,6 @@ public class Purchase_Ledger extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
