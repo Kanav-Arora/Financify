@@ -77,7 +77,7 @@ public class Purchase_Ledger extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             System.out.println("Connection is created successfully");
 
-            query = "select sum(taxable),sum(disc),sum(gst),count(s_no),acc_name,bill_amount from bill where bill_no = '" + bill_number + "'";
+            query = "select sum(taxable),sum(disc),sum(gst),count(s_no),any_value(acc_name),any_value(bill_amount) from bill where bill_no = '" + bill_number + "' group by username";
             System.out.println("Fetching items from database: jvp; table: bill");
             rs = stmt.executeQuery(query);
             System.out.println("Record fetched successfully.");
