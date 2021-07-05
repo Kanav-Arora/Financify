@@ -279,7 +279,7 @@ String username;
         jTextField8.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel21.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel21.setText("Interest  :");
+        jLabel21.setText("Interest % :");
 
         jTextField9.setBackground(new java.awt.Color(255, 255, 255));
 
