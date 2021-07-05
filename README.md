@@ -46,6 +46,49 @@ Password: Contains alphanumeric characters, one upper case character and a speci
  At the end, there is a Jbutton for confirmation and creating the account and an option to directly go to the login page if an account already exists.
 Regular Expression (Regex) was used in the backend code of this frame to ensure that the users enter the data according to the constraints provided above.
     
+### Login Page:
+
+
+  It is the page through which a user successfully logs in to their respective account and can actually start using the software and it also comprises mainly of two text fields (just like any other ordinary login page) that is the Username and the Password with very same constraints for these two fields as they are in the case of the registration window. There is also an option that if the user does not have an existing account then they can come back to the registration page accordingly.
+
+
+## Main Frame:
+
+
+After the user has successfully logged in, the main frame appears which showcases the summary and overview of some of the transactions and dues for the person’s account. There is a proper separate panel which has labels for all the necessary frames which include details such as Items, Ledger Accounts, Trial Balancing, Sale, Purchase and Voucher. By simply clicking on any of these above-mentioned labels, the user will be brought to a new window which will show all the required account details for the respective label which was clicked by the user. A table with proper columns for Bill No., Account Name, Due Date and Amount is present in the frame for the user to get a summary. Similarly, a graphical representation has also been provided to get an overview of the account and the transactions made so far which is organised well on the basis of segregating the amount for each and every month. The user will also have options for signing out of their account as well as for making an exit from the application.
+Items- This frame is made to enter and edit details related to the items which the user wants to keep the record of. The user can simply view and edit the details of the existing items, add new items and can even delete items and their details according to their desire. The exit button is present for the user. By clicking on it, the user will be brought back to the main frame window.
+Ledger Accounts: As the name suggests, this frame is a complete receptacle and a display to all your details and transactions which are ongoing in your firm. The ledger accounts frame consists many options to assist you in keeping a proper and organised record of all your transactions-:
+            -> Setting of Date and Time Period of Transactions- There is an option provided in the software which helps the user to set the date (from and till) you want to know transactions from. Checkboxes are provided to directly select the time period on a daily, monthly and quarterly basis which makes it easier for the user to retrieve the required data from the records.
+         -> Transaction Table: It shows the serial number, particulars, exact date of billing/transaction, amount and type( credit or debit) which can also be downloaded in excel format by the user.
+       -> Net Balance Display: These boxes show the net balance, amount credited and debited in the account of the particular person you want to see.
+At the end, the user can move to the account setup frame or exit the current frame according to their choice.        
+-> Account Setup : This frame allows the user to create a new account, edit it or delete an account according to the user’s discretion. It contains options/text fields to enter/store/display details related to a person such as their ID, Name, Type, Address, State,Pincode,Email,GST and many other details related to banking.
+At the end, there are buttons for the above tasks which one can perform in the frame or exit the frame if they want. 
+
+
+<div id='id-sec1'/>
+
+<div id='id-sec2'/>
+
+
+> ## ER Diagram
+
+
+
+<div id='id-sec3'/>
+
+
+>## DB Diagram
+<div id='id-sec4'/>
+
+
+>## Libraries
+<div id='id-sec5'/>
+
+
+>## Installation Guide
+<div id='id-sec6'/>
+
 
 
 <br>
