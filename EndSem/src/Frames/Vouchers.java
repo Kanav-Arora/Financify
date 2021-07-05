@@ -283,7 +283,7 @@ public class Vouchers extends javax.swing.JFrame {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             System.out.println("Connection is created successfully");
             Statement stmt = (Statement) con.createStatement();
-            String query = "select DISTINCT bill_no from bill WHERE status='" + "pending" + "'";
+            String query = "select DISTINCT bill_no from bill WHERE status='" + "pending" + "' and acc_name='"+acc+"' and username='"+username+"'";
             System.out.println("Fetching records from database: jvp, table: bill");
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("Records fetched successfully.");
@@ -337,6 +337,7 @@ public class Vouchers extends javax.swing.JFrame {
         String username = new Login().user;
         String bill_no = (String) jComboBox2.getSelectedItem();
         String acc_name = (String) jComboBox1.getSelectedItem();
+        String type="";
         int cheque_number = 0;
         float amount = Float.parseFloat(jTextField2.getText());
         try {
@@ -344,23 +345,60 @@ public class Vouchers extends javax.swing.JFrame {
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
             Statement stmt = (Statement) con.createStatement();
 
-            String query = "INSERT INTO transactions VALUES('" + bill_no + "','" + current_date + "','" + 0 + "','" + amount + "','" + acc_name + "','" + username + "');";
-            stmt.executeUpdate(query);
-            System.out.println("Adding records in database: jvp,table: bill");
-            if (jComboBox3.getSelectedItem() == "Cheque") {
-                cheque_number = Integer.parseInt(jTextField1.getText());
-                query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cheque" + "','" + amount + "','" + "sale" + "','" + username + "','" + cheque_number + "');";
-                stmt.executeUpdate(query);
-                System.out.println("Clearing bill with Cheque in database: jvp,table: voucher");
-            } else if (jComboBox3.getSelectedItem() == "Cash") {
-                query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cash" + "','" + amount + "','" + "sale" + "','" + username + "','" + cheque_number + "');";
-                stmt.executeUpdate(query);
-                System.out.println("Clearing bill with Cash in database: jvp,table: voucher");
-            }
-            query = "UPDATE bill SET status='" + "cleared" + "' where bill_no= '" + bill_no + "';";
-            stmt.executeUpdate(query);
-            System.out.println("Clearing bill in database: jvp,table: bill");
+            String query = "select type from bill where username = '" + username + "' and bill_no='"+bill_no+"' ";
+            System.out.println("Fetching items from database: jvp; table: transactions");
+            ResultSet rs = stmt.executeQuery(query);
+            System.out.println("Record fetched successfully.");
 
+            for (;;) {
+                if (rs.next()) {
+                    type = rs.getString(1);
+                    
+                } else {
+                    break;
+                }
+            }
+
+            if(type.equals("sale"))
+            {    
+                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + current_date + "','" + 0 + "','" + amount + "','" + acc_name + "','" + username + "');";
+                stmt.executeUpdate(query);
+                System.out.println("Adding records in database: jvp,table: bill");
+                if (jComboBox3.getSelectedItem() == "Cheque") {
+                    cheque_number = Integer.parseInt(jTextField1.getText());
+                    query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cheque" + "','" + amount + "','" + "sale" + "','" + username + "','" + cheque_number + "');";
+                    stmt.executeUpdate(query);
+                    System.out.println("Clearing bill with Cheque in database: jvp,table: voucher");
+                } else if (jComboBox3.getSelectedItem() == "Cash") {
+                    query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cash" + "','" + amount + "','" + "sale" + "','" + username + "','" + cheque_number + "');";
+                    stmt.executeUpdate(query);
+                    System.out.println("Clearing bill with Cash in database: jvp,table: voucher");
+                }
+                query = "UPDATE bill SET status='" + "cleared" + "' where bill_no= '" + bill_no + "';";
+                stmt.executeUpdate(query);
+                System.out.println("Clearing bill in database: jvp,table: bill");
+            }
+                if(type.equals("purchase"))
+            {    
+                query = "INSERT INTO transactions VALUES('" + bill_no + "','" + current_date + "','" + amount + "','" + 0 + "','" + acc_name + "','" + username + "');";
+                stmt.executeUpdate(query);
+                System.out.println("Adding records in database: jvp,table: bill");
+                if (jComboBox3.getSelectedItem() == "Cheque") {
+                    cheque_number = Integer.parseInt(jTextField1.getText());
+                    query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cheque" + "','" + amount + "','" + "purchase" + "','" + username + "','" + cheque_number + "');";
+                    stmt.executeUpdate(query);
+                    System.out.println("Clearing bill with Cheque in database: jvp,table: voucher");
+                } else if (jComboBox3.getSelectedItem() == "Cash") {
+                    query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cash" + "','" + amount + "','" + "purchase" + "','" + username + "','" + cheque_number + "');";
+                    stmt.executeUpdate(query);
+                    System.out.println("Clearing bill with Cash in database: jvp,table: voucher");
+                }
+                query = "UPDATE bill SET status='" + "cleared" + "' where bill_no= '" + bill_no + "';";
+                stmt.executeUpdate(query);
+                System.out.println("Clearing bill in database: jvp,table: bill");
+            }
+            
+            
             JOptionPane.showMessageDialog(this, "Bill Cleared");
             this.setVisible(false);
             new Main().setVisible(true);
