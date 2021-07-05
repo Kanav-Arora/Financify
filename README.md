@@ -90,6 +90,11 @@ At the end, there are buttons for the above tasks which one can perform in the f
 <div id='id-sec6'/>
 
 
+>## Contributors
+
+<p>We are a Quintet. The A-Team includes Shivam Bhatt, Kanav Arora, Kinshuk G. Pandey, Samriddh Srivastava and Arnav Batra. Now when it comes down to individual contributions, we would like to mention a brief summary that will explain the way in which this project was developed. Backend coding and logic development is one thing which almost all of us did. Designing and presentation was handled by Kinshuk, Arnav and Samriddh. Shivam and Kanav handled the GUI integration and major frame development. Debugging and testing was done by Shivam, Samriddh and Kinshuk. Also a special mention to Arnav, the credit goes to him for our logo design. Kanav and Shivam were responsible for significant project development and the merging of frames. Kinshuk, Samriddh and Arnav took charge of the documentation and project planning.<p>
+
+
 
 <br>
 
