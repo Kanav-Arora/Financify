@@ -388,7 +388,14 @@ public class Vouchers extends javax.swing.JFrame {
                     query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cheque" + "','" + amount + "','" + "purchase" + "','" + username + "','" + cheque_number + "');";
                     stmt.executeUpdate(query);
                     System.out.println("Clearing bill with Cheque in database: jvp,table: voucher");
-                } 
+                } else if (jComboBox3.getSelectedItem() == "Cash") {
+                    query = "INSERT INTO voucher VALUES('" + bill_no + "','" + current_date + "','" + "Cash" + "','" + amount + "','" + "purchase" + "','" + username + "','" + cheque_number + "');";
+                    stmt.executeUpdate(query);
+                    System.out.println("Clearing bill with Cash in database: jvp,table: voucher");
+                }
+                query = "UPDATE bill SET status='" + "cleared" + "' where bill_no= '" + bill_no + "';";
+                stmt.executeUpdate(query);
+                System.out.println("Clearing bill in database: jvp,table: bill");
             }
             
             
