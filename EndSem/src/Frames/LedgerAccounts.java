@@ -747,15 +747,25 @@ boolean bill_click = false;
         
         int table_row = jTable1.getRowCount();
         int table_col = jTable1.getColumnCount();
-        
-        for(int i=0; i<table_row; i++)
+        Row row = Excel.createRow(sheet);
+        Cell cell = row.createCell(0);
+        cell.setCellValue("S. No");
+        cell = row.createCell(1);
+        cell.setCellValue("Bill No.");
+        cell = row.createCell(2);
+        cell.setCellValue("Date");
+        cell = row.createCell(3);
+        cell.setCellValue("Amount");
+        cell = row.createCell(4);
+        cell.setCellValue("Annexure");
+        for(int i=1; i<=table_row; i++)
         {
-            Row row = Excel.createRow(sheet);
+            row = Excel.createRow(sheet);
             
-            for(int j =0; j<table_col; j++)
+            for(int j =1; j<=table_col; j++)
             {
-                Object data = jTable1.getModel().getValueAt(i, j);
-                Cell cell = row.createCell(j);
+                Object data = jTable1.getModel().getValueAt(i-1, j-1);
+                cell = row.createCell(j-1);
                 if (data instanceof String) {
                     System.out.print(data.toString());
                     cell.setCellValue(data.toString());
@@ -768,10 +778,14 @@ boolean bill_click = false;
                     System.out.print(Float.parseFloat(data.toString()));
                     cell.setCellValue(Float.parseFloat(data.toString()));
                 }
-                
+                else if(data instanceof Date)
+                {
+                    cell.setCellValue(data.toString());
+                }
                 
             }
         }
+        Excel.FileOutput(acc_name, workbook);
         
     }//GEN-LAST:event_jLabel24MouseClicked
 

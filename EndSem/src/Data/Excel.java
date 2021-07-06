@@ -26,7 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Excel {
     public static XSSFWorkbook createWorkbook(String name)
     {   
-        System.out.println("Workbook method"+name + " " + new Frames.Login().user);
+        System.out.println("Workbook method "+name + " " + new Frames.Login().user);
         String filepath = name + ".xlsx";
         XSSFWorkbook workbook = new XSSFWorkbook(); 
         File f = new File(filepath);
@@ -44,7 +44,6 @@ public class Excel {
             {
             FileOutputStream out = new FileOutputStream(filepath);
             workbook.write(out);
-            Sheet s1 = workbook.createSheet("Sheet 1");
             System.out.println("createworkbook.xlsx written successfully");
             out.close();
             
