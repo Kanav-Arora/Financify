@@ -54,13 +54,11 @@ ____
 
 > Java Swing Components used:
 - [x] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] ~~JTextField~~
-- [ ] ~~JTextField~~ 
+- [x] JLabel
+- [x] JComboBox
+- [x] JButton
+- [x] JPanel
+
     
 ### 2.) Login Page:
 <p>It is the page through which a user successfully logs in to their respective account and can actually start using the software and it also comprises mainly of two text fields (just like any other ordinary login page) that is the Username and the Password with very same constraints for these two fields as they are in the case of the registration window. There is also an option that if the user does not have an existing account then they can come back to the registration page accordingly.<p>
@@ -68,13 +66,10 @@ ____
 > Java Swing Components used:
 
 - [x] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField
-- [ ] JTextField 
+- [x] JLabel
+- [x] JButton
+- [x] JPanel
+
 
 
 ### 3.)Main Frame:
