@@ -72,13 +72,18 @@ At the end, there are buttons for the above tasks which one can perform in the f
 
 
 > ## ER Diagram
+Below given is an ER (Entity Relationship) diagram which will help the users to know more abut the software in an interactive manner.
 
-
+<p align="center" ><img src="./EndSem/src/Icons/ER.png" ></p>
 
 <div id='id-sec3'/>
 
 
 >## DB Diagram
+*A DB Diagram is a Graphical representation  of structure of the database.* Below given is a DB Diagram related to **Financify**.
+
+<p align="center" ><img src="./EndSem/src/Icons/DB.png" ></p>
+
 <div id='id-sec4'/>
 
 
