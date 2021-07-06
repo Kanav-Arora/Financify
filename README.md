@@ -252,12 +252,12 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 
 <br>
 
-># License
+>## License
 
 This project comes under [MIT License](LICENSE).
 
 <br>
 
-># Contribution Guide
+>## Contribution Guide
 
 Check the [contribution guide](CONTRIBUTING.md).
