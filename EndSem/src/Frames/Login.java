@@ -29,7 +29,7 @@ boolean passLabel;
         initComponents();
         jLabel4.setText("");
         String myimgpath;
-        myimgpath = "./src/Icons/full logo.png";
+        myimgpath = "./src/Icons/full_logo.png";
         Icon myimgicon = new ImageIcon(myimgpath);
         jLabel4.setIcon(myimgicon);
         
