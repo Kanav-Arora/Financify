@@ -14,10 +14,13 @@ We are proposing an idea to make an accounting software using Java programming l
 <br>
 
 >>>>>>>## *Redifining Accounting*
+<br>
 
 *This readme file is being made to introduce and explain our project, *‘Financify’* to a large number of developers and users all around the globe. It contains the information regarding the full framework and the purpose of the project.*
 
 **The whole project is based on Java programming language.The desktop application has a user-friendly UI and a very famous and stable database named MySQL to keep a track of all records.*’Financify’* is designed in such a way that it will meet the demands of a small scale business and as well as a large scale business.The implementation of the front-end for this project was done using Java Swing library for building the GUI of the software, along with this NetBeans IDE (Integrated Development Environment) and VS Code ( Code Editor ) are the tools which were used to compile all distinguished and vast frames of this project. Keeping all the bills and vouchers in an organised order is no more a hectic task,*’Financify’* makes it easy for you.**  
+<br>
+
 ____
 
 ># **INDEX**
@@ -139,7 +142,7 @@ At the end, there are buttons for the above tasks which one can perform in the f
 - *Disc (%)*
 - *Taxable*
 - *GST(%)*
-- *GST8*
+- *GST*
 <p>After doing all this, the user can click on the generate bill button after which, a bill will be generated that will showcase the calculated CGST, SGST, Rate, Amount and Subtotal in certain TextFields which will prove to be quite beneficial for the user as all essential details will get listed in a very organized way. The user can then exit according to their choice.<p>
 
 > Java Swing Components used:
@@ -184,36 +187,43 @@ At the end, there are buttons for the above tasks which one can perform in the f
 ___
 
 
-
- 
 <div id='id-sec1'/>
 
 <div id='id-sec2'/>
 
+<br>
 
 > ## **ER Diagram**
+<br>
+
 Below given is an ER (Entity Relationship) diagram which will help the users to know more abut the software in an interactive manner.
+
+<br>
 
 <p align="center" ><img src="./EndSem/src/Icons/ER.png" ></p>
 
 
-
-
-
 <div id='id-sec3'/>
 
+<br>
 
 >## **DB Diagram**
+<br>
 
 *A DB Diagram is a Graphical representation  of structure of the database.* Below given is a DB Diagram related to **Financify**.
+
+<br>
 
 <p align="center" ><img src="./EndSem/src/Icons/DB.png" ></p>
 
 
 <div id='id-sec4'/>
 
+<br>
 
 >## Libraries
+<br>
+
 *The libraries used in the creation of this software were:*
 
 1. **Animation Class**
@@ -231,10 +241,15 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 
 <div id='id-sec5'/>
 
+<br>
 
 >## Installation Guide
 <div id='id-sec6'/>
+<br>
 
+Visit the [installation guide](Installation.md).
+
+<br>
 
 >## Contributors
 
