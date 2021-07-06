@@ -173,7 +173,7 @@ public class Vouchers extends javax.swing.JFrame {
                 jLabel19MouseClicked(evt);
             }
         });
-        panel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 520, 110, 32));
+        panel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 530, 110, 32));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -233,7 +233,7 @@ public class Vouchers extends javax.swing.JFrame {
                 jLabel18MouseClicked(evt);
             }
         });
-        panel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 520, 140, 32));
+        panel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 530, 140, 32));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Cheque" }));
         jComboBox3.setSelectedItem("Select Payment Type");

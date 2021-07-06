@@ -689,7 +689,7 @@ public class Purchase extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(690, 510, 140, 32);
+        jLabel18.setBounds(60, 500, 140, 32);
 
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -701,7 +701,7 @@ public class Purchase extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel19);
-        jLabel19.setBounds(20, 510, 110, 32);
+        jLabel19.setBounds(680, 500, 110, 32);
 
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");

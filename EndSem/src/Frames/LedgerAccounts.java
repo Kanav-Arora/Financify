@@ -737,6 +737,7 @@ boolean bill_click = false;
         String date_to = jTextField2.getText().substring(0,2);
         XSSFWorkbook workbook = Excel.createWorkbook("Ledger Account");
         XSSFSheet sheet = Excel.createSheets(workbook, acc_name + "("+date_from + "-"+date_to + ")");
+        JOptionPane.showMessageDialog(this,"Excel Generated");
         
         
         /*

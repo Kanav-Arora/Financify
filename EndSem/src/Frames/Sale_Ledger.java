@@ -43,7 +43,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             jLabel1.setForeground(new java.awt.Color(187, 187, 187));
             jLabel2.setVisible(false);
             jButton1.setVisible(false);
-            jLabel18.setVisible(false);
+            
 
             jComboBox1.setEnabled(false);
             jComboBox2.setEnabled(false);
@@ -325,7 +325,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
@@ -609,18 +608,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(10, 350, 478, 105);
 
-        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Generate Bill");
-        jLabel18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel18);
-        jLabel18.setBounds(690, 490, 140, 32);
-
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Exit");
@@ -631,7 +618,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel19);
-        jLabel19.setBounds(300, 490, 110, 32);
+        jLabel19.setBounds(680, 500, 110, 32);
 
         jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setText("Bill Amount :");
@@ -664,7 +651,7 @@ public class Sale_Ledger extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel21);
-        jLabel21.setBounds(160, 490, 110, 32);
+        jLabel21.setBounds(60, 500, 110, 32);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(-10, 150, 860, 10);
         jPanel1.add(jSeparator2);
@@ -714,58 +701,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
         row = model.getRowCount();
         jTextField11.setText("" + row);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int row = model.getRowCount();
-        model = (DefaultTableModel) jTable1.getModel();
-        int i = 0;
-        String bill_no = jTextField1.getText();
-        username = new Login().user;
-        float subtotal = 0;
-        float discount_total = 0;
-        float gst_total = 0;
-        float grand_total = 0;
-        String acc_name = (String) jComboBox1.getSelectedItem();
-        String type = "sale";
-        while (i < row) {
-            int s_no = Integer.parseInt(model.getValueAt(i, 0).toString());
-            System.out.println(0);
-            String item_id = model.getValueAt(i, 1).toString();
-            System.out.println(1);
-            String item_name = (String) model.getValueAt(i, 2);
-            System.out.println(2);
-            int pcs = (int) model.getValueAt(i, 3);
-            System.out.println(3);
-            float quantity = Float.parseFloat(String.valueOf(model.getValueAt(i, 4)));
-            System.out.println(4);
-            float net_rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 5)));
-            float rate = Float.parseFloat(String.valueOf(model.getValueAt(i, 6)));
-            float amount = Float.parseFloat(String.valueOf(model.getValueAt(i, 7)));
-            float discount = Float.parseFloat(String.valueOf(model.getValueAt(i, 8)));
-            float discount_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 9)));
-            float taxable = Float.parseFloat(String.valueOf(model.getValueAt(i, 10)));
-            float gst_perc = Float.parseFloat(String.valueOf(model.getValueAt(i, 11)));
-            float gst = Float.parseFloat(String.valueOf(model.getValueAt(i, 12)));
-
-            subtotal += taxable;
-            discount_total += discount;
-            gst_total += gst;
-            try {
-                Class.forName("java.sql.DriverManager");
-                Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jvp", "root", "bhulgaya123");
-                Statement stmt = (Statement) con.createStatement();
-                String query = "INSERT INTO bill VALUES('" + bill_no + "','" + s_no + "','" + item_id + "','" + item_name + "','" + pcs + "','" + quantity + "','" + net_rate + "','" + rate + "','" + amount + "','" + discount + "','" + discount_perc + "','" + taxable + "','" + gst_perc + "','" + gst + "','" + acc_name + "','" + username + "','" + type + "');";
-
-                stmt.executeUpdate(query);
-
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(Sale_Ledger.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            i++;
-        }
-
-    }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
         // TODO add your handling code here:
@@ -925,7 +860,6 @@ public class Sale_Ledger extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
