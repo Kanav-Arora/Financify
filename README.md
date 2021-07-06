@@ -1,5 +1,5 @@
-<a align = "center"> <img src = "./EndSem/src/Icons/icon.png" > </a>
-<a align = "center"><img src = " ./EndSem/src/Icons/full_logo.png"> </a>
+![image](./EndSem/src/Icons/icon.png)
+![image](./EndSem/src/Icons/full_logo.png)
 
 [![Hits-of-Code](https://hitsofcode.com/github/Kanav-Arora/Financify?branch=main)](https://hitsofcode.com/github/Kanav-Arora/Financify/view?branch=main)
 
@@ -8,6 +8,7 @@
 ![Github stars](https://img.shields.io/github/stars/Kanav-Arora/Financify?style=social)
 
 We are proposing an idea to make an accounting software using Java programming language and MySQL database. The desktop application will have a user-friendly UI and a database to keep track of all records.
+
 
 >## *Redifining Accounting*
 
