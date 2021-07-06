@@ -13,7 +13,7 @@ We are proposing an idea to make an accounting software using Java programming l
 
 <br>
 
->>>>>>>## *Redifining Accounting*
+# *Redefining Accounting*
 
 *This readme file is being made to introduce and explain our project, *‘Financify’* to a large number of developers and users all around the globe. It contains the information regarding the full framework and the purpose of the project.*
 
@@ -252,12 +252,12 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 
 <br>
 
-# License
+># License
 
 This project comes under [MIT License](LICENSE).
 
 <br>
 
-# Contribution Guide
+># Contribution Guide
 
 Check the [contribution guide](CONTRIBUTING.md).
