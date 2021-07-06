@@ -1,5 +1,5 @@
-![image](./EndSem/src/Icons/icon.png)
-![image](./EndSem/src/Icons/full_logo.png)
+<p align="center" ><img src="./EndSem/src/Icons/icon.png" ><img src="./EndSem/src/Icons/full_logo.png" ></p>
+
 
 [![Hits-of-Code](https://hitsofcode.com/github/Kanav-Arora/Financify?branch=main)](https://hitsofcode.com/github/Kanav-Arora/Financify/view?branch=main)
 
@@ -139,7 +139,8 @@ At the end, there are buttons for the above tasks which one can perform in the f
 - *Disc (%)*
 - *Taxable*
 - *GST(%)*
-- *GST8*
+- *GST*
+ 
 <p>After doing all this, the user can click on the generate bill button after which, a bill will be generated that will showcase the calculated CGST, SGST, Rate, Amount and Subtotal in certain TextFields which will prove to be quite beneficial for the user as all essential details will get listed in a very organized way. The user can then exit according to their choice.<p>
 
 > Java Swing Components used:
