@@ -73,6 +73,9 @@ At the end, there are buttons for the above tasks which one can perform in the f
 
 
 > ## ER Diagram
+Below given is an ER (Entity Relationship) diagram which will help the users to know more abut the software in an interactive manner.
+
+![image](./EndSem/src/Icons/ER.png)
 
 
 
@@ -80,6 +83,8 @@ At the end, there are buttons for the above tasks which one can perform in the f
 
 
 >## DB Diagram
+
+
 <div id='id-sec4'/>
 
 
