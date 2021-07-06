@@ -9,7 +9,8 @@
 We are proposing an idea to make an accounting software using Java programming language and MySQL database. The desktop application will have a user-friendly UI and a database to keep track of all records.
 
 # Financify
-![image](./src/Icons/fulllogo.png)
+![image](./EndSem/src/Icons/icon.png)
+![image](./EndSem/src/Icons/full_logo.png)
 >## *Redifining Accounting*
 
 *This readme file is being made to introduce and explain our project, *‘Financify’* to a large number of developers and users all around the globe. It contains the information regarding the full framework and the purpose of the project.*
