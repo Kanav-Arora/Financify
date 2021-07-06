@@ -22,12 +22,17 @@ ____
 - [ER Diagram](#id-sec2)
 - [DB DIagram](#id-sec3)
 - [Libraries](#id-sec4)
-- [Installation Guide](#id-sec5)
-- [Contributors](#id-sec6)
+- [Components Used](#id-sec5)
+- [Installation Guide](#id-sec6)
+- [Contributors](#id-sec7)
+- [License](#id-sec8)
+- [Contribution Guide](#id-sec9)
 
+ 
 <div id='id-sec1'/>
 
-
+<br>
+ 
 >## **FRAMES AND DESCRIPTION**
 
 *In this section, the whole framework will be described in an elaborated and a sequential way which will help the users to know more about its working and functionality and any person will be able to use it with the utmost usability* -:
@@ -47,17 +52,25 @@ ____
 <p>Regular Expression (Regex) was used in the backend code of this frame to ensure that the users enter the data according to the constraints provided above.<p>
 
 
+<br>
+ 
 ### 2.) Login Page:
 <p>It is the page through which a user successfully logs in to their respective account and can actually start using the software and it also comprises mainly of two text fields (just like any other ordinary login page) that is the Username and the Password with very same constraints for these two fields as they are in the case of the registration window. There is also an option that if the user does not have an existing account then they can come back to the registration page accordingly.<p>
 
- 
+
+<br>
+  
 ### 3.)Main Frame:
 <p>After the user has successfully logged in, the main frame appears which showcases the summary and overview of some of the transactions and dues for the person’s account. There is a proper separate panel which has labels for all the necessary frames which include details such as Items, Ledger Accounts, Trial Balancing, Sale, Purchase and Voucher. By simply clicking on any of these above-mentioned labels, the user will be brought to a new window which will show all the required account details for the respective label which was clicked by the user. A table with proper columns for Bill No., Account Name, Due Date and Amount is present in the frame for the user to get a summary. Similarly, a graphical representation has also been provided to get an overview of the account and the transactions made so far which is organised well on the basis of segregating the amount for each and every month. The user will also have options for signing out of their account as well as for making an exit from the application.<p>
 
+<br>
+ 
 ### 4.)Items: 
 <p> This frame is made to enter and edit details related to the items which the user wants to keep the record of. The user can simply view and edit the details of the existing items, add new items and can even delete items and their details according to their desire. The exit button is present for the user. By clicking on it, the user will be brought back to the main frame window.<p>
  
 
+<br>
+ 
 ### 5.) Ledger Accounts:
 <p> As the name suggests, this frame is a complete receptacle and a display to all your details and transactions which are ongoing in your firm. The ledger accounts frame consists many options to assist you in keeping a proper and organised record of all your transactions.<p>
 
@@ -74,6 +87,8 @@ ____
 At the end, there are buttons for the above tasks which one can perform in the frame or exit the frame if they want. 
 
 
+<br>
+ 
 ### 6.)Trial Balancing-Closing: 
 <p>Trial Balance has a tabular format which shows details of all ledgers balances at one place. It includes transactions done as well along with the opening and closing balances of ledgers, as every entity needs to evaluate its financial position over a particular span of time. The trial balance shows the list of all the accounts with both debit as well as credit balance at one place and helps in analyzing the position and transactions entered during such time period at one place. In this frame, one can directly go through all the ongoing transactions(credit or debit) in the firm. Trial Balancing frame consists of a table which has the following components-:<p>
 
@@ -85,6 +100,8 @@ At the end, there are buttons for the above tasks which one can perform in the f
 <p>At the bottom of the frame there are three *JTextFields* to show the net credit and debit along with the total balance present on a real time basis.<p.>
 
 
+<br>
+ 
 ### 7.) Sale:
  <p>The sale frame is one of the most important and of the utmost utility amongst all the frames. One can update and edit item details and enter various valuable data in this frame. Starting from the top, this frame allows the user to enter various details about the buyer/consumer/customer such as the Bill number, Bill Date, Due date, Mode of Payment(cash/credit/cheque), Balance , GST Number and address. Also there is a dropbox provided to choose between the  names of customers which were pre-registered. Now, the main part comes from the table. The table in the frame is the part where you can add items and can calculate some very important quantities like the net amount, discount etc. It consists of the following details:-<p>
 
@@ -104,14 +121,20 @@ At the end, there are buttons for the above tasks which one can perform in the f
 <p>After doing all this, the user can click on the generate bill button after which, a bill will be generated that will showcase the calculated CGST, SGST, Rate, Amount and Subtotal in certain TextFields which will prove to be quite beneficial for the user as all essential details will get listed in a very organized way. The user can then exit according to their choice.<p>
 
 
+<br>
+ 
 ### 8.) Purchase:
 <p>A Purchase Invoice is a bill which the company or the firm receives from their suppliers against which the respective firm needs to make the payment. Purchase Invoice is the exact opposite of the Sales Invoice. Here the firm has to accrue expenses to their suppliers.<p> Making a Purchase Invoice is very similar to making a Purchase Order. Once the user goes to our Purchase frame, he/she will have an option to select the supplier from a given ComboBox and then click on the details button after which the user will get all the necessary details of the supplier such as the bill date, due date, balance, etc. Now the user can add items and quantities in the Items table. After doing all this, the user can click on the generate bill button after which, a bill will be generated that will showcase the calculated CGST, SGST, Rate, Amount and Subtotal in certain TextFields which will prove to be quite beneficial for the user as all essential details will get listed in a very organized way. After clicking on the exit button, the user will get back to the main frame.<p>
 
 
+<br>
+ 
 ### 9.) Voucher:
 <p>A voucher is a supporting document which the company uses to create and file all supporting documents required for approving a voucher. Vouchers help in recording all transactions and make sure that their respective payment is made in an authorized manner and that the purchased goods and services are actually and properly received by the company.<p> A purchase voucher is created upon receiving the supplier’s invoice. When payment is made to the supplier, the voucher is stamped as “paid” and then archived with its supporting documents. Purchase vouchers are not created without receiving supplier’s invoices. They are also not used in the process of payroll payment. If vouchers are used for every payable then the total amount of all payables can be aggregated and the total amount of outstanding accounts payable can be determined. However, this function is only needed in the manual accounting system. The computerized accounting system instead uses the aged payables report.<p> Vouchers are also known as ‘source documents’ because they help identify a transaction’s source. Some of its examples include cash memo, cheque, bill receipt, pay-in-slip, debit note, credit note, invoice, etc.<p>
 
 
+<br>
+ 
 ### 10.) Analysis Dashboard:
 <p> Now when it comes down to our very last frame, it is all about the final representation of all the different transactions made so far.<p> We have used graphical representation for showcasing all the data. Below the graph, the user will find four proper and well defined labels which will mention the sales made by the firm under the Sale section, amount which the firm needs to clear under the Purchase section, the amount which is due comes under the Sales Unrealized, and the total GST formed from the Sales made by the firm comes under the GST section. And as usual, an exit button has been provided which will get the user back to our main frame.<p>
 
@@ -125,28 +148,29 @@ ___
 <div id='id-sec2'/>
 
 
+<br>
+ 
 > ## **ER Diagram**
 Below given is an ER (Entity Relationship) diagram which will help the users to know more abut the software in an interactive manner.
 
 <p align="center" ><img src="./EndSem/src/Icons/ER.png" ></p>
 
-
-
-
-
 <div id='id-sec3'/>
 
 
+<br>
+ 
 >## **DB Diagram**
 
 *A DB Diagram is a Graphical representation  of structure of the database.* Below given is a DB Diagram related to **Financify**.
 
 <p align="center" ><img src="./EndSem/src/Icons/DB.png" ></p>
 
-
 <div id='id-sec4'/>
 
 
+<br>
+ 
 >## Libraries
 *The libraries used in the creation of this software were:*
 
@@ -166,7 +190,10 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 <div id='id-sec5'/>
  
  
+<br>
+ 
 >## Components Used
+
 |Components|Register|Login|Main|Items|Ledger Accounts|Trial Balancing|Sale|Purchase|Voucher|Analysis|
 |:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:|:-----------:| 
 |JPanel|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
@@ -182,10 +209,17 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 |JRadioButton|:x:|:x:|:x:|:x:|:heavy_check_mark:|:x:|:x:|:x:|:heavy_check_mark:|:x:|
 |JButtonGroup|:x:|:x:|:x:|:x:|:x:|:x:|:x:|:x:|:heavy_check_mark:|:x:|
 
->## Installation Guide
+<br>
+ 
 <div id='id-sec6'/>
+ 
+>## Installation Guide
+
+<div id='id-sec7'/>
 
 
+<br>
+ 
 >## Contributors
 
 <p> 
@@ -202,12 +236,16 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 
 <br>
 
+<div id='id-sec8'/>
+ 
 >## License
 
 This project comes under [MIT License](LICENSE).
 
 <br>
 
+<div id='id-sec9'/>
+ 
 >## Contribution Guide
 
 Check the [contribution guide](CONTRIBUTING.md).
