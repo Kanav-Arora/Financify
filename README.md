@@ -13,7 +13,7 @@ We are proposing an idea to make an accounting software using Java programming l
 
 <br>
 
->>>>>>## *Redefining Accounting*
+>>>>>>>## *Redifining Accounting*
 
 *This readme file is being made to introduce and explain our project, *‘Financify’* to a large number of developers and users all around the globe. It contains the information regarding the full framework and the purpose of the project.*
 
@@ -249,3 +249,15 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 
 *Now when it comes down to individual contributions, we would like to mention a brief summary that will explain the way in which this project was developed. Backend coding and logic development is one thing which almost all of us did. Designing and presentation was handled by Kinshuk, Arnav and Samriddh. Shivam and Kanav handled the GUI integration and major frame development. Debugging and testing was done by Shivam, Samriddh and Kinshuk. Also a special mention to Arnav, the credit goes to him for our logo design. Kanav and Shivam were responsible for significant project development and the merging of frames. Kinshuk, Samriddh and Arnav took charge of the documentation and project planning.*
 <p>
+
+<br>
+
+# License
+
+This project comes under [MIT License](LICENSE).
+
+<br>
+
+# Contribution Guide
+
+Check the [contribution guide](CONTRIBUTING.md).
