@@ -97,7 +97,7 @@ public class Main extends javax.swing.JFrame {
                     Date due_date = rs.getDate("due_date");
                     float amount = rs.getFloat("bill_amount");
                     row++;
-                    model.addRow(new Object[]{"B-" + bill_no, acc_name, due_date, amount});
+                    model.addRow(new Object[]{bill_no, acc_name, due_date, amount});
 
                 } else {
                     break;
