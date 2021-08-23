@@ -1,4 +1,4 @@
-<p align="center" ><img src="./EndSem/src/Icons/icon.png" ><img src="./EndSem/src/Icons/full_logo.png" ></p>
+<p align="center" ><img src="./Financify/src/Icons/icon.png" ><img src="./Financify/src/Icons/full_logo.png" ></p>
 
 
 [![Hits-of-Code](https://hitsofcode.com/github/Kanav-Arora/Financify?branch=main)](https://hitsofcode.com/github/Kanav-Arora/Financify/view?branch=main)
@@ -6,6 +6,8 @@
 ![GitHub forks](https://img.shields.io/github/forks/Kanav-Arora/Financify?style=social)
 
 ![Github stars](https://img.shields.io/github/stars/Kanav-Arora/Financify?style=social)
+
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Checkout%20this%20repository%20on%20github.&url=https://github.com/Kanav-Arora/Financify&via=Beardy_Weird&hashtags=java,mysql,accounting,opensource,developers)
 
 <br>
 
