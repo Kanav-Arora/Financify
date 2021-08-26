@@ -11,6 +11,11 @@
 
 <br>
 
+**Latest Release:**
+- [Financify v1.0.0-b.1](https://github.com/Kanav-Arora/Financify/releases/tag/v1.0.0)
+
+<br>
+
 We are proposing an idea to make an accounting software using Java programming language and MySQL database. The desktop application will have a user-friendly UI and a database to keep track of all records.
 <br>
 <h1 align="center"><i>Redefining Accounting<i></h1>
