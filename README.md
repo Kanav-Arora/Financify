@@ -216,6 +216,9 @@ Below given is an ER (Entity Relationship) diagram which will help the users to 
 <div id='id-sec6'/>
  
 >## Installation Guide
+<br>
+
+Please refer [Installation Guide](https://github.com/Kanav-Arora/Financify/blob/main/Installation.md).
 
 <div id='id-sec7'/>
 
