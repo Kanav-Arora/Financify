@@ -1,0 +1,108 @@
+Project Financify {
+  database_type: 'MySQL'
+  Note: '''
+    # Financify Database
+    The whole project is based on Java programming language.The desktop application has a user-friendly UI and a very famous and stable database named MySQL to keep a track of all records.’Financify’ is designed in such a way that it will meet the demands of a small scale business and as well as a large scale business.The implementation of the front-end for this project was done using Java Swing library for building the GUI of the software, along with this NetBeans IDE (Integrated Development Environment) and VS Code ( Code Editor ) are the tools which were used to compile all distinguished and vast frames of this project. Keeping all the bills and vouchers in an organised order is no more a hectic task,’Financify’ makes it easy for you.
+  '''
+}
+
+
+Table "accounts" {
+  "username" varchar(15) [default: NULL]
+  "acc_id" int [not null]
+  "acc_name" varchar(15) [default: NULL]
+  "acc_type" varchar(15) [default: NULL]
+  "address" varchar(30) [default: NULL]
+  "city" varchar(30) [default: NULL]
+  "state" varchar(30) [default: NULL]
+  "pincode" int [default: NULL]
+  "GST" varchar(20) [default: NULL]
+  "PAN" varchar(20) [default: NULL]
+  "email" varchar(40) [default: NULL]
+  "mobile" mediumtext
+  "credit_days" int [default: NULL]
+  "interest" int [default: NULL]
+}
+
+Table "bill" {
+  "bill_no" varchar(10) [default: NULL]
+  "s_no" int [default: NULL]
+  "item_id" varchar(10) [default: NULL]
+  "item_name" varchar(25) [default: NULL]
+  "pcs" int [default: NULL]
+  "quantity" float [default: NULL]
+  "net_rate" float [default: NULL]
+  "rate" float [default: NULL]
+  "amount" float [default: NULL]
+  "disc" float [default: NULL]
+  "disc_perc" float [default: NULL]
+  "taxable" float [default: NULL]
+  "gst_perc" float [default: NULL]
+  "gst" float [default: NULL]
+  "acc_name" varchar(25) [default: NULL]
+  "username" varchar(20) [default: NULL]
+  "type" varchar(25) [default: NULL]
+  "date" date [default: NULL]
+  "bill_amount" float [default: NULL]
+  "due_date" date [default: NULL]
+  "status" varchar(20) [default: NULL]
+}
+
+Table "cities" {
+  "id" int [pk, not null, increment]
+  "city" varchar(255) [not null]
+  "state_id" int [not null]
+
+Indexes {
+  state_id [name: "state_id"]
+}
+}
+
+Table "countries" {
+  "id" int [pk, not null, increment]
+  "countryCode" char(2) [not null, default: ""]
+  "name" varchar(45) [not null, default: ""]
+}
+
+Table "states" {
+  "id" int [pk, not null, increment]
+  "name" varchar(50) [not null]
+  "country_id" int [not null]
+}
+
+Table "stocks" {
+  "item_id" varchar(10) [default: NULL]
+  "item_name" varchar(25) [default: NULL]
+  "gst_slab" int [default: NULL]
+  "quantity" mediumtext
+  "weight" float(10,2) [default: NULL]
+  "price" float(10,2) [default: NULL]
+  "username" varchar(20) [default: NULL]
+}
+
+Table "transactions" {
+  "bill_no" varchar(10) [default: NULL]
+  "date" date [default: NULL]
+  "debit" float [default: NULL]
+  "credit" float [default: NULL]
+  "acc_name" varchar(25) [default: NULL]
+  "username" varchar(20) [default: NULL]
+}
+
+Table "users" {
+  "username" varchar(15) [pk, not null]
+  "password" varchar(20) [default: NULL]
+  "email" varchar(40) [default: NULL]
+  "name" varchar(25) [default: NULL]
+  "gender" varchar(10) [default: NULL]
+}
+
+Table "voucher" {
+  "bill_no" varchar(10) [default: NULL]
+  "date" date [default: NULL]
+  "narration" varchar(20) [default: NULL]
+  "amount" float [default: NULL]
+  "type" varchar(20) [default: NULL]
+  "username" varchar(20) [default: NULL]
+  "cheque_number" int [default: NULL]
+}
